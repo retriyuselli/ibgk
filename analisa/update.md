@@ -37,7 +37,7 @@ cp .env-production .env
 
 # 6. Storage & assets
 /opt/alt/php84/usr/bin/php artisan storage:link
-npm ci && npm run build   # jalankan di local/CI jika server tanpa Node
+npm ci && npm run build   # WAJIB — upload folder public/build/ ke server (folder ini di .gitignore)
 
 # 7. Cache production
 /opt/alt/php84/usr/bin/php artisan optimize:clear
@@ -93,6 +93,7 @@ Sesuaikan path `artisan` dengan lokasi project di server.
 
 | Masalah | Solusi |
 |--------|--------|
+| **Homepage 500, admin/login OK** | `public/build/manifest.json` belum ada — jalankan `npm run build` lalu upload folder `public/build/` |
 | `Table elections doesn't exist` saat artisan | Pastikan `AppServiceProvider` versi terbaru sudah di-deploy, lalu `migrate --force` |
 | 403 / 500 setelah upload | Cek `.htaccess` root + `public/`, permission folder `storage` & `bootstrap/cache` (775) |
 | Logo/upload tidak muncul | `storage:link` + pastikan `public/storage` ada |
