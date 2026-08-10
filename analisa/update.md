@@ -50,6 +50,8 @@ npm ci && npm run build   # jalankan di local/CI jika server tanpa Node
 
 **Document Root** di hPanel → arahkan ke folder `public/`.
 
+**Log Viewer:** Admin → Pengaturan → Log Viewer (`/admin/logs`) — hanya `super_admin`.
+
 ---
 
 ## Update / redeploy (setelah git pull)

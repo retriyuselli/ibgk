@@ -2,7 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use AchyutN\FilamentLogViewer\FilamentLogViewer;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use BezhanSalleh\FilamentShield\Support\Utils;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -53,6 +55,12 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make()
                     ->navigationGroup('Pengaturan')
                     ->navigationSort(1),
+                FilamentLogViewer::make()
+                    ->navigationGroup('Pengaturan')
+                    ->navigationSort(2)
+                    ->navigationLabel('Log Viewer')
+                    ->navigationIcon('heroicon-o-clipboard-document-list')
+                    ->authorize(fn (): bool => auth()->user()?->hasRole(Utils::getSuperAdminName()) ?? false),
             ])
             ->widgets([
                 AccountWidget::class,
