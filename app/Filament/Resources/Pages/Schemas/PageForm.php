@@ -42,6 +42,7 @@ class PageForm
                         ->columnSpanFull(),
                     Textarea::make('excerpt')
                         ->label('Ringkasan')
+                        ->helperText('Ditampilkan sebagai deskripsi hero halaman.')
                         ->rows(3)
                         ->columnSpanFull(),
                 ]),
@@ -56,7 +57,8 @@ class PageForm
             Section::make('Media')
                 ->schema([
                     FileUpload::make('banner')
-                        ->label('Banner')
+                        ->label('Banner Hero')
+                        ->helperText('Gambar latar hero halaman. Kosongkan untuk gambar bawaan.')
                         ->image()
                         ->directory('pages/banners')
                         ->disk('public')
@@ -70,13 +72,13 @@ class PageForm
             Section::make('SEO')
                 ->schema([
                     TextInput::make('meta_title')
-                        ->label('SEO Title')
+                        ->label('SEO Title / Subjudul Hero')
                         ->maxLength(255)
-                        ->helperText('Digunakan untuk hasil pencarian Google dan social preview.'),
+                        ->helperText('Subjudul atau tagline hero (Beranda, Kontak, Kemitraan). Halaman lain: judul SEO.'),
                     Textarea::make('meta_description')
-                        ->label('Meta Description')
+                        ->label('Meta Description / Kutipan Hero')
                         ->rows(3)
-                        ->helperText('Digunakan untuk hasil pencarian Google dan social preview.')
+                        ->helperText('Kutipan hero Kontak, atau deskripsi SEO halaman lainnya.')
                         ->columnSpanFull(),
                 ])
                 ->collapsed(),

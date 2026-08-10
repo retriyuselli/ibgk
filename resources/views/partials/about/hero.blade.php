@@ -1,8 +1,16 @@
+@php
+    $hero = $cmsPages->hero('about', [
+        'title' => 'Tentang IBGK Sumatera Selatan',
+        'excerpt' => $profile->short_description ?? 'Ikatan Bujang Gadis Kampus Sumatera Selatan merupakan wadah pemersatu para alumni dan finalis Pemilihan Bujang Gadis Kampus Sumatera Selatan.',
+        'image' => 'images/home/hero-ampera.jpg',
+        'imageAlt' => 'Palembang — Tentang IBGK Sumatera Selatan',
+    ]);
+@endphp
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
     <img
-        src="{{ asset('images/home/hero-ampera.jpg') }}"
-        alt="Palembang — Tentang IBGK Sumatera Selatan"
+        src="{{ $hero['image'] }}"
+        alt="{{ $hero['imageAlt'] }}"
         class="absolute inset-0 h-full w-full object-cover"
     >
     <div class="absolute inset-0 bg-navy-deep/80"></div>
@@ -19,7 +27,7 @@
 
         <div class="mx-auto mt-10 max-w-3xl text-center sm:mt-14">
             <h1 class="hero-animate-delay font-display text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl lg:text-5xl">
-                Tentang IBGK Sumatera Selatan
+                {{ $hero['title'] }}
             </h1>
 
             <div class="ornament-divider hero-animate-delay mt-5">
@@ -29,7 +37,7 @@
             </div>
 
             <p class="hero-animate-delay-2 mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
-                {{ $profile->short_description ?? 'Ikatan Bujang Gadis Kampus Sumatera Selatan merupakan wadah pemersatu para alumni dan finalis Pemilihan Bujang Gadis Kampus Sumatera Selatan.' }}
+                {{ $hero['excerpt'] }}
                 Selama {{ $yearsActive }} tahun, IBGK Sumsel terus berkomitmen membina generasi muda yang berbudaya, berprestasi, dan menginspirasi.
             </p>
         </div>

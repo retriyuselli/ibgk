@@ -399,6 +399,61 @@
         border-color: color-mix(in oklab, var(--color-gold) 85%, white);
         box-shadow: 0 0 18px color-mix(in oklab, var(--color-gold) 22%, transparent);
     }
+
+    .participants-section .shape-pos-tl {
+        top: 8%;
+        left: 3%;
+    }
+
+    .participants-section .shape-pos-diamond {
+        top: auto;
+        bottom: 10%;
+        right: 5%;
+    }
+
+    .participants-section .shape-pos-dot-a {
+        top: 20%;
+        right: 10%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .participants-animate {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .participants-section.is-visible .participants-animate {
+        animation: history-rise 0.75s ease-out both;
+        animation-delay: var(--participants-delay, 0s);
+    }
+
+    .participant-card {
+        transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .participant-card:hover {
+        transform: translateY(-6px);
+        border-color: color-mix(in oklab, var(--color-gold) 45%, transparent);
+        box-shadow: 0 16px 32px color-mix(in oklab, var(--color-navy) 12%, transparent);
+    }
+
+    .participant-photo img {
+        transition: transform 0.45s ease;
+    }
+
+    .participant-card:hover .participant-photo img {
+        transform: scale(1.04);
+    }
+
+    .participant-badge {
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .participant-card:hover .participant-badge {
+        background-color: color-mix(in oklab, var(--color-navy) 92%, transparent);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-gold) 20%, transparent);
+    }
 }
 
 @keyframes hero-rise {
@@ -511,7 +566,8 @@
     .journey-animate,
     .journey-line,
     .stages-animate,
-    .stages-connector {
+    .stages-connector,
+    .participants-animate {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
@@ -522,10 +578,20 @@
     .journey-section.is-visible .journey-animate,
     .journey-section.is-visible .journey-line,
     .stages-section.is-visible .stages-animate,
-    .stages-section.is-visible .stages-connector {
+    .stages-section.is-visible .stages-connector,
+    .participants-section.is-visible .participants-animate {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    .participant-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .participant-card:hover .participant-photo img {
+        transform: none;
     }
 }
 

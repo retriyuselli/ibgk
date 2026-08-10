@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            PageSeeder::class,
             OrganizationProfileSeeder::class,
             OrganizationPositionSeeder::class,
             HonoraryMemberSeeder::class,
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             NewsCategorySeeder::class,
             PartnerCategorySeeder::class,
             PartnerSeeder::class,
+            PartnerLogoSeeder::class,
             AlumniBatchSeeder::class,
             AlumniSeeder::class,
             ActivitySeeder::class,

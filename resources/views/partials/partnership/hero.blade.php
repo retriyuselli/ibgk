@@ -1,3 +1,12 @@
+@php
+    $hero = $cmsPages->hero('partnership', [
+        'title' => 'Kemitraan',
+        'subtitle' => 'IBGK Sumatera Selatan',
+        'excerpt' => 'Kolaborasi bersama mitra strategis memperkuat peran generasi muda kampus Sumatera Selatan dalam pendidikan, sosial, budaya, dan kepemimpinan.',
+        'image' => 'images/home/about-2.jpg',
+        'imageAlt' => 'Kolaborasi kemitraan IBGK Sumsel',
+    ]);
+@endphp
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
     <div class="absolute inset-0 opacity-20" aria-hidden="true" style="background-image: radial-gradient(circle at 20% 20%, color-mix(in oklab, var(--color-gold) 35%, transparent) 0, transparent 45%), radial-gradient(circle at 80% 0%, color-mix(in oklab, var(--color-gold) 20%, transparent) 0, transparent 40%), repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 8%, transparent) 0 2px, transparent 2px 14px);"></div>
@@ -14,11 +23,13 @@
             </nav>
 
             <h1 class="hero-animate-delay mt-8 font-display text-4xl font-semibold tracking-tight text-gold sm:text-5xl">
-                Kemitraan
+                {{ $hero['title'] }}
             </h1>
-            <p class="hero-animate-delay mt-2 font-display text-xl text-gold/90 sm:text-2xl">
-                IBGK Sumatera Selatan
-            </p>
+            @if ($hero['subtitle'])
+                <p class="hero-animate-delay mt-2 font-display text-xl text-gold/90 sm:text-2xl">
+                    {{ $hero['subtitle'] }}
+                </p>
+            @endif
 
             <div class="ornament-divider hero-animate-delay mt-5 justify-start">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -27,16 +38,15 @@
             </div>
 
             <p class="hero-animate-delay-2 mt-6 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
-                Kolaborasi bersama mitra strategis memperkuat peran generasi muda kampus
-                Sumatera Selatan dalam pendidikan, sosial, budaya, dan kepemimpinan.
+                {{ $hero['excerpt'] }}
             </p>
         </div>
 
         <div class="hero-animate-delay-2 relative">
             <div class="relative overflow-hidden rounded-sm border border-gold/25 shadow-2xl">
                 <img
-                    src="{{ asset('images/home/about-2.jpg') }}"
-                    alt="Kolaborasi kemitraan IBGK Sumsel"
+                    src="{{ $hero['image'] }}"
+                    alt="{{ $hero['imageAlt'] }}"
                     class="aspect-[4/3] w-full object-cover"
                 >
                 <div class="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-navy/20 to-transparent"></div>

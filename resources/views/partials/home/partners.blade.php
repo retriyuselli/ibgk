@@ -28,13 +28,7 @@
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
             @if ($partners->isNotEmpty())
                 @foreach ($partners->take(6) as $partner)
-                    <div class="flex min-h-24 items-center justify-center border border-navy/8 bg-white px-4 py-6 text-center shadow-sm">
-                        @if ($partner->logo)
-                            <img src="{{ asset('storage/'.$partner->logo) }}" alt="{{ $partner->name }}" class="max-h-12 max-w-full object-contain">
-                        @else
-                            <span class="text-xs font-semibold tracking-wide text-navy/70 uppercase">{{ $partner->name }}</span>
-                        @endif
-                    </div>
+                    @include('partials.site.partner-logo-card-compact', ['partner' => $partner])
                 @endforeach
             @else
                 @foreach ($fallbackPartners as $name)

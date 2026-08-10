@@ -1,8 +1,18 @@
+@php
+    $hero = $cmsPages->hero('contact', [
+        'title' => 'Kontak',
+        'subtitle' => 'IBGK Sumatera Selatan',
+        'excerpt' => 'Kami terbuka untuk pertanyaan, informasi kegiatan, dan kolaborasi. Hubungi tim IBGK Sumsel melalui kanal resmi berikut.',
+        'quote' => 'Bersama, Berbudaya, Berprestasi, Menginspirasi.',
+        'image' => 'images/home/about-4.jpg',
+        'imageAlt' => 'Kontak IBGK Sumatera Selatan',
+    ]);
+@endphp
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
     <img
-        src="{{ asset('images/home/about-4.jpg') }}"
-        alt="Kontak IBGK Sumatera Selatan"
+        src="{{ $hero['image'] }}"
+        alt="{{ $hero['imageAlt'] }}"
         class="absolute inset-0 h-full w-full object-cover opacity-35"
     >
     <div class="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy/88 to-navy-deep/80"></div>
@@ -18,11 +28,13 @@
         </nav>
 
         <h1 class="hero-animate-delay mt-8 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            Kontak
+            {{ $hero['title'] }}
         </h1>
-        <p class="hero-animate-delay mt-2 font-display text-xl text-gold sm:text-2xl">
-            IBGK Sumatera Selatan
-        </p>
+        @if ($hero['subtitle'])
+            <p class="hero-animate-delay mt-2 font-display text-xl text-gold sm:text-2xl">
+                {{ $hero['subtitle'] }}
+            </p>
+        @endif
 
         <div class="ornament-divider hero-animate-delay mt-5">
             <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -31,18 +43,19 @@
         </div>
 
         <p class="hero-animate-delay-2 mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
-            Kami terbuka untuk pertanyaan, informasi kegiatan, dan kolaborasi.
-            Hubungi tim IBGK Sumsel melalui kanal resmi berikut.
+            {{ $hero['excerpt'] }}
         </p>
 
-        <p class="hero-animate-delay-2 mt-5 font-display text-lg italic text-gold sm:text-xl">
-            "Bersama, Berbudaya, Berprestasi, Menginspirasi."
-        </p>
+        @if ($hero['quote'])
+            <p class="hero-animate-delay-2 mt-5 font-display text-lg italic text-gold sm:text-xl">
+                "{{ $hero['quote'] }}"
+            </p>
 
-        <div class="ornament-divider hero-animate-delay-2 mt-5">
-            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 2l1.8 5.5L20 9.2l-4.5 3.5L17 19l-5-3.2L7 19l1.5-6.3L4 9.2l6.2-1.7L12 2z"/>
-            </svg>
-        </div>
+            <div class="ornament-divider hero-animate-delay-2 mt-5">
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2l1.8 5.5L20 9.2l-4.5 3.5L17 19l-5-3.2L7 19l1.5-6.3L4 9.2l6.2-1.7L12 2z"/>
+                </svg>
+            </div>
+        @endif
     </div>
 </section>

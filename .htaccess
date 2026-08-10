@@ -1,0 +1,30 @@
+# Laravel — root .htaccess (MAMP / shared hosting)
+# Production: arahkan Document Root ke folder public/ jika memungkinkan.
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # HTTPS di production (localhost & 127.0.0.1 tetap HTTP untuk development)
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} !^localhost(:\d+)?$ [NC]
+    RewriteCond %{HTTP_HOST} !^127\.0\.0\.1(:\d+)?$ [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Blokir akses langsung ke folder internal Laravel
+    RewriteRule ^(?:app|bootstrap|config|database|resources|routes|storage|tests|vendor)(?:/|$) - [F,L]
+
+    # Arahkan request publik ke folder public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Blokir file & dotfile sensitif
+<FilesMatch "(^\.|\.(env|git|gitignore|gitattributes|htaccess|htpasswd|ini|log|sql|bak|backup|swp|dist|md|neon|lock|yaml|yml))$|(^(artisan|phpunit\.xml(\.dist)?|composer\.(json|lock|phar)|package(-lock)?\.json|webpack\.mix\.js|vite\.config\.(js|ts)|\.editorconfig|\.php-cs-fixer\.(dist\.)?php|\.phpunit\.result\.cache)$">
+    Require all denied
+</FilesMatch>
+
+<Files "artisan">
+    Require all denied
+</Files>

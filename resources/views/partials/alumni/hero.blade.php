@@ -1,8 +1,16 @@
+@php
+    $hero = $cmsPages->hero('alumni', [
+        'title' => 'Alumni IBGK Sumatera Selatan',
+        'excerpt' => 'Keluarga besar IBGK Sumsel terdiri dari finalis Pemilihan Bujang Gadis Kampus dari berbagai perguruan tinggi di Sumatera Selatan yang terus berkarya dan berkontribusi.',
+        'image' => 'images/home/about-4.jpg',
+        'imageAlt' => 'Keluarga besar alumni IBGK Sumatera Selatan',
+    ]);
+@endphp
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
     <img
-        src="{{ asset('images/home/about-4.jpg') }}"
-        alt="Keluarga besar alumni IBGK Sumatera Selatan"
+        src="{{ $hero['image'] }}"
+        alt="{{ $hero['imageAlt'] }}"
         class="absolute inset-0 h-full w-full object-cover opacity-35"
     >
     <div class="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/90 to-navy/75"></div>
@@ -18,10 +26,10 @@
 
         <div class="hero-animate-delay mt-8 max-w-3xl">
             <h1 class="font-display text-3xl font-semibold tracking-tight text-gold sm:text-4xl lg:text-5xl">
-                Alumni IBGK Sumatera Selatan
+                {{ $hero['title'] }}
             </h1>
             <p class="mt-5 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
-                Keluarga besar IBGK Sumsel terdiri dari finalis Pemilihan Bujang Gadis Kampus dari berbagai perguruan tinggi di Sumatera Selatan yang terus berkarya dan berkontribusi.
+                {{ $hero['excerpt'] }}
             </p>
         </div>
 

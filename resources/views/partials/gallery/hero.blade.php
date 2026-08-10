@@ -1,8 +1,16 @@
+@php
+    $hero = $cmsPages->hero('gallery', [
+        'title' => 'Galeri IBGK Sumatera Selatan',
+        'excerpt' => 'Abadikan momen perjalanan IBGK Sumsel — dari pemilihan BGK, kegiatan sosial, budaya, hingga kolaborasi yang menginspirasi generasi muda kampus.',
+        'image' => 'images/home/sejarah-grand-final.jpg',
+        'imageAlt' => 'Galeri IBGK Sumatera Selatan',
+    ]);
+@endphp
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
     <img
-        src="{{ asset('images/home/sejarah-grand-final.jpg') }}"
-        alt="Galeri IBGK Sumatera Selatan"
+        src="{{ $hero['image'] }}"
+        alt="{{ $hero['imageAlt'] }}"
         class="absolute inset-0 h-full w-full object-cover opacity-40"
     >
     <div class="absolute inset-0 bg-gradient-to-b from-navy-deep/85 via-navy/80 to-navy-deep/90"></div>
@@ -17,7 +25,7 @@
         </nav>
 
         <h1 class="hero-animate-delay mt-8 font-display text-3xl font-semibold tracking-tight text-gold sm:text-4xl lg:text-5xl">
-            Galeri IBGK Sumatera Selatan
+            {{ $hero['title'] }}
         </h1>
 
         <div class="ornament-divider hero-animate-delay mt-5">
@@ -27,8 +35,7 @@
         </div>
 
         <p class="hero-animate-delay-2 mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
-            Abadikan momen perjalanan IBGK Sumsel — dari pemilihan BGK, kegiatan sosial,
-            budaya, hingga kolaborasi yang menginspirasi generasi muda kampus.
+            {{ $hero['excerpt'] }}
         </p>
     </div>
 </section>

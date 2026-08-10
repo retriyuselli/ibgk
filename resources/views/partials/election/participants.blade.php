@@ -1,8 +1,8 @@
-<section id="peserta" class="relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-24">
+<section id="peserta" class="participants-section relative overflow-hidden bg-cream py-16 sm:py-20 lg:py-24">
     @include('partials.site.section-shapes', ['variant' => 'light'])
 
     <div class="site-container relative">
-        <div class="mx-auto max-w-3xl text-center">
+        <div class="participants-header participants-animate mx-auto max-w-3xl text-center">
             <h2 class="section-title">Peserta Pemilihan BGK {{ $election?->year ?? $activeElection?->year }}</h2>
             <div class="ornament-divider mt-4">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -17,15 +17,18 @@
 
         @if ($participants->isNotEmpty())
             <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                @foreach ($participants as $participant)
-                    <article class="overflow-hidden border border-navy/8 bg-white shadow-sm transition hover:border-gold/35">
-                        <div class="relative">
+                @foreach ($participants as $index => $participant)
+                    <article
+                        class="participant-card participants-animate overflow-hidden border border-navy/8 bg-white shadow-sm"
+                        style="--participants-delay: {{ ($index * 0.1) + 0.15 }}s"
+                    >
+                        <div class="participant-photo relative overflow-hidden">
                             <img
                                 src="{{ $participant->photo ? asset('storage/'.$participant->photo) : asset('images/home/alumni-placeholder.jpg') }}"
                                 alt="{{ $participant->full_name }}"
                                 class="aspect-[3/4] w-full object-cover"
                             >
-                            <span class="absolute top-3 right-3 rounded-full bg-navy/85 px-2 py-1 text-[10px] font-semibold tracking-wide text-gold uppercase backdrop-blur-sm">
+                            <span class="participant-badge absolute top-3 right-3 rounded-full bg-navy/85 px-2 py-1 text-[10px] font-semibold tracking-wide text-gold uppercase backdrop-blur-sm">
                                 {{ $participant->gender === 'female' ? 'Gadis' : 'Bujang' }}
                             </span>
                         </div>
@@ -45,7 +48,7 @@
                 @endforeach
             </div>
         @else
-            <div class="mt-10 border border-dashed border-navy/15 bg-white px-6 py-12 text-center">
+            <div class="participants-animate participants-empty mt-10 border border-dashed border-navy/15 bg-white px-6 py-12 text-center" style="--participants-delay: 0.2s">
                 <p class="font-display text-xl text-navy">Daftar peserta segera diumumkan</p>
                 <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
                     Profil peserta publik akan tampil setelah proses verifikasi administrasi selesai.

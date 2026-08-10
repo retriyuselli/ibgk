@@ -1,8 +1,17 @@
+@php
+    $hero = $cmsPages->hero('home', [
+        'title' => 'Ikatan Bujang Gadis Kampus Sumatera Selatan',
+        'subtitle' => 'Muda, Berbudaya, Berprestasi, dan Menginspirasi.',
+        'excerpt' => $profile->short_description ?? 'Wadah pemersatu para alumni dan finalis Pemilihan Bujang Gadis Kampus Sumatera Selatan.',
+        'image' => 'images/home/hero-ampera.jpg',
+        'imageAlt' => 'Suasana Palembang — IBGK Sumatera Selatan',
+    ]);
+@endphp
 <section class="relative isolate min-h-[88vh] overflow-hidden bg-navy text-white lg:min-h-[92vh]">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
     <img
-        src="{{ asset('images/home/hero-ampera.jpg') }}"
-        alt="Suasana Palembang — IBGK Sumatera Selatan"
+        src="{{ $hero['image'] }}"
+        alt="{{ $hero['imageAlt'] }}"
         class="absolute inset-0 h-full w-full object-cover"
     >
 
@@ -17,15 +26,17 @@
                 </p>
 
                 <h1 class="hero-animate-delay mt-4 font-display text-4xl leading-[1.12] font-semibold text-balance sm:text-5xl lg:text-[3.35rem]">
-                    Ikatan Bujang Gadis Kampus<br class="hidden sm:block"> Sumatera Selatan
+                    {{ $hero['title'] }}
                 </h1>
 
-                <p class="hero-animate-delay mt-5 font-display text-lg text-gold-light italic sm:text-xl">
-                    Muda, Berbudaya, Berprestasi, dan Menginspirasi.
-                </p>
+                @if ($hero['subtitle'])
+                    <p class="hero-animate-delay mt-5 font-display text-lg text-gold-light italic sm:text-xl">
+                        {{ $hero['subtitle'] }}
+                    </p>
+                @endif
 
                 <p class="hero-animate-delay-2 mt-5 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
-                    {{ $profile->short_description ?? 'Wadah pemersatu para alumni dan finalis Pemilihan Bujang Gadis Kampus Sumatera Selatan.' }}
+                    {{ $hero['excerpt'] }}
                 </p>
 
                 <div class="hero-animate-delay-2 mt-8 flex flex-wrap gap-3">

@@ -34,13 +34,7 @@
                         data-partner-page="{{ $pageIndex }}"
                     >
                         @foreach ($pagePartners as $partner)
-                            <div class="flex min-h-28 flex-col items-center justify-center rounded-sm border border-navy/8 bg-cream/40 px-4 py-6 text-center shadow-sm transition hover:border-gold/35 hover:shadow-md">
-                                @if ($partner->logo)
-                                    <img src="{{ asset('storage/'.$partner->logo) }}" alt="{{ $partner->name }}" class="max-h-12 max-w-full object-contain">
-                                @else
-                                    <span class="text-[11px] font-semibold leading-snug tracking-wide text-navy/75 uppercase">{{ $partner->name }}</span>
-                                @endif
-                            </div>
+                            @include('partials.site.partner-logo-card', ['partner' => $partner])
                         @endforeach
                     </div>
                 @endforeach

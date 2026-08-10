@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Election;
 use App\Models\OrganizationProfile;
+use App\Support\CmsPages;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -11,7 +12,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->singleton(CmsPages::class);
     }
 
     public function boot(): void
@@ -23,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::share('activeElection', Election::query()->where('is_active', true)->latest('year')->first());
+
+        if (! $this->app->runningInConsole()) {
+            View::share('cmsPages', $this->app->make(CmsPages::class));
+        }
     }
 }

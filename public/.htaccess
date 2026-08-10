@@ -23,3 +23,23 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# Security headers (production)
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header unset X-Powered-By
+</IfModule>
+
+# Blokir eksekusi script di folder upload (public/storage → storage/app/public)
+<IfModule mod_rewrite.c>
+    RewriteRule ^storage/.*\.(?:php|php[0-9]?|phtml|phar|cgi|pl|py|sh|bash)$ - [F,L,NC]
+</IfModule>
+
+# Sembunyikan file backup / konfigurasi yang tidak sengaja ter-upload
+<FilesMatch "\.(env|git|htaccess|htpasswd|ini|log|sql|bak|backup|swp|dist|neon|lock|yaml|yml|md)$">
+    Require all denied
+</FilesMatch>

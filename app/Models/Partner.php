@@ -40,4 +40,21 @@ class Partner extends Model
     {
         return $this->category();
     }
+
+    public function logoUrl(): ?string
+    {
+        if (blank($this->logo)) {
+            return null;
+        }
+
+        if (str_starts_with($this->logo, 'http://') || str_starts_with($this->logo, 'https://')) {
+            return $this->logo;
+        }
+
+        if (str_starts_with($this->logo, 'images/')) {
+            return asset($this->logo);
+        }
+
+        return asset('storage/'.$this->logo);
+    }
 }
