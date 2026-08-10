@@ -63,7 +63,6 @@ npm ci && npm run build   # jalankan di local/CI jika server tanpa Node
 /opt/alt/php84/usr/bin/php artisan route:cache
 /opt/alt/php84/usr/bin/php artisan view:cache
 /opt/alt/php84/usr/bin/php artisan filament:optimize
-/opt/alt/php84/usr/bin/php artisan permission:cache-reset
 ```
 
 ---
@@ -96,3 +95,4 @@ Sesuaikan path `artisan` dengan lokasi project di server.
 | 403 / 500 setelah upload | Cek `.htaccess` root + `public/`, permission folder `storage` & `bootstrap/cache` (775) |
 | Logo/upload tidak muncul | `storage:link` + pastikan `public/storage` ada |
 | Shield: user tidak bisa login admin | `shield:super-admin --user=ID --panel=admin` |
+| `shield:generate` prohibited | Deploy ulang `AppServiceProvider` terbaru, lalu `optimize:clear` |
