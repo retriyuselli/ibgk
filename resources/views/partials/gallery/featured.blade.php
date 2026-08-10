@@ -32,11 +32,7 @@
                 @foreach ($displayAlbums as $index => $album)
                     <article class="group overflow-hidden rounded-sm border border-navy/8 bg-cream/30 shadow-sm transition hover:border-gold/35 hover:shadow-md">
                         <div class="relative overflow-hidden">
-                            <img
-                                src="{{ $album->cover ? asset('storage/'.$album->cover) : asset($placeholders[$index % count($placeholders)]) }}"
-                                alt="{{ $album->title }}"
-                                class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
-                            >
+                            {!! site_image_or_storage($album->cover, $placeholders[$index % count($placeholders)], $album->title, ['class' => 'aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105']) !!}
                             <span class="absolute top-3 right-3 rounded bg-navy/80 px-2 py-1 text-[10px] font-semibold tracking-wide text-gold uppercase">
                                 {{ $album->photos_count ?: 0 }} Foto
                             </span>

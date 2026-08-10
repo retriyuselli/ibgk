@@ -80,11 +80,7 @@
             </div>
 
             <figure class="overflow-hidden rounded-lg shadow-md shadow-navy/10">
-                <img
-                    src="{{ asset('images/home/sejarah-grand-final.jpg') }}"
-                    alt="Suasana Grand Final BGK"
-                    class="aspect-[3/4] h-full w-full object-cover"
-                >
+                {!! site_image('images/home/sejarah-grand-final.jpg', 'Suasana Grand Final BGK', ['class' => 'aspect-[3/4] h-full w-full object-cover']) !!}
             </figure>
         </div>
     </div>

@@ -36,11 +36,7 @@
                                     {{ $batch->historical_member_count ?: '—' }} Finalis
                                 </p>
                             </div>
-                            <img
-                                src="{{ $batch->photo ? asset('storage/'.$batch->photo) : asset('images/home/alumni-placeholder.jpg') }}"
-                                alt="Angkatan {{ $batch->year }}"
-                                class="aspect-[4/3] w-full object-cover"
-                            >
+                            {!! site_image_or_storage($batch->photo, 'images/home/alumni-placeholder.jpg', 'Angkatan '.$batch->year, ['class' => 'aspect-[4/3] w-full object-cover']) !!}
                         </article>
                     @empty
                         <p class="text-sm text-white/60">Data angkatan belum tersedia.</p>

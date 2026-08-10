@@ -44,11 +44,7 @@
 
         <div class="hero-animate-delay-2 relative">
             <div class="relative overflow-hidden rounded-sm border border-gold/25 shadow-2xl">
-                <img
-                    src="{{ $hero['image'] }}"
-                    alt="{{ $hero['imageAlt'] }}"
-                    class="aspect-[4/3] w-full object-cover"
-                >
+                {!! site_image_from_src($hero['image'], $hero['imageAlt'], ['class' => 'aspect-[4/3] w-full object-cover', 'lazy' => false]) !!}
                 <div class="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-navy/20 to-transparent"></div>
                 <span class="absolute top-4 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border border-gold/50 bg-navy/80 text-gold">
                     <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">

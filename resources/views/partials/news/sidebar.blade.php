@@ -97,11 +97,7 @@
             @forelse ($popularNews as $index => $item)
                 <li>
                     <a href="{{ route('news.show', $item) }}" class="flex gap-3 group">
-                        <img
-                            src="{{ $item->thumbnail ? asset('storage/'.$item->thumbnail) : asset('images/home/news-'.(($index % 3) + 1).'.jpg') }}"
-                            alt="{{ $item->title }}"
-                            class="h-16 w-16 shrink-0 rounded-sm object-cover"
-                        >
+                        {!! site_image_or_storage($item->thumbnail, 'images/home/news-'.(($index % 3) + 1).'.jpg', $item->title, ['class' => 'h-16 w-16 shrink-0 rounded-sm object-cover']) !!}
                         <div class="min-w-0">
                             <p class="line-clamp-2 text-sm font-semibold leading-snug text-navy group-hover:text-gold">
                                 {{ $item->title }}

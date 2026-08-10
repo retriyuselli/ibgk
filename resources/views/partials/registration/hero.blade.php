@@ -4,11 +4,7 @@
 
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
-    <img
-        src="{{ $election?->banner ? asset('storage/'.$election->banner) : asset('images/home/hero-ampera.jpg') }}"
-        alt="Daftar BGK Sumatera Selatan"
-        class="absolute inset-0 h-full w-full object-cover opacity-35"
-    >
+    {!! site_image_or_storage($election?->banner, 'images/home/hero-ampera.jpg', 'Daftar BGK Sumatera Selatan', ['class' => 'absolute inset-0 h-full w-full object-cover opacity-35', 'lazy' => false]) !!}
     <div class="absolute inset-0 bg-gradient-to-b from-navy-deep/95 via-navy/88 to-navy-deep/90"></div>
 
     <div class="site-container relative py-16 text-center sm:py-20 lg:py-24">

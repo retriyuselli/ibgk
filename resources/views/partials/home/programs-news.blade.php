@@ -52,11 +52,7 @@
                     @foreach ($latestNews as $index => $news)
                         <li>
                             <a href="{{ route('news.show', $news) }}" class="group flex gap-4">
-                                <img
-                                    src="{{ $news->thumbnail ? asset('storage/'.$news->thumbnail) : asset('images/home/news-'.(($index % 3) + 1).'.jpg') }}"
-                                    alt="{{ $news->title }}"
-                                    class="h-20 w-24 shrink-0 rounded-sm object-cover"
-                                >
+                                {!! site_image_or_storage($news->thumbnail, 'images/home/news-'.(($index % 3) + 1).'.jpg', $news->title, ['class' => 'h-20 w-24 shrink-0 rounded-sm object-cover']) !!}
                                 <div>
                                     <h3 class="text-sm font-semibold text-navy transition group-hover:text-gold sm:text-base">
                                         {{ $news->title }}
@@ -72,7 +68,7 @@
                     @foreach ($fallbackNews as $news)
                         <li>
                             <a href="{{ route('news') }}" class="group flex gap-4">
-                                <img src="{{ asset('images/home/'.$news['image']) }}" alt="{{ $news['title'] }}" class="h-20 w-24 shrink-0 rounded-sm object-cover">
+                                {!! site_image('images/home/'.$news['image'], $news['title'], ['class' => 'h-20 w-24 shrink-0 rounded-sm object-cover']) !!}
                                 <div>
                                     <h3 class="text-sm font-semibold text-navy transition group-hover:text-gold sm:text-base">
                                         {{ $news['title'] }}

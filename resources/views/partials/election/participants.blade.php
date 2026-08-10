@@ -23,11 +23,7 @@
                         style="--participants-delay: {{ ($index * 0.1) + 0.15 }}s"
                     >
                         <div class="participant-photo relative overflow-hidden">
-                            <img
-                                src="{{ $participant->photo ? asset('storage/'.$participant->photo) : asset('images/home/alumni-placeholder.jpg') }}"
-                                alt="{{ $participant->full_name }}"
-                                class="aspect-[3/4] w-full object-cover"
-                            >
+                            {!! site_image_or_storage($participant->photo, 'images/home/alumni-placeholder.jpg', $participant->full_name, ['class' => 'aspect-[3/4] w-full object-cover']) !!}
                             <span class="participant-badge absolute top-3 right-3 rounded-full bg-navy/85 px-2 py-1 text-[10px] font-semibold tracking-wide text-gold uppercase backdrop-blur-sm">
                                 {{ $participant->gender === 'female' ? 'Gadis' : 'Bujang' }}
                             </span>

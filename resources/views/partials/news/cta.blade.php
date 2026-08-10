@@ -1,9 +1,5 @@
 <section class="relative isolate overflow-hidden bg-navy py-16 text-white sm:py-20">
-    <img
-        src="{{ asset('images/home/sejarah-grand-final.jpg') }}"
-        alt="Bergabung dengan IBGK Sumsel"
-        class="absolute inset-0 h-full w-full object-cover opacity-35"
-    >
+    {!! site_image('images/home/sejarah-grand-final.jpg', 'Bergabung dengan IBGK Sumsel', ['class' => 'absolute inset-0 h-full w-full object-cover opacity-35', 'lazy' => false]) !!}
     <div class="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy/85 to-navy-deep/90"></div>
 
     <div class="site-container relative flex flex-col items-center gap-6 text-center lg:flex-row lg:items-center lg:justify-between lg:text-left">

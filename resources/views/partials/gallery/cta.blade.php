@@ -1,10 +1,5 @@
 <section class="relative isolate overflow-hidden bg-navy py-14 text-white sm:py-16">
-    <img
-        src="{{ asset('images/home/about-3.jpg') }}"
-        alt=""
-        aria-hidden="true"
-        class="absolute inset-0 h-full w-full object-cover opacity-15"
-    >
+    {!! site_image('images/home/about-3.jpg', '', ['class' => 'absolute inset-0 h-full w-full object-cover opacity-15', 'lazy' => false, 'aria-hidden' => 'true']) !!}
     <div class="absolute inset-0 bg-navy/90"></div>
 
     <div class="site-container relative flex flex-col items-center gap-6 text-center lg:flex-row lg:items-center lg:justify-between lg:text-left">

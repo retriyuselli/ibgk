@@ -8,11 +8,7 @@
 @endphp
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
-    <img
-        src="{{ $hero['image'] }}"
-        alt="{{ $hero['imageAlt'] }}"
-        class="absolute inset-0 h-full w-full object-cover"
-    >
+    {!! site_image_from_src($hero['image'], $hero['imageAlt'], ['class' => 'absolute inset-0 h-full w-full object-cover', 'lazy' => false]) !!}
     <div class="absolute inset-0 bg-navy-deep/80"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy/40 to-navy/50"></div>
 

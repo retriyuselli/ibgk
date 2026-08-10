@@ -21,9 +21,12 @@
             <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($socialLinks as $network => $social)
                     @php
-                        $href = $social['url'] ?: '#';
-                        $isExternal = filled($social['url']) && $network !== 'email';
+                        $href = $network === 'email'
+                            ? safe_url($social['url'])
+                            : safe_url($social['url']);
+                        $isExternal = filled($href) && $network !== 'email';
                     @endphp
+                    @if (filled($href))
                     <a
                         href="{{ $href }}"
                         @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
@@ -38,6 +41,7 @@
                         <span class="mt-3 text-[11px] font-semibold tracking-wide text-navy uppercase">{{ ucfirst($network) }}</span>
                         <span class="mt-1 text-xs text-muted">{{ $social['label'] }}</span>
                     </a>
+                    @endif
                 @endforeach
             </div>
         </div>

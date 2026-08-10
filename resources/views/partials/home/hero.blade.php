@@ -9,11 +9,7 @@
 @endphp
 <section class="relative isolate min-h-[88vh] overflow-hidden bg-navy text-white lg:min-h-[92vh]">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
-    <img
-        src="{{ $hero['image'] }}"
-        alt="{{ $hero['imageAlt'] }}"
-        class="absolute inset-0 h-full w-full object-cover"
-    >
+    {!! site_image_from_src($hero['image'], $hero['imageAlt'], ['class' => 'absolute inset-0 h-full w-full object-cover', 'priority' => true, 'lazy' => false]) !!}
 
     <div class="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy/85 to-navy/55"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-transparent to-navy/30"></div>

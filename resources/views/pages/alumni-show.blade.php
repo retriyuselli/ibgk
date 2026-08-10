@@ -19,11 +19,7 @@
 
             <div class="mt-8 grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
                 <figure class="overflow-hidden rounded-lg border border-navy/8 bg-white shadow-sm">
-                    <img
-                        src="{{ $alumni->photo ? asset('storage/'.$alumni->photo) : asset('images/home/alumni-placeholder.jpg') }}"
-                        alt="{{ $alumni->name }}"
-                        class="aspect-[3/4] w-full object-cover"
-                    >
+                        {!! site_image_or_storage($alumni->photo, 'images/home/alumni-placeholder.jpg', $alumni->name, ['class' => 'aspect-[3/4] w-full object-cover']) !!}
                 </figure>
 
                 <div>
@@ -78,13 +74,13 @@
 
                     @if ($alumni->instagram || $alumni->linkedin)
                         <div class="mt-8 flex flex-wrap gap-3">
-                            @if ($alumni->instagram)
-                                <a href="{{ $alumni->instagram }}" target="_blank" rel="noopener noreferrer" class="btn-outline-gold text-xs">
+                            @if ($alumni->instagram && ($instagramUrl = safe_url($alumni->instagram)))
+                                <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" class="btn-outline-gold text-xs">
                                     Instagram
                                 </a>
                             @endif
-                            @if ($alumni->linkedin)
-                                <a href="{{ $alumni->linkedin }}" target="_blank" rel="noopener noreferrer" class="btn-outline-gold text-xs">
+                            @if ($alumni->linkedin && ($linkedinUrl = safe_url($alumni->linkedin)))
+                                <a href="{{ $linkedinUrl }}" target="_blank" rel="noopener noreferrer" class="btn-outline-gold text-xs">
                                     LinkedIn
                                 </a>
                             @endif

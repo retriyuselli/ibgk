@@ -13,8 +13,6 @@ class EnsureDevelopmentAccess
         'home',
         'login',
         'login.store',
-        'register',
-        'register.store',
         'auth.google',
         'auth.google.callback',
     ];

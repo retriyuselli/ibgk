@@ -19,7 +19,7 @@
 
             <div class="mt-6 space-y-4 text-sm leading-relaxed text-muted sm:text-base [&_p+p]:mt-4">
                 @if ($hasDescription)
-                    {!! $profile->description !!}
+                    {!! clean_html($profile->description) !!}
                 @else
                     <p>
                         Ikatan Bujang Gadis Kampus Sumatera Selatan (IBGK Sumsel) didirikan oleh
@@ -44,11 +44,7 @@
         </div>
 
         <figure class="overflow-hidden rounded-lg shadow-md shadow-navy/10">
-            <img
-                src="{{ asset('images/home/sejarah-grand-final.jpg') }}"
-                alt="Grand Final BGK Sumatera Selatan"
-                class="aspect-[4/3] w-full object-cover"
-            >
+            {!! site_image('images/home/sejarah-grand-final.jpg', 'Grand Final BGK Sumatera Selatan', ['class' => 'aspect-[4/3] w-full object-cover']) !!}
             <figcaption class="bg-cream px-4 py-3 text-xs font-medium tracking-wide text-muted uppercase">
                 Grand Final BGK
             </figcaption>

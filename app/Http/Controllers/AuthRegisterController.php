@@ -18,6 +18,12 @@ class AuthRegisterController extends Controller
     ) {}
     public function create(): View|RedirectResponse
     {
+        if (config('site.under_development')) {
+            return redirect()
+                ->route('home')
+                ->withErrors(['email' => 'Pendaftaran akun sementara ditutup selama pengembangan website.']);
+        }
+
         if (Auth::check()) {
             return redirect()->intended(route('dashboard'));
         }
@@ -29,6 +35,12 @@ class AuthRegisterController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        if (config('site.under_development')) {
+            return redirect()
+                ->route('home')
+                ->withErrors(['email' => 'Pendaftaran akun sementara ditutup selama pengembangan website.']);
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],

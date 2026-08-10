@@ -14,6 +14,13 @@ class HomeController extends Controller
     public function __invoke(): View
     {
         $profile = OrganizationProfile::query()->first();
+
+        if (config('site.under_development') && ! auth()->check()) {
+            return view('pages.home-gate', [
+                'profile' => $profile,
+            ]);
+        }
+
         $batches = AlumniBatch::query()
             ->where('is_active', true)
             ->orderBy('year')

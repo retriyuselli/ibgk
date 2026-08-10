@@ -107,11 +107,7 @@
                 <article class="overflow-hidden rounded-sm border border-navy/8 bg-white shadow-sm transition hover:border-gold/35 hover:shadow-md">
                     <a href="{{ route('news.show', $item) }}" class="block">
                     <div class="relative">
-                        <img
-                            src="{{ $item->thumbnail ? asset('storage/'.$item->thumbnail) : asset($placeholders[$index % count($placeholders)]) }}"
-                            alt="{{ $item->title }}"
-                            class="aspect-[4/3] w-full object-cover"
-                        >
+                        {!! site_image_or_storage($item->thumbnail, $placeholders[$index % count($placeholders)], $item->title, ['class' => 'aspect-[4/3] w-full object-cover']) !!}
                         @if ($item->category)
                             <span class="absolute top-3 left-3 rounded px-2 py-1 text-[10px] font-semibold tracking-wide uppercase {{ $badgeClass }}">
                                 {{ $item->category->name }}

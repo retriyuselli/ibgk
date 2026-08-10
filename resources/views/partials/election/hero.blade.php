@@ -8,11 +8,7 @@
 
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
-    <img
-        src="{{ $election?->banner ? asset('storage/'.$election->banner) : asset('images/home/hero-ampera.jpg') }}"
-        alt=""
-        class="absolute inset-0 h-full w-full object-cover opacity-40"
-    >
+    {!! site_image_or_storage($election?->banner, 'images/home/hero-ampera.jpg', '', ['class' => 'absolute inset-0 h-full w-full object-cover opacity-40', 'lazy' => false]) !!}
     <div class="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/92 to-navy/70"></div>
 
     <div class="site-container relative grid items-center gap-10 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12 lg:py-20">
@@ -55,11 +51,7 @@
 
         <div class="hero-animate-delay-2 relative mx-auto w-full max-w-md lg:max-w-none">
             <div class="absolute -inset-3 rounded-lg border border-gold/25" aria-hidden="true"></div>
-            <img
-                src="{{ $election?->poster ? asset('storage/'.$election->poster) : asset('images/home/about-1.jpg') }}"
-                alt="Finalis Bujang Gadis Kampus Sumatera Selatan"
-                class="relative aspect-[4/5] w-full rounded-lg object-cover shadow-2xl shadow-black/40 sm:aspect-[5/6]"
-            >
+            {!! site_image_or_storage($election?->poster, 'images/home/about-1.jpg', 'Finalis Bujang Gadis Kampus Sumatera Selatan', ['class' => 'relative aspect-[4/5] w-full rounded-lg object-cover shadow-2xl shadow-black/40 sm:aspect-[5/6]']) !!}
         </div>
     </div>
 </section>

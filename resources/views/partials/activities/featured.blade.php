@@ -55,11 +55,7 @@
                     <article class="overflow-hidden border border-navy/8 bg-cream/40 shadow-sm transition hover:border-gold/35">
                         <a href="{{ route('activities.show', $activity) }}" class="block">
                         <div class="relative">
-                            <img
-                                src="{{ $activity->thumbnail ? asset('storage/'.$activity->thumbnail) : asset($placeholders[$index % count($placeholders)]) }}"
-                                alt="{{ $activity->title }}"
-                                class="aspect-[4/3] w-full object-cover"
-                            >
+                            {!! site_image_or_storage($activity->thumbnail, $placeholders[$index % count($placeholders)], $activity->title, ['class' => 'aspect-[4/3] w-full object-cover']) !!}
                             @if ($activity->category)
                                 <span class="absolute top-3 right-3 rounded bg-navy/90 px-2 py-1 text-[10px] font-semibold tracking-wide text-gold uppercase">
                                     {{ \Illuminate\Support\Str::before($activity->category->name, ' &') }}

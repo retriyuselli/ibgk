@@ -53,9 +53,15 @@ class GalleryPageController extends Controller
         $totalAlbumCount = GalleryAlbum::query()->published()->count();
         $totalPhotoCount = GalleryPhoto::query()->count();
 
-        $categoryCounts = collect(self::CATEGORIES)->map(function (array $category) use ($totalAlbumCount): array {
+        $countsByCategory = GalleryAlbum::query()
+            ->published()
+            ->selectRaw('category, COUNT(*) as aggregate')
+            ->groupBy('category')
+            ->pluck('aggregate', 'category');
+
+        $categoryCounts = collect(self::CATEGORIES)->map(function (array $category) use ($totalAlbumCount, $countsByCategory): array {
             $count = filled($category['match'])
-                ? GalleryAlbum::query()->published()->where('category', $category['match'])->count()
+                ? (int) ($countsByCategory[$category['match']] ?? 0)
                 : $totalAlbumCount;
 
             return array_merge($category, ['count' => $count]);

@@ -34,11 +34,7 @@
             <div id="gallery-track" class="alumni-track px-8 sm:px-10">
                 @forelse ($galleryAlbums as $index => $album)
                     <article class="alumni-card w-64 shrink-0 overflow-hidden border border-navy/8 bg-white shadow-sm sm:w-72">
-                        <img
-                            src="{{ $album->cover ? asset('storage/'.$album->cover) : asset($galleryImages[$index % count($galleryImages)]) }}"
-                            alt="{{ $album->title }}"
-                            class="aspect-[4/3] w-full object-cover"
-                        >
+                        {!! site_image_or_storage($album->cover, $galleryImages[$index % count($galleryImages)], $album->title, ['class' => 'aspect-[4/3] w-full object-cover']) !!}
                         <div class="px-4 py-3">
                             <p class="text-[10px] font-semibold tracking-[0.12em] text-gold uppercase">{{ $album->category ?: 'Galeri' }}</p>
                             <h3 class="mt-1 text-sm font-semibold text-navy">{{ $album->title }}</h3>
@@ -47,7 +43,7 @@
                 @empty
                     @foreach (array_slice($galleryImages, 0, 5) as $image)
                         <article class="alumni-card w-64 shrink-0 overflow-hidden border border-navy/8 bg-white shadow-sm sm:w-72">
-                            <img src="{{ asset($image) }}" alt="Galeri kegiatan" class="aspect-[4/3] w-full object-cover">
+                            {!! site_image($image, 'Galeri kegiatan', ['class' => 'aspect-[4/3] w-full object-cover']) !!}
                             <div class="px-4 py-3">
                                 <p class="text-[10px] font-semibold tracking-[0.12em] text-gold uppercase">Dokumentasi</p>
                                 <h3 class="mt-1 text-sm font-semibold text-navy">Kegiatan IBGK Sumsel</h3>

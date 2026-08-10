@@ -36,8 +36,8 @@
                     'tiktok' => $profile?->tiktok,
                     'facebook' => $profile?->facebook,
                 ] as $network => $url)
-                    @if (filled($url))
-                        <a href="{{ $url }}" target="_blank" rel="noopener noreferrer"
+                    @if (filled($url) && ($safeUrl = safe_url($url)))
+                        <a href="{{ $safeUrl }}" target="_blank" rel="noopener noreferrer"
                            class="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/80 transition hover:border-gold hover:text-gold"
                            aria-label="{{ ucfirst($network) }}">
                             <span class="text-xs font-semibold uppercase">{{ substr($network, 0, 2) }}</span>

@@ -23,9 +23,9 @@ Route::get('/pemilihan-bgk', ElectionPageController::class)->name('election');
 Route::get('/dokumen/{document:slug}/unduh', DocumentDownloadController::class)->name('documents.download');
 Route::middleware('guest')->group(function (): void {
     Route::get('/masuk', [AuthLoginController::class, 'create'])->name('login');
-    Route::post('/masuk', [AuthLoginController::class, 'store'])->name('login.store');
+    Route::post('/masuk', [AuthLoginController::class, 'store'])->middleware('throttle:10,1')->name('login.store');
     Route::get('/daftar', [AuthRegisterController::class, 'create'])->name('register');
-    Route::post('/daftar', [AuthRegisterController::class, 'store'])->name('register.store');
+    Route::post('/daftar', [AuthRegisterController::class, 'store'])->middleware('throttle:5,1')->name('register.store');
     Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
 });
@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function (): void {
 });
 
 Route::get('/daftar-bgk', ElectionRegistrationController::class)->name('election.register');
-Route::post('/daftar-bgk', [ElectionRegistrationController::class, 'submit'])->name('election.register.submit');
+Route::post('/daftar-bgk', [ElectionRegistrationController::class, 'submit'])->middleware('throttle:3,1')->name('election.register.submit');
 
 Route::redirect('/admin/login', '/masuk');
 Route::get('/alumni', AlumniPageController::class)->name('alumni');
@@ -46,9 +46,9 @@ Route::get('/kegiatan', ActivityPageController::class)->name('activities');
 Route::get('/kegiatan/{activity:slug}', [ActivityPageController::class, 'show'])->name('activities.show');
 Route::get('/berita', NewsPageController::class)->name('news');
 Route::get('/berita/{news:slug}', [NewsPageController::class, 'show'])->name('news.show');
-Route::post('/berita/langganan', [NewsPageController::class, 'subscribe'])->name('news.subscribe');
+Route::post('/berita/langganan', [NewsPageController::class, 'subscribe'])->middleware('throttle:5,1')->name('news.subscribe');
 Route::get('/galeri', GalleryPageController::class)->name('gallery');
 Route::get('/kemitraan', PartnershipPageController::class)->name('partnership');
-Route::post('/kemitraan/ajukan', [PartnershipPageController::class, 'submit'])->name('partnership.submit');
+Route::post('/kemitraan/ajukan', [PartnershipPageController::class, 'submit'])->middleware('throttle:5,1')->name('partnership.submit');
 Route::get('/kontak', ContactPageController::class)->name('contact');
-Route::post('/kontak/kirim', [ContactPageController::class, 'submit'])->name('contact.submit');
+Route::post('/kontak/kirim', [ContactPageController::class, 'submit'])->middleware('throttle:5,1')->name('contact.submit');

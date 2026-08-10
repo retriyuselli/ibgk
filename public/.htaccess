@@ -32,6 +32,7 @@
     Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
     Header always set X-XSS-Protection "1; mode=block"
     Header unset X-Powered-By
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
 </IfModule>
 
 # Blokir eksekusi script di folder upload (public/storage → storage/app/public)

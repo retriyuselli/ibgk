@@ -29,7 +29,13 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        View::composer('*', function ($view): void {
+        View::composer([
+            'partials.site.header',
+            'partials.registration.*',
+            'partials.election.*',
+            'pages.election-register',
+            'pages.election',
+        ], function ($view): void {
             if (! $view->offsetExists('activeElection')) {
                 $view->with('activeElection', $this->activeElection());
             }

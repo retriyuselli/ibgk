@@ -57,7 +57,7 @@
 
             <div class="mt-8 space-y-4 text-sm leading-relaxed text-muted sm:text-base [&_p+p]:mt-4">
                 @if ($hasContent)
-                    {!! $activity->content !!}
+                    {!! clean_html($activity->content) !!}
                 @elseif ($activity->excerpt)
                     <p>{{ $activity->excerpt }}</p>
                 @else

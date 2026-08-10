@@ -51,7 +51,7 @@
                 <p class="text-xs font-semibold tracking-[0.18em] text-gold uppercase">Visi</p>
                 @if ($hasVision)
                     <div class="mt-4 font-display text-xl leading-relaxed text-navy sm:text-2xl [&_p+p]:mt-4">
-                        {!! $profile->vision !!}
+                        {!! clean_html($profile->vision) !!}
                     </div>
                 @else
                     <p class="mt-4 font-display text-xl leading-relaxed text-navy sm:text-2xl">

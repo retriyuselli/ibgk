@@ -26,16 +26,12 @@
             <div id="preview-track" class="alumni-track px-8 sm:px-10">
                 @forelse ($previewPhotos as $photo)
                     <figure class="alumni-card w-56 shrink-0 overflow-hidden rounded-sm border border-navy/8 bg-white shadow-sm sm:w-64">
-                        <img
-                            src="{{ $resolveImage($photo->image) }}"
-                            alt="{{ $photo->caption ?: $photo->album?->title }}"
-                            class="aspect-[16/10] w-full object-cover"
-                        >
+                        {!! site_image_from_src($resolveImage($photo->image), $photo->caption ?: $photo->album?->title, ['class' => 'aspect-[16/10] w-full object-cover']) !!}
                     </figure>
                 @empty
                     @foreach (['about-1.jpg', 'about-2.jpg', 'about-3.jpg', 'about-4.jpg', 'news-1.jpg', 'news-2.jpg'] as $image)
                         <figure class="alumni-card w-56 shrink-0 overflow-hidden rounded-sm border border-navy/8 bg-white shadow-sm sm:w-64">
-                            <img src="{{ asset('images/home/'.$image) }}" alt="Preview galeri" class="aspect-[16/10] w-full object-cover">
+                            {!! site_image('images/home/'.$image, 'Preview galeri', ['class' => 'aspect-[16/10] w-full object-cover']) !!}
                         </figure>
                     @endforeach
                 @endforelse

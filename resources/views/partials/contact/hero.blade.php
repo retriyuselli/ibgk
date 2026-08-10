@@ -10,11 +10,7 @@
 @endphp
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
-    <img
-        src="{{ $hero['image'] }}"
-        alt="{{ $hero['imageAlt'] }}"
-        class="absolute inset-0 h-full w-full object-cover opacity-35"
-    >
+    {!! site_image_from_src($hero['image'], $hero['imageAlt'], ['class' => 'absolute inset-0 h-full w-full object-cover opacity-35', 'lazy' => false]) !!}
     <div class="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy/88 to-navy-deep/80"></div>
     <div class="absolute inset-y-0 right-0 w-1/2 opacity-15" aria-hidden="true" style="background-image: repeating-linear-gradient(45deg, color-mix(in oklab, var(--color-gold) 12%, transparent) 0 2px, transparent 2px 12px), repeating-linear-gradient(-45deg, color-mix(in oklab, var(--color-gold) 8%, transparent) 0 2px, transparent 2px 12px);"></div>
 
