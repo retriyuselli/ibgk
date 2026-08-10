@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Election;
 use App\Models\OrganizationProfile;
 use App\Support\CmsPages;
+use BezhanSalleh\FilamentShield\Facades\FilamentShield;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -18,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        FilamentShield::enforcePolicies();
+        FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
+
         View::composer(['partials.site.header', 'partials.site.footer', 'layouts.app'], function ($view): void {
             if (! $view->offsetExists('profile')) {
                 $view->with('profile', $this->firstOrganizationProfile());

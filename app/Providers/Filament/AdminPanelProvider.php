@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -40,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
                 'Kemitraan',
                 'Inbox',
                 'CMS',
+                'Pengaturan',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -47,6 +49,11 @@ class AdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+            ->plugins([
+                FilamentShieldPlugin::make()
+                    ->navigationGroup('Pengaturan')
+                    ->navigationSort(1),
+            ])
             ->widgets([
                 AccountWidget::class,
                 // FilamentInfoWidget::class,
