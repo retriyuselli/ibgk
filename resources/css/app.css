@@ -94,6 +94,36 @@
         @apply inline-flex items-center justify-center gap-2 rounded-md bg-gold px-4 py-2.5 text-xs font-semibold tracking-wide text-navy-deep transition duration-300 hover:bg-gold-light;
     }
 
+    .btn-outline-light-sm {
+        @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/70 bg-transparent px-4 py-2.5 text-xs font-semibold tracking-wide text-white transition duration-300 hover:border-gold hover:text-gold;
+    }
+
+    .btn-google {
+        @apply inline-flex w-full items-center justify-center gap-3 rounded-md border border-navy/12 bg-white px-4 py-2.5 text-sm font-semibold text-navy shadow-sm transition duration-300 hover:border-navy/20 hover:bg-cream/70 hover:shadow;
+    }
+
+    .auth-divider {
+        @apply relative my-5 flex items-center;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+        content: '';
+        @apply h-px flex-1 bg-navy/10;
+    }
+
+    .auth-divider span {
+        @apply px-3 text-xs font-semibold tracking-[0.12em] text-muted uppercase;
+    }
+
+    .dashboard-action-card {
+        @apply flex items-start gap-4 rounded-sm border border-navy/8 bg-cream/35 p-5 transition duration-300 hover:border-gold/40 hover:bg-white hover:shadow-sm;
+    }
+
+    .dashboard-action-icon {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-md;
+    }
+
     .hero-animate {
         animation: hero-rise 0.9s ease-out both;
     }
@@ -104,6 +134,103 @@
 
     .hero-animate-delay-2 {
         animation: hero-rise 0.9s ease-out 0.32s both;
+    }
+
+    .hero-animate-delay-3 {
+        animation: hero-rise 0.9s ease-out 0.46s both;
+    }
+
+    .auth-section .shape-pos-tl {
+        top: 10%;
+        left: 5%;
+    }
+
+    .auth-section .shape-pos-diamond {
+        top: 18%;
+        right: 8%;
+    }
+
+    .auth-section .shape-pos-dot-a {
+        bottom: 16%;
+        left: 10%;
+    }
+
+    .auth-shapes--rich .auth-shape-ring-tr {
+        @apply absolute rounded-full;
+        top: 8%;
+        right: 5%;
+        width: 7rem;
+        height: 7rem;
+        border: 1px solid color-mix(in oklab, var(--color-gold) 24%, transparent);
+        animation: shape-spin 42s linear infinite reverse;
+    }
+
+    .auth-shapes--rich .auth-shape-orb {
+        @apply absolute rounded-full;
+        bottom: 8%;
+        right: 12%;
+        width: 11rem;
+        height: 11rem;
+        background: radial-gradient(circle, color-mix(in oklab, var(--color-gold) 14%, transparent) 0%, transparent 72%);
+        animation: shape-orb 24s ease-in-out infinite;
+    }
+
+    .auth-shapes--rich .auth-shape-shimmer {
+        @apply absolute;
+        top: 42%;
+        left: 8%;
+        width: 5rem;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-gold) 45%, transparent), transparent);
+        animation: shape-shimmer 7s ease-in-out infinite;
+    }
+
+    .auth-shapes--rich .auth-shape-dot-b {
+        top: 28%;
+        right: 28%;
+        bottom: auto;
+        left: auto;
+        animation: shape-pulse 6s ease-in-out infinite 0.8s;
+    }
+
+    .section-shapes--dark.auth-shapes--rich .auth-shape-orb {
+        top: auto;
+        bottom: 6%;
+        right: 18%;
+        width: 14rem;
+        height: 14rem;
+        opacity: 0.75;
+    }
+
+    .section-shapes--dark.auth-shapes--rich .auth-shape-ring-tr {
+        top: 14%;
+        right: 8%;
+        width: 9rem;
+        height: 9rem;
+        border-color: color-mix(in oklab, var(--color-gold) 28%, transparent);
+    }
+
+    .section-shapes--dark.auth-shapes--rich .auth-shape-shimmer {
+        top: 36%;
+        left: 14%;
+        opacity: 0.7;
+    }
+
+    .auth-form-card {
+        animation: auth-card-rise 0.95s ease-out 0.22s both;
+    }
+
+    .auth-field-animate {
+        animation: hero-rise 0.75s ease-out both;
+        animation-delay: calc(0.38s + var(--auth-delay, 0s));
+    }
+
+    .shape-ring-lg {
+        @apply absolute rounded-full;
+        width: 8rem;
+        height: 8rem;
+        border: 1px solid color-mix(in oklab, var(--color-gold) 22%, transparent);
+        animation: shape-spin 45s linear infinite reverse;
     }
 
     .alumni-track {
@@ -467,6 +594,17 @@
     }
 }
 
+@keyframes auth-card-rise {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 @keyframes shape-float {
     0%,
     100% {
@@ -558,9 +696,17 @@
     .section-shapes .shape-ring-sm,
     .section-shapes .shape-diamond,
     .section-shapes .shape-dot,
+    .section-shapes .shape-ring-lg,
+    .auth-shapes--rich .auth-shape-ring-tr,
+    .auth-shapes--rich .auth-shape-orb,
+    .auth-shapes--rich .auth-shape-shimmer,
+    .auth-shapes--rich .auth-shape-dot-b,
     .hero-animate,
     .hero-animate-delay,
     .hero-animate-delay-2,
+    .hero-animate-delay-3,
+    .auth-form-card,
+    .auth-field-animate,
     .history-animate,
     .history-line,
     .journey-animate,

@@ -9,7 +9,9 @@
     $isGallery = request()->routeIs('gallery');
     $isPartnership = request()->routeIs('partnership');
     $isContact = request()->routeIs('contact');
-    $isRegister = request()->routeIs('election.register');
+    $isRegister = request()->routeIs('register');
+    $isLogin = request()->routeIs('login');
+    $isDashboard = request()->routeIs('dashboard');
 @endphp
 
 <header class="sticky top-0 z-50 border-b border-white/10 bg-navy/95 backdrop-blur-md">
@@ -43,10 +45,28 @@
             <a href="{{ route('contact') }}" @class(['nav-link', 'nav-link-active' => $isContact])>Kontak</a>
         </nav>
 
-        <div class="flex items-center gap-3">
-            <a href="{{ route('election.register') }}" @class(['btn-gold-sm hidden xl:inline-flex', 'ring-2 ring-white/30' => $isRegister])>
-                Daftar BGK {{ $activeElection?->year ?? now()->year }}
-            </a>
+        <div class="flex items-center gap-2 sm:gap-3">
+            @auth
+                <a
+                    href="{{ route('dashboard') }}"
+                    @class(['btn-outline-light-sm hidden lg:inline-flex', 'border-gold text-gold' => $isDashboard])
+                >
+                    Dashboard
+                </a>
+            @else
+                <a
+                    href="{{ route('login') }}"
+                    @class(['btn-outline-light-sm hidden lg:inline-flex', 'border-gold text-gold' => $isLogin])
+                >
+                    Masuk
+                </a>
+                <a
+                    href="{{ route('register') }}"
+                    @class(['btn-gold-sm hidden lg:inline-flex', 'ring-2 ring-white/30' => $isRegister])
+                >
+                    Daftar
+                </a>
+            @endauth
 
             <button
                 type="button"
@@ -74,7 +94,29 @@
             <a href="{{ route('gallery') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isGallery ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Galeri</a>
             <a href="{{ route('partnership') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isPartnership ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Kemitraan</a>
             <a href="{{ route('contact') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isContact ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Kontak</a>
-            <a href="{{ route('election.register') }}" @class(['mt-2 rounded-md px-3 py-2.5 text-center text-sm font-semibold text-navy-deep', $isRegister ? 'bg-gold-light ring-2 ring-white/30' : 'bg-gold'])>Daftar BGK {{ $activeElection?->year ?? now()->year }}</a>
+            <div class="mt-3 grid grid-cols-2 gap-2 border-t border-white/10 pt-4">
+                @auth
+                    <a
+                        href="{{ route('dashboard') }}"
+                        @class(['rounded-md border px-3 py-2.5 text-center text-sm font-semibold transition sm:col-span-2', $isDashboard ? 'border-gold bg-gold/10 text-gold' : 'border-white/25 text-white hover:border-gold hover:text-gold'])
+                    >
+                        Dashboard
+                    </a>
+                @else
+                    <a
+                        href="{{ route('login') }}"
+                        @class(['rounded-md border px-3 py-2.5 text-center text-sm font-semibold transition', $isLogin ? 'border-gold bg-gold/10 text-gold' : 'border-white/25 text-white hover:border-gold hover:text-gold'])
+                    >
+                        Masuk
+                    </a>
+                    <a
+                        href="{{ route('register') }}"
+                        @class(['rounded-md px-3 py-2.5 text-center text-sm font-semibold text-navy-deep', $isRegister ? 'bg-gold-light ring-2 ring-white/30' : 'bg-gold'])
+                    >
+                        Daftar
+                    </a>
+                @endauth
+            </div>
         </nav>
     </div>
 </header>

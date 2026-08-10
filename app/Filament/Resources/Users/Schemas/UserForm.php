@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use BezhanSalleh\FilamentShield\Support\Utils;
+use App\Support\Roles;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -49,10 +49,10 @@ class UserForm
                         ->preload()
                         ->searchable()
                         ->default(fn (): array => Role::query()
-                            ->where('name', Utils::getPanelUserRoleName())
+                            ->where('name', Roles::PENGUNJUNG)
                             ->pluck('id')
                             ->all())
-                        ->helperText('Super admin memiliki akses penuh. Panel user hanya akses dasar panel admin.')
+                        ->helperText('Super Admin dan Admin dapat mengakses panel admin. Pengunjung dan Anggota hanya dashboard pengguna.')
                         ->columnSpanFull(),
                 ]),
         ]);

@@ -3,11 +3,15 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActivityPageController;
 use App\Http\Controllers\AlumniPageController;
+use App\Http\Controllers\AuthLoginController;
+use App\Http\Controllers\AuthRegisterController;
 use App\Http\Controllers\ElectionPageController;
 use App\Http\Controllers\ElectionRegistrationController;
 use App\Http\Controllers\ContactPageController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentDownloadController;
 use App\Http\Controllers\GalleryPageController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsPageController;
 use App\Http\Controllers\PartnershipPageController;
@@ -17,8 +21,25 @@ Route::get('/', HomeController::class)->name('home');
 Route::get('/tentang', AboutController::class)->name('about');
 Route::get('/pemilihan-bgk', ElectionPageController::class)->name('election');
 Route::get('/dokumen/{document:slug}/unduh', DocumentDownloadController::class)->name('documents.download');
+Route::middleware('guest')->group(function (): void {
+    Route::get('/masuk', [AuthLoginController::class, 'create'])->name('login');
+    Route::post('/masuk', [AuthLoginController::class, 'store'])->name('login.store');
+    Route::get('/daftar', [AuthRegisterController::class, 'create'])->name('register');
+    Route::post('/daftar', [AuthRegisterController::class, 'store'])->name('register.store');
+    Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
+});
+
+Route::post('/keluar', [AuthLoginController::class, 'destroy'])->middleware('auth')->name('logout');
+
+Route::middleware('auth')->group(function (): void {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+});
+
 Route::get('/daftar-bgk', ElectionRegistrationController::class)->name('election.register');
 Route::post('/daftar-bgk', [ElectionRegistrationController::class, 'submit'])->name('election.register.submit');
+
+Route::redirect('/admin/login', '/masuk');
 Route::get('/alumni', AlumniPageController::class)->name('alumni');
 Route::get('/alumni/{alumni:slug}', [AlumniPageController::class, 'show'])->name('alumni.show');
 Route::get('/kegiatan', ActivityPageController::class)->name('activities');
