@@ -1,8 +1,12 @@
 *.log
 .DS_Store
+
+# Environment (local & secrets — jangan commit)
 .env
-.env.backup
-.env.production
+.env.*
+.env-*
+!.env.example
+
 .phpactor.json
 .phpunit.result.cache
 /.codex

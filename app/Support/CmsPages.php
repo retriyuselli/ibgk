@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\Page;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 
 class CmsPages
 {
@@ -14,10 +15,27 @@ class CmsPages
     public function all(): Collection
     {
         if ($this->pages === null) {
-            $this->pages = Page::query()->published()->get()->keyBy('slug');
+            if (! $this->pagesTableExists()) {
+                $this->pages = collect();
+            } else {
+                try {
+                    $this->pages = Page::query()->published()->get()->keyBy('slug');
+                } catch (\Throwable) {
+                    $this->pages = collect();
+                }
+            }
         }
 
         return $this->pages;
+    }
+
+    private function pagesTableExists(): bool
+    {
+        try {
+            return Schema::hasTable('pages');
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     public function get(string $slug): ?Page

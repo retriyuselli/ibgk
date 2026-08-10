@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Election;
 use App\Models\OrganizationProfile;
 use App\Support\CmsPages;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,14 +20,53 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer(['partials.site.header', 'partials.site.footer', 'layouts.app'], function ($view): void {
             if (! $view->offsetExists('profile')) {
-                $view->with('profile', OrganizationProfile::query()->first());
+                $view->with('profile', $this->firstOrganizationProfile());
             }
         });
 
-        View::share('activeElection', Election::query()->where('is_active', true)->latest('year')->first());
+        View::composer('*', function ($view): void {
+            if (! $view->offsetExists('activeElection')) {
+                $view->with('activeElection', $this->activeElection());
+            }
+        });
 
         if (! $this->app->runningInConsole()) {
             View::share('cmsPages', $this->app->make(CmsPages::class));
+        }
+    }
+
+    private function activeElection(): ?Election
+    {
+        if (! $this->hasTable('elections')) {
+            return null;
+        }
+
+        try {
+            return Election::query()->where('is_active', true)->latest('year')->first();
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    private function firstOrganizationProfile(): ?OrganizationProfile
+    {
+        if (! $this->hasTable('organization_profiles')) {
+            return null;
+        }
+
+        try {
+            return OrganizationProfile::query()->first();
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    private function hasTable(string $table): bool
+    {
+        try {
+            return Schema::hasTable($table);
+        } catch (\Throwable) {
+            return false;
         }
     }
 }
