@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Filament\Resources\OrganizationProfiles\Pages;
+
+use App\Filament\Resources\OrganizationProfiles\OrganizationProfileResource;
+use Filament\Actions\ViewAction;
+use Filament\Resources\Pages\EditRecord;
+
+class EditOrganizationProfile extends EditRecord
+{
+    protected static string $resource = OrganizationProfileResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            ViewAction::make(),
+        ];
+    }
+}

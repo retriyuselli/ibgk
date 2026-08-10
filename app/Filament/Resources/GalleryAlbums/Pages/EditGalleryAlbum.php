@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Filament\Resources\GalleryAlbums\Pages;
+
+use App\Filament\Resources\GalleryAlbums\GalleryAlbumResource;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
+use Filament\Resources\Pages\EditRecord;
+
+class EditGalleryAlbum extends EditRecord
+{
+    protected static string $resource = GalleryAlbumResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [ViewAction::make(), DeleteAction::make()];
+    }
+}
