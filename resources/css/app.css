@@ -124,6 +124,10 @@
         @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-md;
     }
 
+    .development-gate-panel {
+        animation: auth-card-rise 0.95s ease-out both;
+    }
+
     .hero-animate {
         animation: hero-rise 0.9s ease-out both;
     }

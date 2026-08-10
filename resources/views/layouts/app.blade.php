@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@php
+    $showDevelopmentGate = config('site.under_development')
+        && ! auth()->check()
+        && request()->routeIs('home');
+@endphp
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +14,11 @@
     {!! Vite::fonts() !!}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="relative min-h-screen overflow-x-hidden bg-cream font-sans text-ink antialiased">
+<body @class(['relative min-h-screen overflow-x-hidden bg-cream font-sans text-ink antialiased', 'overflow-hidden' => $showDevelopmentGate])>
+    @if ($showDevelopmentGate)
+        @include('partials.site.development-gate')
+    @endif
+
     @include('partials.site.header')
 
     <main class="relative z-10">
