@@ -7,7 +7,7 @@
     $isActivities = request()->routeIs('activities');
     $isNews = request()->routeIs('news');
     $isGallery = request()->routeIs('gallery');
-    $isPartnership = request()->routeIs('partnership');
+    $isPartnership = request()->routeIs('partnership', 'partnership.show');
     $isContact = request()->routeIs('contact');
     $isRegister = request()->routeIs('register');
     $isLogin = request()->routeIs('login');

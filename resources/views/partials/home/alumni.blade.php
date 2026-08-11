@@ -33,7 +33,7 @@
                             <div class="border-b border-white/10 px-4 py-3">
                                 <p class="font-display text-2xl font-semibold text-gold">{{ $batch->year }}</p>
                                 <p class="text-xs text-white/65">
-                                    {{ $batch->historical_member_count ?: '—' }} Finalis
+                                    {{ $batch->displayMemberCount() ?: '—' }} Finalis
                                 </p>
                             </div>
                             {!! site_image_or_storage($batch->photo, 'images/home/alumni-placeholder.jpg', 'Angkatan '.$batch->year, ['class' => 'aspect-[4/3] w-full object-cover']) !!}

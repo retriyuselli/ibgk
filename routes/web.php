@@ -49,6 +49,8 @@ Route::get('/berita/{news:slug}', [NewsPageController::class, 'show'])->name('ne
 Route::post('/berita/langganan', [NewsPageController::class, 'subscribe'])->middleware('throttle:5,1')->name('news.subscribe');
 Route::get('/galeri', GalleryPageController::class)->name('gallery');
 Route::get('/kemitraan', PartnershipPageController::class)->name('partnership');
+Route::redirect('/kemitraan/mitra/bank-syariah-indonesia', '/kemitraan/mitra/bank-mitra-utama', 301);
+Route::get('/kemitraan/mitra/{partner:slug}', [PartnershipPageController::class, 'show'])->name('partnership.show');
 Route::post('/kemitraan/ajukan', [PartnershipPageController::class, 'submit'])->middleware('throttle:5,1')->name('partnership.submit');
 Route::get('/kontak', ContactPageController::class)->name('contact');
 Route::post('/kontak/kirim', [ContactPageController::class, 'submit'])->middleware('throttle:5,1')->name('contact.submit');

@@ -1,4 +1,6 @@
 @php
+    use App\Models\AlumniBatch;
+
     $milestones = [
         [
             'year' => '1999',
@@ -25,15 +27,15 @@
             'icon' => 'building',
         ],
         [
-            'year' => '2006–2011',
+            'year' => '2006–'.(AlumniBatch::FIRST_ELECTION_YEAR + 9),
             'title' => 'Penguatan Organisasi',
             'text' => 'Penguatan budaya, kontribusi sosial, dan jejaring alumni lintas angkatan.',
             'icon' => 'users',
         ],
         [
-            'year' => '2011',
-            'title' => '282 Anggota',
-            'text' => 'Jejaring alumni dan finalis terus tumbuh hingga ratusan anggota.',
+            'year' => AlumniBatch::FIRST_ELECTION_YEAR.'–sekarang',
+            'title' => number_format(AlumniBatch::totalPublicMembersUpToCurrentYear()).' Finalis',
+            'text' => 'Setiap tahun pemilihan BGK Sumsel melahirkan '.AlumniBatch::MEMBERS_PER_YEAR.' finalis, hingga total '.number_format(AlumniBatch::totalPublicMembersUpToCurrentYear()).' anggota.',
             'icon' => 'star',
         ],
     ];

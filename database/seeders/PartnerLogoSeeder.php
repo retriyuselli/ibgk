@@ -12,6 +12,7 @@ class PartnerLogoSeeder extends Seeder
 {
     /** @var array<string, string> */
     private const REMOTE_LOGOS = [
+        'bank-syariah-indonesia' => 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Bank_Syariah_Indonesia.svg',
         'bank-indonesia' => 'https://upload.wikimedia.org/wikipedia/commons/8/8e/Bank_Indonesia_logo.svg',
         'pt-telkomsel' => 'https://upload.wikimedia.org/wikipedia/commons/7/72/Telkomsel_2021_icon.svg',
         'pertamina' => 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Pertamina_logo.svg',

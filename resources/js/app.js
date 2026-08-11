@@ -119,4 +119,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
         observer.observe(section);
     });
+
+    const alumniGrid = document.getElementById('alumni-grid');
+    const alumniLoadMore = document.getElementById('alumni-load-more');
+    const alumniLoadMoreWrap = document.getElementById('alumni-load-more-wrap');
+
+    if (alumniGrid && alumniLoadMore) {
+        alumniLoadMore.addEventListener('click', async () => {
+            const nextPage = alumniLoadMore.dataset.nextPage;
+
+            if (!nextPage) {
+                return;
+            }
+
+            const originalLabel = alumniLoadMore.textContent;
+            alumniLoadMore.disabled = true;
+            alumniLoadMore.textContent = 'Memuat...';
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('page', nextPage);
+
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        Accept: 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load alumni');
+                }
+
+                const data = await response.json();
+
+                alumniGrid.insertAdjacentHTML('beforeend', data.html);
+
+                if (data.has_more && data.next_page) {
+                    alumniLoadMore.dataset.nextPage = String(data.next_page);
+                    alumniLoadMore.disabled = false;
+                    alumniLoadMore.textContent = originalLabel;
+                } else if (alumniLoadMoreWrap) {
+                    alumniLoadMoreWrap.remove();
+                }
+            } catch {
+                alumniLoadMore.disabled = false;
+                alumniLoadMore.textContent = originalLabel;
+            }
+        });
+    }
 });

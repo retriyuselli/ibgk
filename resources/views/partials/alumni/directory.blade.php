@@ -11,6 +11,7 @@
             <form method="GET" action="{{ route('alumni') }}" class="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
                 @if ($selectedBatch)
                     <input type="hidden" name="angkatan" value="{{ $selectedBatch->slug }}">
+                    <input type="hidden" name="halaman" value="{{ $sidebarPage }}">
                 @endif
 
                 <label class="relative block min-w-0 flex-1 lg:w-72">

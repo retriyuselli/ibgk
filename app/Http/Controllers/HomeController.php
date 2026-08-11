@@ -21,10 +21,7 @@ class HomeController extends Controller
             ]);
         }
 
-        $batches = AlumniBatch::query()
-            ->where('is_active', true)
-            ->orderBy('year')
-            ->get();
+        $batches = AlumniBatch::electionBatchesOrdered();
 
         $yearsActive = $profile?->founded_at
             ? max(1, (int) now()->format('Y') - (int) $profile->founded_at->format('Y'))
@@ -34,8 +31,8 @@ class HomeController extends Controller
             'profile' => $profile,
             'yearsActive' => $yearsActive,
             'batches' => $batches,
-            'alumniCount' => (int) $batches->sum('historical_member_count'),
-            'batchCount' => $batches->count(),
+            'alumniCount' => AlumniBatch::totalPublicMembersUpToCurrentYear(),
+            'batchCount' => AlumniBatch::activeBatchCountUpToCurrentYear(),
             'activityCategories' => ActivityCategory::query()
                 ->where('is_active', true)
                 ->orderBy('sort_order')

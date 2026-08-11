@@ -1,0 +1,23 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('partners', function (Blueprint $table) {
+            $table->text('showcase_official_subtext')->nullable()->after('showcase_official_title');
+            $table->string('showcase_social_handle')->nullable()->after('showcase_footer_quote');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('partners', function (Blueprint $table) {
+            $table->dropColumn(['showcase_official_subtext', 'showcase_social_handle']);
+        });
+    }
+};

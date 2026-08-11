@@ -5,6 +5,9 @@
 @section('meta_description', $alumni->bio ?: 'Profil alumni IBGK Sumatera Selatan.')
 
 @section('content')
+    @php
+        use App\Models\AlumniBatch;
+    @endphp
     <section class="relative bg-cream py-10 sm:py-12">
         <div class="site-container max-w-4xl">
             <nav class="text-xs text-muted" aria-label="Breadcrumb">
@@ -88,7 +91,10 @@
                     @endif
 
                     <div class="mt-10">
-                        <a href="{{ route('alumni', ['angkatan' => $alumni->alumniBatch?->slug]) }}" class="btn-outline-gold">
+                        <a href="{{ route('alumni', array_filter([
+                            'angkatan' => $alumni->alumniBatch?->slug,
+                            'halaman' => $alumni->alumniBatch ? AlumniBatch::sidebarPageForBatch($alumni->alumniBatch) : null,
+                        ])) }}" class="btn-outline-gold">
                             ← Kembali ke Direktori Alumni
                         </a>
                     </div>

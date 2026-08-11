@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             NewsCategorySeeder::class,
             PartnerCategorySeeder::class,
             PartnerSeeder::class,
+            MainSponsorSeeder::class,
             PartnerLogoSeeder::class,
             AlumniBatchSeeder::class,
             AlumniSeeder::class,

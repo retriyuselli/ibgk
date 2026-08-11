@@ -1,15 +1,20 @@
 <div
     id="development-gate"
-    class="development-gate fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
+    class="development-gate fixed inset-0 z-[200] flex items-center justify-center overflow-hidden p-4 sm:p-6"
     role="dialog"
     aria-modal="true"
     aria-labelledby="development-gate-title"
 >
-    <div class="development-gate-backdrop absolute inset-0 bg-navy-deep/75 backdrop-blur-sm" aria-hidden="true"></div>
+    <div class="development-gate-backdrop absolute inset-0 overflow-hidden bg-navy-deep/75 backdrop-blur-sm" aria-hidden="true">
+        @include('partials.auth.decorative-shapes', ['variant' => 'dark', 'density' => 'rich'])
+    </div>
 
-    <div class="development-gate-panel relative w-full max-w-md rounded-sm border border-white/10 bg-white p-6 shadow-2xl sm:p-8">
-        <div class="text-center">
-            <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15 text-gold">
+    <div class="development-gate-panel relative w-full max-w-md overflow-hidden rounded-sm border border-white/10 bg-white p-6 shadow-2xl sm:p-8">
+        @include('partials.auth.decorative-shapes', ['variant' => 'light', 'density' => 'default'])
+
+        <div class="relative z-10">
+        <div class="auth-field-animate text-center" style="--auth-delay: 0s">
+            <span class="development-gate-icon mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15 text-gold">
                 <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
                 </svg>
@@ -28,7 +33,7 @@
         <form method="POST" action="{{ route('login.store') }}" class="mt-8 space-y-4">
             @csrf
 
-            <div>
+            <div class="auth-field-animate" style="--auth-delay: 0.1s">
                 <label for="gate-email" class="mb-1.5 block text-sm font-medium text-navy">Email</label>
                 <input
                     id="gate-email"
@@ -44,7 +49,7 @@
                 @enderror
             </div>
 
-            <div>
+            <div class="auth-field-animate" style="--auth-delay: 0.18s">
                 <label for="gate-password" class="mb-1.5 block text-sm font-medium text-navy">Kata Sandi</label>
                 <input
                     id="gate-password"
@@ -59,16 +64,18 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn-gold w-full justify-center">
+            <div class="auth-field-animate" style="--auth-delay: 0.26s">
+            <button type="submit" class="btn-gold w-full justify-center transition-transform duration-300 hover:scale-[1.01] active:scale-[0.99]">
                 Masuk
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/>
                 </svg>
             </button>
+            </div>
         </form>
 
         @if (filled(config('services.google.client_id')))
-            <div class="mt-4">
+            <div class="auth-field-animate mt-4" style="--auth-delay: 0.34s">
                 @include('partials.auth.divider')
                 <a href="{{ route('auth.google') }}" class="btn-google mt-4">
                     <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
@@ -81,5 +88,6 @@
                 </a>
             </div>
         @endif
+        </div>
     </div>
 </div>

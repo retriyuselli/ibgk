@@ -78,12 +78,20 @@ class PartnershipPageController extends Controller
             ->with('category')
             ->get();
 
+        $mainSponsor = $partners->firstWhere('is_main_sponsor', true)
+            ?? $partners->firstWhere('tier', Partner::TIER_PLATINUM);
+
+        $carouselPartners = $mainSponsor
+            ? $partners->reject(fn (Partner $partner): bool => $partner->is($mainSponsor))
+            : $partners;
+
         $partnerCount = max($partners->count(), 20);
 
         return view('pages.partnership', [
             'profile' => $profile,
             'partners' => $partners,
-            'partnerPages' => $partners->chunk(12),
+            'mainSponsor' => $mainSponsor,
+            'partnerPages' => $carouselPartners->chunk(12),
             'partnershipTypes' => self::PARTNERSHIP_TYPES,
             'ctaFeatures' => self::CTA_FEATURES,
             'stats' => [
@@ -114,5 +122,15 @@ class PartnershipPageController extends Controller
         return redirect()
             ->route('partnership')
             ->with('partnership_success', 'Terima kasih! Pengajuan kerja sama Anda telah kami terima dan akan segera ditindaklanjuti.');
+    }
+
+    public function show(Partner $partner): View
+    {
+        abort_unless($partner->is_active && $partner->has_showcase_page, 404);
+
+        return view('pages.partner-showcase', [
+            'profile' => OrganizationProfile::query()->first(),
+            'partner' => $partner->load('category'),
+        ]);
     }
 }

@@ -7,6 +7,7 @@
 @section('content')
     @include('partials.partnership.hero')
     @include('partials.partnership.highlights')
+    @include('partials.partnership.main-sponsor')
     @include('partials.partnership.partners')
     @include('partials.partnership.types')
     @include('partials.partnership.cta')

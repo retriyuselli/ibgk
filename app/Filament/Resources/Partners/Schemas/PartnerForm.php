@@ -106,6 +106,88 @@ class PartnerForm
                         ->default(true)
                         ->inline(false),
                 ]),
+
+            Section::make('Halaman Showcase Sponsor')
+                ->description('Template halaman khusus mitra perbankan — isi nama bank, logo, dan website di admin.')
+                ->columns(2)
+                ->schema([
+                    Select::make('tier')
+                        ->label('Tier Kemitraan')
+                        ->options([
+                            Partner::TIER_PLATINUM => 'Platinum Main Partner',
+                            Partner::TIER_GOLD => 'Gold Partner',
+                            Partner::TIER_SILVER => 'Silver Partner',
+                            Partner::TIER_BRONZE => 'Bronze Partner',
+                        ])
+                        ->nullable(),
+                    TextInput::make('showcase_year')
+                        ->label('Tahun Kolaborasi')
+                        ->numeric()
+                        ->minValue(2000)
+                        ->maxValue(now()->year + 5)
+                        ->nullable(),
+                    Toggle::make('is_main_sponsor')
+                        ->label('Sponsor Utama')
+                        ->default(false)
+                        ->inline(false),
+                    Toggle::make('has_showcase_page')
+                        ->label('Punya Halaman Showcase')
+                        ->default(false)
+                        ->inline(false),
+                    TextInput::make('tagline')
+                        ->label('Tagline')
+                        ->maxLength(255)
+                        ->nullable()
+                        ->columnSpanFull(),
+                    Textarea::make('showcase_intro')
+                        ->label('Ringkasan Kolaborasi')
+                        ->rows(4)
+                        ->columnSpanFull(),
+                    TextInput::make('showcase_official_title')
+                        ->label('Judul Official Partner')
+                        ->maxLength(255)
+                        ->columnSpanFull(),
+                    Textarea::make('showcase_official_subtext')
+                        ->label('Subteks Official Partner')
+                        ->rows(2)
+                        ->columnSpanFull(),
+                    Textarea::make('showcase_program_quote')
+                        ->label('Kutipan Program Kolaborasi')
+                        ->rows(2)
+                        ->columnSpanFull(),
+                    TextInput::make('showcase_partner_tagline')
+                        ->label('Tagline Mitra')
+                        ->placeholder('Sahabat Finansial, Sahabat Sosial, Sahabat Spiritual')
+                        ->maxLength(255)
+                        ->columnSpanFull(),
+                    Textarea::make('showcase_footer_quote')
+                        ->label('Kutipan Penutup')
+                        ->rows(3)
+                        ->columnSpanFull(),
+                    TextInput::make('showcase_social_handle')
+                        ->label('Handle Media Sosial')
+                        ->placeholder('@banksyariahindonesia')
+                        ->maxLength(255),
+                    Textarea::make('showcase_privacy_note')
+                        ->label('Catatan Privasi Data')
+                        ->rows(3)
+                        ->columnSpanFull(),
+                    FileUpload::make('hero_image')
+                        ->label('Gambar Hero Showcase')
+                        ->image()
+                        ->directory('partners/hero')
+                        ->disk('public')
+                        ->visibility('public')
+                        ->imageEditor()
+                        ->maxSize(5120)
+                        ->columnSpanFull(),
+                    TextInput::make('external_cta_label')
+                        ->label('Label Tombol Website')
+                        ->default('Kunjungi Bank')
+                        ->maxLength(255)
+                        ->columnSpanFull(),
+                ])
+                ->collapsed(),
         ]);
     }
 }

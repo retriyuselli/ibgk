@@ -1,14 +1,20 @@
 <aside class="space-y-5">
     <div class="border border-navy/8 bg-white p-5 shadow-sm">
-        <h3 class="font-display text-xl font-semibold text-navy">Angkatan</h3>
+        <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display text-xl font-semibold text-navy">Angkatan</h3>
+            <p class="text-[11px] font-medium tracking-wide text-muted">
+                {{ $sidebarPage }} / {{ $sidebarPages }}
+            </p>
+        </div>
         <div class="mt-2 h-px w-12 bg-gold"></div>
 
         <nav class="mt-5 space-y-2" aria-label="Daftar angkatan">
-            @foreach ($batches as $batch)
+            @foreach ($sidebarBatches as $batch)
                 @php
                     $isActive = $selectedBatch?->id === $batch->id;
                     $url = route('alumni', array_filter([
                         'angkatan' => $batch->slug,
+                        'halaman' => $sidebarPage,
                         'q' => $search ?: null,
                         'gender' => $gender ?: null,
                     ]));
@@ -33,6 +39,42 @@
                 </a>
             @endforeach
         </nav>
+
+        <div class="mt-4 flex items-center justify-between gap-2">
+            @if ($sidebarPage > 1)
+                <a
+                    href="{{ route('alumni', array_filter([
+                        'angkatan' => $prevPageBatch?->slug,
+                        'halaman' => $sidebarPage - 1,
+                        'q' => $search ?: null,
+                        'gender' => $gender ?: null,
+                    ])) }}"
+                    class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-gold hover:text-gold"
+                    aria-label="Angkatan sebelumnya"
+                >
+                    ←
+                </a>
+            @else
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-navy/8 text-navy/25" aria-hidden="true">←</span>
+            @endif
+
+            @if ($sidebarPage < $sidebarPages)
+                <a
+                    href="{{ route('alumni', array_filter([
+                        'angkatan' => $nextPageBatch?->slug,
+                        'halaman' => $sidebarPage + 1,
+                        'q' => $search ?: null,
+                        'gender' => $gender ?: null,
+                    ])) }}"
+                    class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-gold hover:text-gold"
+                    aria-label="Angkatan berikutnya"
+                >
+                    →
+                </a>
+            @else
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-navy/8 text-navy/25" aria-hidden="true">→</span>
+            @endif
+        </div>
     </div>
 
     <div class="rounded-md bg-navy px-5 py-5 text-white">

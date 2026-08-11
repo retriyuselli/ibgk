@@ -18,6 +18,8 @@
     --color-cream-muted: #efeae1;
     --color-ink: #1a2332;
     --color-muted: #5c6675;
+    --color-banking: #006764;
+    --color-banking-dark: #00524f;
 }
 
 @layer base {
@@ -124,8 +126,82 @@
         @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-md;
     }
 
+    .development-gate-backdrop {
+        animation: gate-backdrop-in 0.65s ease-out both;
+    }
+
     .development-gate-panel {
-        animation: auth-card-rise 0.95s ease-out both;
+        animation: auth-card-rise 0.95s ease-out 0.12s both;
+    }
+
+    .development-gate-icon {
+        animation: gate-icon-pulse 3s ease-in-out infinite;
+    }
+
+    .development-gate-backdrop .shape-pos-tl {
+        top: 10%;
+        left: 5%;
+    }
+
+    .development-gate-backdrop .shape-pos-diamond {
+        top: 16%;
+        right: 8%;
+    }
+
+    .development-gate-backdrop .shape-pos-dot-a {
+        bottom: 14%;
+        left: 10%;
+    }
+
+    .development-gate-backdrop .auth-shape-ring-tr {
+        top: 22%;
+        right: 12%;
+        width: 10rem;
+        height: 10rem;
+    }
+
+    .development-gate-backdrop .auth-shape-orb {
+        bottom: 10%;
+        right: 15%;
+        width: 16rem;
+        height: 16rem;
+    }
+
+    .development-gate-backdrop .auth-shape-shimmer {
+        top: 38%;
+        left: 12%;
+        width: 6rem;
+    }
+
+    .development-gate-backdrop .auth-shape-dot-b {
+        top: 32%;
+        right: 32%;
+    }
+
+    .development-gate-panel .section-shapes {
+        opacity: 0.7;
+    }
+
+    .development-gate-panel .shape-pos-tl {
+        top: 4%;
+        left: -4%;
+    }
+
+    .development-gate-panel .shape-pos-diamond {
+        top: auto;
+        bottom: 10%;
+        right: 4%;
+    }
+
+    .development-gate-panel .shape-pos-dot-a {
+        top: 42%;
+        right: 10%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .development-gate .auth-field-animate {
+        animation-delay: calc(0.28s + var(--auth-delay, 0s));
     }
 
     .hero-animate {
@@ -585,6 +661,275 @@
         background-color: color-mix(in oklab, var(--color-navy) 92%, transparent);
         box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-gold) 20%, transparent);
     }
+
+    .showcase-hero-photo__crop {
+        background-size: 380%;
+        background-position: 63% 20%;
+    }
+
+    @media (min-width: 640px) {
+        .showcase-hero-photo__crop {
+            background-size: 340%;
+            background-position: 61% 18%;
+        }
+    }
+
+    .showcase-program-card {
+        min-height: 11.5rem;
+    }
+
+    .showcase-official-banner {
+        box-shadow: 0 10px 30px color-mix(in oklab, #0a5c58 18%, transparent);
+    }
+
+    .showcase-official-card {
+        box-shadow: 0 12px 32px color-mix(in oklab, var(--color-banking) 22%, transparent);
+    }
+
+    .showcase-hero-visual__frame {
+        min-height: 22rem;
+        border-radius: 0.25rem;
+        background: linear-gradient(180deg, color-mix(in oklab, var(--color-banking) 6%, white) 0%, white 100%);
+    }
+
+    .showcase-hero-visual__photo {
+        min-height: 22rem;
+        max-height: 28rem;
+    }
+
+    @media (min-width: 640px) {
+        .showcase-hero-visual__frame,
+        .showcase-hero-visual__photo {
+            min-height: 26rem;
+        }
+    }
+
+    .showcase-byond-logo {
+        min-width: 7.5rem;
+    }
+
+    .showcase-shapes {
+        @apply pointer-events-none absolute inset-0 z-[1] overflow-hidden;
+    }
+
+    .partner-showcase .section-shapes--light .shape-ring-sm {
+        border-color: color-mix(in oklab, var(--color-banking) 28%, transparent);
+    }
+
+    .partner-showcase .section-shapes--light .shape-diamond {
+        background: color-mix(in oklab, var(--color-banking) 10%, transparent);
+        border-color: color-mix(in oklab, var(--color-banking) 24%, transparent);
+    }
+
+    .partner-showcase .section-shapes--light .shape-dot,
+    .partner-showcase .section-shapes--light .auth-shape-dot-b {
+        background: color-mix(in oklab, var(--color-gold) 50%, transparent);
+    }
+
+    .partner-showcase .section-shapes--light.auth-shapes--rich .auth-shape-ring-tr {
+        border-color: color-mix(in oklab, var(--color-banking) 22%, transparent);
+    }
+
+    .partner-showcase .section-shapes--light.auth-shapes--rich .auth-shape-orb {
+        background: radial-gradient(circle, color-mix(in oklab, var(--color-banking) 12%, transparent) 0%, transparent 72%);
+    }
+
+    .showcase-shapes--hero .shape-pos-tl {
+        top: 6%;
+        right: 4%;
+        left: auto;
+    }
+
+    .showcase-shapes--hero .shape-pos-diamond {
+        top: auto;
+        bottom: 18%;
+        left: 2%;
+    }
+
+    .showcase-shapes--hero .shape-pos-dot-a {
+        top: 42%;
+        right: 18%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--hero .auth-shape-ring-tr {
+        top: 14%;
+        left: 8%;
+        right: auto;
+    }
+
+    .showcase-shapes--hero .auth-shape-orb {
+        bottom: 8%;
+        right: 10%;
+    }
+
+    .showcase-shapes--strategic .shape-pos-tl {
+        top: 10%;
+        left: 4%;
+    }
+
+    .showcase-shapes--strategic .shape-pos-diamond {
+        top: auto;
+        bottom: 12%;
+        right: 6%;
+        left: auto;
+    }
+
+    .showcase-shapes--strategic .shape-pos-dot-a {
+        top: 22%;
+        right: 12%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--programs .shape-pos-tl {
+        top: 8%;
+        right: 3%;
+        left: auto;
+    }
+
+    .showcase-shapes--programs .shape-pos-diamond {
+        bottom: 10%;
+        left: 3%;
+        top: auto;
+    }
+
+    .showcase-shapes--programs .shape-pos-dot-a {
+        top: 35%;
+        left: 45%;
+        right: auto;
+        bottom: auto;
+    }
+
+    .showcase-shapes--programs .auth-shape-ring-tr {
+        top: 12%;
+        left: 6%;
+        right: auto;
+    }
+
+    .showcase-shapes--programs .auth-shape-orb {
+        bottom: 6%;
+        right: 8%;
+    }
+
+    .showcase-shapes--quote .shape-pos-tl {
+        top: 20%;
+        left: 8%;
+    }
+
+    .showcase-shapes--quote .shape-pos-diamond {
+        top: auto;
+        bottom: 10%;
+        right: 10%;
+        left: auto;
+    }
+
+    .showcase-shapes--contact .shape-pos-tl {
+        top: 12%;
+        right: 5%;
+        left: auto;
+    }
+
+    .showcase-shapes--contact .shape-pos-diamond {
+        bottom: 14%;
+        left: 4%;
+        top: auto;
+    }
+
+    .showcase-partner-card {
+        min-height: 14rem;
+    }
+
+    .showcase-partner-card .showcase-shapes {
+        @apply absolute inset-0;
+    }
+
+    .showcase-shapes--contact-card .shape-pos-tl {
+        top: 8%;
+        left: 6%;
+        right: auto;
+    }
+
+    .showcase-shapes--contact-card .shape-pos-diamond {
+        top: auto;
+        bottom: 10%;
+        right: 8%;
+        left: auto;
+    }
+
+    .showcase-shapes--contact-card .shape-pos-dot-a {
+        top: 45%;
+        left: 12%;
+        right: auto;
+        bottom: auto;
+    }
+
+    .showcase-shapes--contact-card .auth-shape-ring-tr {
+        top: 12%;
+        right: 10%;
+        left: auto;
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .showcase-shapes--contact-card .auth-shape-orb {
+        bottom: 12%;
+        left: 10%;
+        right: auto;
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .showcase-shapes--contact-card .auth-shape-shimmer {
+        top: 55%;
+        right: 15%;
+        left: auto;
+        width: 4rem;
+    }
+
+    .showcase-shapes--contact-card .auth-shape-dot-b {
+        top: 22%;
+        right: 28%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--contact-card .shape-ring-sm {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .showcase-shapes--footer .shape-pos-tl {
+        top: 18%;
+        left: 5%;
+    }
+
+    .showcase-shapes--footer .shape-pos-diamond {
+        top: auto;
+        bottom: 20%;
+        right: 8%;
+        left: auto;
+    }
+
+    .showcase-shapes--footer .shape-pos-dot-a {
+        top: 40%;
+        right: 22%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--footer .auth-shape-ring-tr {
+        top: 10%;
+        right: 6%;
+        left: auto;
+    }
+
+    .showcase-shapes--footer .auth-shape-orb {
+        bottom: 10%;
+        left: 12%;
+        right: auto;
+    }
 }
 
 @keyframes hero-rise {
@@ -606,6 +951,27 @@
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes gate-backdrop-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes gate-icon-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-gold) 0%, transparent);
+    }
+    50% {
+        transform: scale(1.04);
+        box-shadow: 0 0 0 8px color-mix(in oklab, var(--color-gold) 8%, transparent);
     }
 }
 
@@ -711,6 +1077,9 @@
     .hero-animate-delay-3,
     .auth-form-card,
     .auth-field-animate,
+    .development-gate-backdrop,
+    .development-gate-panel,
+    .development-gate-icon,
     .history-animate,
     .history-line,
     .journey-animate,
@@ -718,6 +1087,32 @@
     .stages-animate,
     .stages-connector,
     .participants-animate {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .partner-showcase .section-shapes .shape-ring-sm,
+    .partner-showcase .section-shapes .shape-diamond,
+    .partner-showcase .section-shapes .shape-dot,
+    .partner-showcase .section-shapes .shape-ring-lg,
+    .partner-showcase .section-shapes .auth-shape-ring-tr,
+    .partner-showcase .section-shapes .auth-shape-orb,
+    .partner-showcase .section-shapes .auth-shape-shimmer,
+    .partner-showcase .section-shapes .auth-shape-dot-b {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .showcase-partner-card .section-shapes .shape-ring-sm,
+    .showcase-partner-card .section-shapes .shape-diamond,
+    .showcase-partner-card .section-shapes .shape-dot,
+    .showcase-partner-card .section-shapes .shape-ring-lg,
+    .showcase-partner-card .section-shapes .auth-shape-ring-tr,
+    .showcase-partner-card .section-shapes .auth-shape-orb,
+    .showcase-partner-card .section-shapes .auth-shape-shimmer,
+    .showcase-partner-card .section-shapes .auth-shape-dot-b {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;

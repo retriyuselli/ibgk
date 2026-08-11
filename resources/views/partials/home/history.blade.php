@@ -1,11 +1,17 @@
 @php
+    use App\Models\AlumniBatch;
+
     $milestones = [
         ['year' => '1999', 'title' => 'Pendirian', 'text' => 'IBGK Sumsel lahir sebagai wadah kebanggaan generasi muda kampus.'],
         ['year' => '2002', 'title' => 'Pemilihan Pertama', 'text' => 'Pemilihan Bujang Gadis Kampus Sumsel digelar untuk pertama kali.'],
         ['year' => '2003–2004', 'title' => 'Kolaborasi', 'text' => 'Memperkuat jejaring dan kolaborasi lintas instansi.'],
         ['year' => '2005', 'title' => 'Pembinaan', 'text' => 'Pembinaan dan pengawasan program semakin terstruktur.'],
-        ['year' => '2006–2011', 'title' => 'Penguatan', 'text' => 'Penguatan organisasi, budaya, dan kontribusi sosial.'],
-        ['year' => '2011', 'title' => '282 Anggota', 'text' => 'Jejaring alumni dan finalis terus tumbuh hingga ratusan anggota.'],
+        ['year' => '2006–'.(AlumniBatch::FIRST_ELECTION_YEAR + 9), 'title' => 'Penguatan', 'text' => 'Penguatan organisasi, budaya, dan kontribusi sosial.'],
+        [
+            'year' => AlumniBatch::FIRST_ELECTION_YEAR.'–sekarang',
+            'title' => number_format(AlumniBatch::totalPublicMembersUpToCurrentYear()).' Finalis',
+            'text' => 'Setiap tahun pemilihan BGK Sumsel melahirkan '.AlumniBatch::MEMBERS_PER_YEAR.' finalis, hingga total '.number_format(AlumniBatch::totalPublicMembersUpToCurrentYear()).' anggota.',
+        ],
     ];
 @endphp
 

@@ -1,10 +1,13 @@
 @php
+    use App\Models\AlumniBatch;
+
     $hero = $cmsPages->hero('alumni', [
         'title' => 'Alumni IBGK Sumatera Selatan',
         'excerpt' => 'Keluarga besar IBGK Sumsel terdiri dari finalis Pemilihan Bujang Gadis Kampus dari berbagai perguruan tinggi di Sumatera Selatan yang terus berkarya dan berkontribusi.',
         'image' => 'images/home/about-4.jpg',
         'imageAlt' => 'Keluarga besar alumni IBGK Sumatera Selatan',
     ]);
+    $alumniSinceYear = AlumniBatch::FIRST_ELECTION_YEAR;
 @endphp
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
@@ -37,7 +40,7 @@
                 <div>
                     <p class="font-display text-2xl font-semibold text-gold">{{ number_format($totalAlumni) }}</p>
                     <p class="text-xs font-semibold tracking-[0.12em] text-white uppercase">Finalis</p>
-                    <p class="mt-1 text-[11px] leading-relaxed text-white/60">Tercatat sebagai anggota IBGK Sumsel 2002–2011</p>
+                    <p class="mt-1 text-[11px] leading-relaxed text-white/60">Tercatat sebagai anggota IBGK Sumsel {{ $alumniSinceYear }}–sekarang</p>
                 </div>
             </div>
             <div class="flex items-start gap-3 border border-gold/25 bg-navy-deep/50 px-4 py-4 backdrop-blur-sm">
@@ -47,7 +50,7 @@
                 <div>
                     <p class="font-display text-2xl font-semibold text-gold">{{ $batchCount }}</p>
                     <p class="text-xs font-semibold tracking-[0.12em] text-white uppercase">Angkatan</p>
-                    <p class="mt-1 text-[11px] leading-relaxed text-white/60">Periode Pemilihan BGK Sumsel 2002–2011</p>
+                    <p class="mt-1 text-[11px] leading-relaxed text-white/60">Periode Pemilihan BGK Sumsel {{ $alumniSinceYear }}–sekarang</p>
                 </div>
             </div>
             <div class="flex items-start gap-3 border border-gold/25 bg-navy-deep/50 px-4 py-4 backdrop-blur-sm">

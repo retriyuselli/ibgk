@@ -1,6 +1,8 @@
 <section class="relative border-b border-navy/5 bg-white overflow-hidden">
     <div class="site-container grid grid-cols-2 divide-x divide-navy/10 lg:grid-cols-4">
         @php
+            use App\Models\AlumniBatch;
+
             $stats = [
                 [
                     'value' => $profile?->founded_at?->format('Y') ?? '1999',
@@ -8,7 +10,7 @@
                     'icon' => 'clock',
                 ],
                 [
-                    'value' => '2002',
+                    'value' => (string) AlumniBatch::FIRST_ELECTION_YEAR,
                     'label' => 'Pemilihan Pertama',
                     'icon' => 'users',
                 ],

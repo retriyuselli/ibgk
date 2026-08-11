@@ -11,6 +11,9 @@
 - Email: `admin@ibgk.test`
 - Password: `password`
 
+cd /home/u380354370/domains/bgk-sumsel.com/public_html && \
+/opt/alt/php84/usr/bin/php artisan db:seed --class=RoleSeeder --force && \
+/opt/alt/php84/usr/bin/php artisan permission:cache-reset
 ---
 
 ## Sebelum push (di Mac / lokal)
