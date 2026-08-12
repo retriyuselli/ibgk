@@ -60,7 +60,7 @@
     "src": "_poppins-700-normal-Qrb0O0WB.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BHsEDxEn.css",
+    "file": "assets/app-DDARs5Cs.css",
     "name": "app",
     "names": [
       "app.css"
@@ -69,7 +69,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DpXuYpa0.js",
+    "file": "assets/app-CnrNzfy3.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

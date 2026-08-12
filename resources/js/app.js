@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.querySelectorAll('.history-section, .journey-section, .stages-section, .participants-section').forEach((section) => {
+    document.querySelectorAll('.history-section, .journey-section, .stages-section, .participants-section, .footer-section').forEach((section) => {
         if (section.classList.contains('is-visible')) {
             return;
         }

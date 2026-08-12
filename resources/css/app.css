@@ -410,6 +410,171 @@
         left: auto;
     }
 
+    .alumni-show-section .shape-pos-tl {
+        top: 8%;
+        left: 2%;
+    }
+
+    .alumni-show-section .shape-pos-diamond {
+        top: 14%;
+        right: 5%;
+        bottom: auto;
+    }
+
+    .alumni-show-section .shape-pos-dot-a {
+        bottom: 18%;
+        left: 8%;
+        top: auto;
+        right: auto;
+    }
+
+    .alumni-show-section .section-shapes--light .shape-ring-sm {
+        width: 5.5rem;
+        height: 5.5rem;
+        border-width: 2px;
+        border-color: color-mix(in oklab, var(--color-navy) 24%, transparent);
+    }
+
+    .alumni-show-section .section-shapes--light .shape-diamond {
+        width: 2.75rem;
+        height: 2.75rem;
+        background: color-mix(in oklab, var(--color-gold) 30%, transparent);
+        border-color: color-mix(in oklab, var(--color-gold) 55%, transparent);
+    }
+
+    .alumni-show-section .section-shapes--light .shape-dot,
+    .alumni-show-section .section-shapes--light .auth-shape-dot-b {
+        width: 0.55rem;
+        height: 0.55rem;
+        background: color-mix(in oklab, var(--color-gold) 70%, transparent);
+    }
+
+    .alumni-show-section .section-shapes--light.auth-shapes--rich .auth-shape-ring-tr {
+        width: 11rem;
+        height: 11rem;
+        border-color: color-mix(in oklab, var(--color-navy) 20%, transparent);
+    }
+
+    .alumni-show-section .section-shapes--light.auth-shapes--rich .auth-shape-orb {
+        width: 18rem;
+        height: 18rem;
+        background: radial-gradient(
+            circle,
+            color-mix(in oklab, var(--color-navy) 12%, transparent) 0%,
+            color-mix(in oklab, var(--color-gold) 8%, transparent) 42%,
+            transparent 72%
+        );
+    }
+
+    .alumni-show-section .section-shapes--light.auth-shapes--rich .auth-shape-shimmer {
+        width: 7rem;
+        opacity: 0.85;
+    }
+
+    .showcase-shapes--alumni-show .shape-pos-tl {
+        top: 6%;
+        left: 3%;
+    }
+
+    .showcase-shapes--alumni-show .shape-pos-diamond {
+        top: 12%;
+        right: 4%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--alumni-show .shape-pos-dot-a {
+        bottom: 12%;
+        left: 6%;
+        top: auto;
+        right: auto;
+    }
+
+    .showcase-shapes--alumni-show .auth-shape-ring-tr {
+        top: 16%;
+        right: 6%;
+        left: auto;
+        width: 12rem;
+        height: 12rem;
+    }
+
+    .showcase-shapes--alumni-show .auth-shape-orb {
+        bottom: 8%;
+        right: 4%;
+        left: auto;
+        width: 20rem;
+        height: 20rem;
+    }
+
+    .showcase-shapes--alumni-show .auth-shape-shimmer {
+        top: 48%;
+        left: 10%;
+        width: 8rem;
+    }
+
+    .showcase-shapes--alumni-show .auth-shape-dot-b {
+        top: 32%;
+        right: 22%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .alumni-show-photo .showcase-shapes {
+        @apply absolute inset-0;
+    }
+
+    .showcase-shapes--alumni-photo .shape-pos-tl {
+        top: 6%;
+        left: 5%;
+    }
+
+    .showcase-shapes--alumni-photo .shape-pos-diamond {
+        top: auto;
+        bottom: 8%;
+        right: 6%;
+        left: auto;
+    }
+
+    .showcase-shapes--alumni-photo .shape-pos-dot-a {
+        top: 38%;
+        right: 10%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--alumni-photo .auth-shape-ring-tr {
+        top: 10%;
+        right: 8%;
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+
+    .showcase-shapes--alumni-photo .auth-shape-orb {
+        bottom: 10%;
+        left: 8%;
+        right: auto;
+        width: 6.5rem;
+        height: 6.5rem;
+    }
+
+    .showcase-shapes--alumni-photo .auth-shape-shimmer {
+        top: 58%;
+        left: 12%;
+        width: 3.5rem;
+    }
+
+    .showcase-shapes--alumni-photo .auth-shape-dot-b {
+        top: 20%;
+        right: 24%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--alumni-photo .shape-ring-sm {
+        width: 2.75rem;
+        height: 2.75rem;
+    }
+
     .history-animate {
         opacity: 0;
         transform: translateY(20px);
@@ -930,6 +1095,69 @@
         left: 12%;
         right: auto;
     }
+
+    .site-footer .showcase-shapes {
+        @apply absolute inset-0;
+    }
+
+    .showcase-shapes--site-footer .shape-pos-tl {
+        top: 14%;
+        left: 4%;
+    }
+
+    .showcase-shapes--site-footer .shape-pos-diamond {
+        top: auto;
+        bottom: 22%;
+        right: 6%;
+        left: auto;
+    }
+
+    .showcase-shapes--site-footer .shape-pos-dot-a {
+        top: 36%;
+        right: 18%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--site-footer .auth-shape-ring-tr {
+        top: 8%;
+        right: 5%;
+        left: auto;
+        width: 10rem;
+        height: 10rem;
+    }
+
+    .showcase-shapes--site-footer .auth-shape-orb {
+        bottom: 8%;
+        left: 8%;
+        right: auto;
+        width: 15rem;
+        height: 15rem;
+    }
+
+    .showcase-shapes--site-footer .auth-shape-shimmer {
+        top: 52%;
+        left: 10%;
+        width: 6rem;
+        opacity: 0.75;
+    }
+
+    .showcase-shapes--site-footer .auth-shape-dot-b {
+        top: 24%;
+        right: 30%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .footer-animate {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    .footer-section.is-visible .footer-animate {
+        animation: hero-rise 0.75s ease-out both;
+        animation-delay: var(--footer-delay, 0s);
+    }
 }
 
 @keyframes hero-rise {
@@ -1086,7 +1314,8 @@
     .journey-line,
     .stages-animate,
     .stages-connector,
-    .participants-animate {
+    .participants-animate,
+    .footer-animate {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
@@ -1124,7 +1353,8 @@
     .journey-section.is-visible .journey-line,
     .stages-section.is-visible .stages-animate,
     .stages-section.is-visible .stages-connector,
-    .participants-section.is-visible .participants-animate {
+    .participants-section.is-visible .participants-animate,
+    .footer-section.is-visible .footer-animate {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
