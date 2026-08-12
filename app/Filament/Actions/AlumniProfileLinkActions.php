@@ -11,6 +11,24 @@ use Illuminate\Database\Eloquent\Collection;
 
 class AlumniProfileLinkActions
 {
+    public static function copyPublicRegistrationLink(): Action
+    {
+        return Action::make('copyPublicRegistrationLink')
+            ->label('Salin Link Formulir Umum')
+            ->icon(Heroicon::OutlinedGlobeAlt)
+            ->color('info')
+            ->action(function (): void {
+                $url = route('alumni.register');
+
+                Notification::make()
+                    ->title('Link formulir alumni umum')
+                    ->body($url)
+                    ->success()
+                    ->persistent()
+                    ->send();
+            });
+    }
+
     public static function copyLink(): Action
     {
         return Action::make('copyProfileLink')

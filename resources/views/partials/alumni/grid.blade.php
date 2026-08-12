@@ -9,7 +9,7 @@
     </div>
 
     @if ($alumni->isNotEmpty())
-        <div id="alumni-grid" class="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        <div id="alumni-grid" class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3 2xl:grid-cols-4">
             @include('partials.alumni.card-items')
         </div>
 

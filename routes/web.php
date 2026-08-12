@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActivityPageController;
 use App\Http\Controllers\AlumniPageController;
 use App\Http\Controllers\AlumniProfileFormController;
+use App\Http\Controllers\AlumniSelfRegistrationController;
 use App\Http\Controllers\AuthLoginController;
 use App\Http\Controllers\AuthRegisterController;
 use App\Http\Controllers\ElectionPageController;
@@ -43,6 +44,8 @@ Route::post('/daftar-bgk', [ElectionRegistrationController::class, 'submit'])->m
 Route::redirect('/admin/login', '/masuk');
 Route::get('/alumni/isi-profil/{token}', [AlumniProfileFormController::class, 'show'])->name('alumni.profile.form');
 Route::post('/alumni/isi-profil/{token}', [AlumniProfileFormController::class, 'submit'])->middleware('throttle:10,1')->name('alumni.profile.form.submit');
+Route::get('/alumni/daftar-profil', [AlumniSelfRegistrationController::class, 'create'])->name('alumni.register');
+Route::post('/alumni/daftar-profil', [AlumniSelfRegistrationController::class, 'store'])->middleware('throttle:5,1')->name('alumni.register.store');
 Route::get('/alumni', AlumniPageController::class)->name('alumni');
 Route::get('/alumni/{alumni:slug}', [AlumniPageController::class, 'show'])->name('alumni.show');
 Route::get('/kegiatan', ActivityPageController::class)->name('activities');
