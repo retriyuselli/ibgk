@@ -64,7 +64,7 @@ class AlumniPageController extends Controller
                         ->orWhere('city', 'like', "%{$search}%");
                 });
             })
-            ->when(in_array($gender, ['male', 'female'], true), fn ($query) => $query->where('gender', $gender))
+            ->when(in_array($gender, ['male', 'female', 'bujang', 'gadis'], true), fn ($query) => $query->genderCategory($gender))
             ->orderBy('name');
 
         $alumni = $alumniQuery->paginate(12)->withQueryString();

@@ -36,8 +36,8 @@
                         onchange="this.form.submit()"
                     >
                         <option value="">Filter</option>
-                        <option value="male" @selected($gender === 'male')>Bujang</option>
-                        <option value="female" @selected($gender === 'female')>Gadis</option>
+                        <option value="bujang" @selected(in_array($gender, ['bujang', 'male'], true))>Bujang</option>
+                        <option value="gadis" @selected(in_array($gender, ['gadis', 'female'], true))>Gadis</option>
                     </select>
                 </label>
 

@@ -8,6 +8,8 @@ use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Js;
+use Livewire\Component;
 
 class AlumniProfileLinkActions
 {
@@ -17,15 +19,9 @@ class AlumniProfileLinkActions
             ->label('Salin Link Formulir Umum')
             ->icon(Heroicon::OutlinedGlobeAlt)
             ->color('info')
-            ->action(function (): void {
-                $url = route('alumni.register');
-
-                Notification::make()
-                    ->title('Link formulir alumni umum')
-                    ->body($url)
-                    ->success()
-                    ->persistent()
-                    ->send();
+            ->action(function (Component $livewire): void {
+                self::copyUrlToClipboard($livewire, route('alumni.register'));
+                self::notifyCopied('Link formulir umum disalin');
             });
     }
 
@@ -35,15 +31,11 @@ class AlumniProfileLinkActions
             ->label('Salin Link Formulir')
             ->icon(Heroicon::OutlinedLink)
             ->color('gray')
-            ->action(function (Alumni $record, AlumniProfileInviteService $service): void {
+            ->action(function (Alumni $record, AlumniProfileInviteService $service, Component $livewire): void {
                 $url = $service->ensureInvite($record);
 
-                Notification::make()
-                    ->title('Link formulir alumni')
-                    ->body($url)
-                    ->success()
-                    ->persistent()
-                    ->send();
+                self::copyUrlToClipboard($livewire, $url);
+                self::notifyCopied('Link formulir alumni disalin');
             });
     }
 
@@ -56,15 +48,11 @@ class AlumniProfileLinkActions
             ->requiresConfirmation()
             ->modalHeading('Buat ulang link formulir?')
             ->modalDescription('Link lama tidak akan bisa dipakai lagi. Alumni perlu menggunakan link baru.')
-            ->action(function (Alumni $record, AlumniProfileInviteService $service): void {
+            ->action(function (Alumni $record, AlumniProfileInviteService $service, Component $livewire): void {
                 $url = $service->regenerateInvite($record);
 
-                Notification::make()
-                    ->title('Link formulir baru')
-                    ->body($url)
-                    ->success()
-                    ->persistent()
-                    ->send();
+                self::copyUrlToClipboard($livewire, $url);
+                self::notifyCopied('Link formulir baru disalin');
             });
     }
 
@@ -88,5 +76,19 @@ class AlumniProfileLinkActions
                     ->send();
             })
             ->deselectRecordsAfterCompletion();
+    }
+
+    private static function copyUrlToClipboard(Component $livewire, string $url): void
+    {
+        $livewire->js('window.navigator.clipboard.writeText('.Js::from($url).')');
+    }
+
+    private static function notifyCopied(string $title): void
+    {
+        Notification::make()
+            ->title($title)
+            ->body('Link telah disalin ke clipboard. Tempel (Ctrl+V / Cmd+V) untuk membagikannya.')
+            ->success()
+            ->send();
     }
 }

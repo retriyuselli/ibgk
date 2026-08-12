@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -85,6 +86,35 @@ class Alumni extends Model
         }
 
         return 'Belum dikirim';
+    }
+
+    public function isGadis(): bool
+    {
+        return in_array($this->gender, ['gadis', 'female'], true);
+    }
+
+    public function isBujang(): bool
+    {
+        return in_array($this->gender, ['bujang', 'male'], true);
+    }
+
+    public function genderLabel(): string
+    {
+        return $this->isGadis() ? 'Gadis Kampus' : 'Bujang Kampus';
+    }
+
+    public function genderShortLabel(): string
+    {
+        return $this->isGadis() ? 'Gadis' : 'Bujang';
+    }
+
+    public function scopeGenderCategory(Builder $query, string $category): Builder
+    {
+        return match ($category) {
+            'gadis', 'female' => $query->whereIn('gender', ['gadis', 'female']),
+            'bujang', 'male' => $query->whereIn('gender', ['bujang', 'male']),
+            default => $query,
+        };
     }
 
     public function batch(): BelongsTo

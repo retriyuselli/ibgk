@@ -50,7 +50,7 @@
                         <h1 class="section-title mt-3">{{ $alumni->name }}</h1>
 
                         <p class="mt-2 text-sm text-muted">
-                            {{ $alumni->gender === 'female' ? 'Gadis Kampus' : 'Bujang Kampus' }}
+                            {{ $alumni->genderLabel() }}
                             @if ($alumni->city)
                                 · {{ $alumni->city }}
                             @endif
