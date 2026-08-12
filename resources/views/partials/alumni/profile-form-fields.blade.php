@@ -99,7 +99,7 @@
     </p>
     <div class="grid gap-4 sm:grid-cols-2">
         <div>
-            <label for="email" class="mb-1.5 block text-sm font-medium text-navy">Email@if ($emailRequired) *@endif</label>
+            <label for="email" class="mb-1.5 block text-sm font-medium text-navy">Email{{ $emailRequired ? ' *' : '' }}</label>
             <input id="email" type="email" name="email" value="{{ old('email', $values?->email) }}" @required($emailRequired) class="w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2.5 text-sm outline-none transition focus:border-gold">
             @error('email')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
         </div>
