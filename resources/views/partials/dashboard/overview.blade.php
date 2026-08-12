@@ -71,21 +71,30 @@
 
                 @if ($alumni ?? null)
                     <div class="mt-6 rounded-sm border border-navy/8 bg-cream/40 px-4 py-4">
-                        <p class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Profil Alumni</p>
-                        <p class="mt-2 text-sm text-navy">
-                            {{ $alumni->batch?->name ?? 'Alumni IBGK' }}
-                            · {{ $alumni->genderLabel() }}
-                        </p>
-                        <p class="mt-1 text-xs text-muted">
-                            @if ($alumni->is_public)
-                                Profil publik aktif di website.
-                            @else
-                                Profil menunggu persetujuan pengurus sebelum tampil di website.
-                            @endif
-                        </p>
-                        <a href="{{ route('alumni.profile.edit') }}" class="mt-3 inline-flex text-xs font-semibold tracking-[0.1em] text-gold uppercase hover:text-navy">
-                            Perbaiki Data Alumni →
-                        </a>
+                        <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+                            @include('partials.dashboard.profile-photo', [
+                                'subject' => $alumni,
+                                'size' => 'sm',
+                                'borderClass' => 'border-navy/10 bg-white',
+                            ])
+                            <div class="min-w-0 flex-1">
+                                <p class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Profil Alumni</p>
+                                <p class="mt-2 text-sm text-navy">
+                                    {{ $alumni->batch?->name ?? 'Alumni IBGK' }}
+                                    · {{ $alumni->genderLabel() }}
+                                </p>
+                                <p class="mt-1 text-xs text-muted">
+                                    @if ($alumni->is_public)
+                                        Profil publik aktif di website.
+                                    @else
+                                        Profil menunggu persetujuan pengurus sebelum tampil di website.
+                                    @endif
+                                </p>
+                                <a href="{{ route('alumni.profile.edit') }}" class="mt-3 inline-flex text-xs font-semibold tracking-[0.1em] text-gold uppercase hover:text-navy">
+                                    Perbaiki Data Alumni →
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 @endif
             </div>
