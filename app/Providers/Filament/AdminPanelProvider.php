@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->favicon(fn (): string => route('favicon'))
+            ->favicon(fn (): string => asset('favicon.ico'))
             ->font('Poppins')
             ->colors([
                 'primary' => Color::Amber,

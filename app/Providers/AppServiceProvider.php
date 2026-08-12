@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Election;
 use App\Models\OrganizationProfile;
+use App\Observers\OrganizationProfileObserver;
 use App\Support\CmsPages;
 use BezhanSalleh\FilamentShield\Commands;
 use BezhanSalleh\FilamentShield\Facades\FilamentShield;
@@ -28,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
     {
         FilamentShield::enforcePolicies();
         $this->prohibitShieldCommandsInProduction();
+
+        OrganizationProfile::observe(OrganizationProfileObserver::class);
 
         View::composer(['partials.site.header', 'partials.site.footer', 'layouts.app'], function ($view): void {
             if (! $view->offsetExists('profile')) {
