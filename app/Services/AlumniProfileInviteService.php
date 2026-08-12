@@ -82,7 +82,8 @@ class AlumniProfileInviteService
     public function submitProfile(Alumni $alumni, array $data, ?UploadedFile $photo = null): Alumni
     {
         if ($photo) {
-            $data['photo'] = $photo->store('alumni/profiles', 'public');
+            app(StoreCompressedImage::class)->delete($alumni->photo);
+            $data['photo'] = app(StoreCompressedImage::class)->store($photo, 'alumni/profiles');
         }
 
         unset($data['terms']);

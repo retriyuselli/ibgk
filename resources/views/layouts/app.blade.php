@@ -12,6 +12,8 @@
     <meta name="description" content="@yield('meta_description', $profile?->short_description ?? 'Ikatan Bujang Gadis Kampus Sumatera Selatan')">
     <meta name="robots" content="{{ $showDevelopmentGate ? 'noindex, nofollow' : 'index, follow' }}">
 
+    @include('partials.site.favicon')
+
     {!! Vite::fonts() !!}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

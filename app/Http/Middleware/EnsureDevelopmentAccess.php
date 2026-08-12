@@ -11,6 +11,8 @@ class EnsureDevelopmentAccess
 {
     /** @var list<string> */
     private array $exemptRoutes = [
+        'favicon',
+        'favicon.apple',
         'home',
         'login',
         'login.store',

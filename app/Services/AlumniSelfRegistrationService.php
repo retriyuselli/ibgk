@@ -10,6 +10,10 @@ use Illuminate\Validation\ValidationException;
 
 class AlumniSelfRegistrationService
 {
+    public function __construct(
+        private StoreCompressedImage $photoStorage,
+    ) {}
+
     /** @return array<string, mixed> */
     public static function validationRules(): array
     {
@@ -61,7 +65,7 @@ class AlumniSelfRegistrationService
         }
 
         if ($photo) {
-            $data['photo'] = $photo->store('alumni/profiles', 'public');
+            $data['photo'] = $this->photoStorage->store($photo, 'alumni/profiles');
         }
 
         unset($data['terms'], $data['alumni_batch_id']);

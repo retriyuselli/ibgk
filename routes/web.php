@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FaviconController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActivityPageController;
 use App\Http\Controllers\AlumniPageController;
@@ -19,6 +20,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsPageController;
 use App\Http\Controllers\PartnershipPageController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/favicon.ico', [FaviconController::class, 'favicon'])->name('favicon');
+Route::get('/apple-touch-icon.png', [FaviconController::class, 'appleTouchIcon'])->name('favicon.apple');
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/tentang', AboutController::class)->name('about');

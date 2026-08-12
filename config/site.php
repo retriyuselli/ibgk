@@ -37,4 +37,17 @@ return [
 
     'alumni_self_registration_temp_password' => env('ALUMNI_SELF_REGISTRATION_TEMP_PASSWORD', '12345678'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Alumni Profile Photo Upload
+    |--------------------------------------------------------------------------
+    |
+    | Ukuran maksimum (px, sisi terpanjang) dan kualitas JPEG saat upload foto.
+    |
+    */
+
+    'alumni_profile_photo_max_dimension' => (int) env('ALUMNI_PROFILE_PHOTO_MAX_DIMENSION', 1000),
+
+    'alumni_profile_photo_quality' => (int) env('ALUMNI_PROFILE_PHOTO_QUALITY', 82),
+
 ];

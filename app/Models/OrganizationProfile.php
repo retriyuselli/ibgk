@@ -35,4 +35,13 @@ class OrganizationProfile extends Model
             'founded_at' => 'date',
         ];
     }
+
+    public function logoUrl(): ?string
+    {
+        if (blank($this->logo)) {
+            return null;
+        }
+
+        return asset('storage/'.$this->logo);
+    }
 }
