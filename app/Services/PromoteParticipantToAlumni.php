@@ -62,7 +62,7 @@ class PromoteParticipantToAlumni
         });
     }
 
-    public function uniqueSlug(string $name, ?int $year = null): string
+    public function uniqueSlug(string $name, ?int $year = null, ?int $ignoreAlumniId = null): string
     {
         $base = Str::slug($name);
 
@@ -73,7 +73,10 @@ class PromoteParticipantToAlumni
         $slug = $base;
         $counter = 2;
 
-        while (Alumni::query()->where('slug', $slug)->exists()) {
+        while (Alumni::query()
+            ->where('slug', $slug)
+            ->when($ignoreAlumniId, fn ($query) => $query->whereKeyNot($ignoreAlumniId))
+            ->exists()) {
             $slug = "{$base}-{$counter}";
             $counter++;
         }

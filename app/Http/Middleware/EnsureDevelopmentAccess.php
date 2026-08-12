@@ -15,6 +15,8 @@ class EnsureDevelopmentAccess
         'login.store',
         'auth.google',
         'auth.google.callback',
+        'alumni.profile.form',
+        'alumni.profile.form.submit',
     ];
 
     public function handle(Request $request, Closure $next): Response

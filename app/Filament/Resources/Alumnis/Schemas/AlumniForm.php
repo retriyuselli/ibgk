@@ -7,6 +7,7 @@ use App\Models\AlumniBatch;
 use App\Models\Participant;
 use App\Services\PromoteParticipantToAlumni;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -16,7 +17,6 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class AlumniForm
@@ -38,7 +38,10 @@ class AlumniForm
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->live(),
+                            ->live()
+                            ->afterStateUpdated(function (Set $set, Get $get, ?Alumni $record): void {
+                                self::syncSlug($set, $get, $record);
+                            }),
                         Select::make('participant_id')
                             ->label('Peserta PBGK')
                             ->relationship(
@@ -82,7 +85,7 @@ class AlumniForm
                             ->searchable(['full_name', 'registration_number'])
                             ->nullable()
                             ->live()
-                            ->afterStateUpdated(function (Set $set, Get $get, mixed $state): void {
+                            ->afterStateUpdated(function (Set $set, Get $get, mixed $state, ?Alumni $record): void {
                                 if (blank($state)) {
                                     return;
                                 }
@@ -105,10 +108,7 @@ class AlumniForm
                                 self::fillBlank($set, $get, 'email', $participant->email);
                                 self::fillBlank($set, $get, 'phone', $participant->phone);
 
-                                if (blank($get('slug')) && filled($get('name'))) {
-                                    $year = AlumniBatch::query()->whereKey($get('alumni_batch_id'))->value('year');
-                                    $set('slug', app(PromoteParticipantToAlumni::class)->uniqueSlug((string) $get('name'), $year));
-                                }
+                                self::syncSlug($set, $get, $record);
                             })
                             ->helperText('Opsional. Gunakan untuk alumni yang berasal dari peserta PBGK di sistem.')
                             ->rules([
@@ -143,26 +143,14 @@ class AlumniForm
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (Set $set, Get $get, ?string $state, ?string $old): void {
-                                $currentSlug = $get('slug');
-                                $year = AlumniBatch::query()->whereKey($get('alumni_batch_id'))->value('year');
-                                $newAuto = Str::slug(trim($state.' '.($year ?? '')));
-                                $oldAuto = filled($old) ? Str::slug(trim($old.' '.($year ?? ''))) : null;
-                                $shouldUpdate = blank($currentSlug)
-                                    || $currentSlug === Str::slug((string) $old)
-                                    || $currentSlug === $oldAuto;
-
-                                if ($shouldUpdate) {
-                                    $set('slug', $newAuto);
-                                }
+                            ->afterStateUpdated(function (Set $set, Get $get, ?Alumni $record): void {
+                                self::syncSlug($set, $get, $record);
                             })
+                            ->helperText('Slug URL dibuat otomatis dari nama dan tahun angkatan.')
                             ->columnSpanFull(),
-                        TextInput::make('slug')
-                            ->label('Slug')
-                            ->required()
-                            ->maxLength(255)
-                            ->unique(ignoreRecord: true)
-                            ->helperText('Disarankan menyertakan tahun angkatan, contoh: andi-saputra-2026.'),
+                        Hidden::make('slug')
+                            ->dehydrated()
+                            ->required(),
                         FileUpload::make('photo')
                             ->label('Foto')
                             ->image()
@@ -250,5 +238,38 @@ class AlumniForm
         if (blank($get($field)) && filled($value)) {
             $set($field, $value);
         }
+    }
+
+    protected static function syncSlug(Set $set, Get $get, ?Alumni $record): void
+    {
+        $name = trim((string) $get('name'));
+
+        if (blank($name)) {
+            return;
+        }
+
+        $year = AlumniBatch::query()->whereKey($get('alumni_batch_id'))->value('year');
+
+        $set(
+            'slug',
+            app(PromoteParticipantToAlumni::class)->uniqueSlug($name, $year, $record?->id),
+        );
+    }
+
+    /** @param  array<string, mixed>  $data */
+    public static function applySlugToData(array $data, ?int $ignoreAlumniId = null): array
+    {
+        if (blank($data['name'] ?? null)) {
+            return $data;
+        }
+
+        $year = AlumniBatch::query()->whereKey($data['alumni_batch_id'] ?? null)->value('year');
+        $data['slug'] = app(PromoteParticipantToAlumni::class)->uniqueSlug(
+            (string) $data['name'],
+            $year,
+            $ignoreAlumniId,
+        );
+
+        return $data;
     }
 }

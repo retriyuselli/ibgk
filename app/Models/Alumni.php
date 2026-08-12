@@ -32,6 +32,10 @@ class Alumni extends Model
         'linkedin',
         'email',
         'phone',
+        'profile_token',
+        'profile_token_expires_at',
+        'profile_invited_at',
+        'profile_submitted_at',
         'is_public',
         'is_active',
     ];
@@ -40,9 +44,47 @@ class Alumni extends Model
     {
         return [
             'graduation_year' => 'integer',
+            'profile_token_expires_at' => 'datetime',
+            'profile_invited_at' => 'datetime',
+            'profile_submitted_at' => 'datetime',
             'is_public' => 'boolean',
             'is_active' => 'boolean',
         ];
+    }
+
+    public function profileFormUrl(): string
+    {
+        return route('alumni.profile.form', $this->profile_token);
+    }
+
+    public function hasValidProfileToken(): bool
+    {
+        if (blank($this->profile_token)) {
+            return false;
+        }
+
+        if ($this->profile_token_expires_at === null) {
+            return true;
+        }
+
+        return $this->profile_token_expires_at->isFuture();
+    }
+
+    public function profileFormStatusLabel(): string
+    {
+        if ($this->profile_submitted_at) {
+            return 'Sudah diisi';
+        }
+
+        if ($this->hasValidProfileToken()) {
+            return 'Menunggu pengisian';
+        }
+
+        if (filled($this->profile_token)) {
+            return 'Link kedaluwarsa';
+        }
+
+        return 'Belum dikirim';
     }
 
     public function batch(): BelongsTo

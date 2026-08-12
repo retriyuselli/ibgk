@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Alumnis\Tables;
 
+use App\Filament\Actions\AlumniProfileLinkActions;
+use App\Models\Alumni;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -63,6 +65,17 @@ class AlumnisTable
                     ->searchable()
                     ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('profile_submitted_at')
+                    ->label('Formulir')
+                    ->badge()
+                    ->formatStateUsing(fn ($state, Alumni $record): string => $record->profileFormStatusLabel())
+                    ->color(fn ($state, Alumni $record): string => match (true) {
+                        (bool) $record->profile_submitted_at => 'success',
+                        $record->hasValidProfileToken() => 'warning',
+                        filled($record->profile_token) => 'danger',
+                        default => 'gray',
+                    })
+                    ->sortable(),
                 IconColumn::make('is_public')
                     ->label('Publik')
                     ->boolean(),
@@ -95,6 +108,7 @@ class AlumnisTable
                     ->placeholder('Semua'),
             ])
             ->recordActions([
+                AlumniProfileLinkActions::copyLink(),
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make()
@@ -104,6 +118,7 @@ class AlumnisTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    AlumniProfileLinkActions::bulkGenerateLinks(),
                     BulkAction::make('activate')
                         ->label('Aktifkan')
                         ->icon('heroicon-o-check-circle')

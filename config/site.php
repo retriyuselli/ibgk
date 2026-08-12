@@ -14,4 +14,15 @@ return [
 
     'under_development' => (bool) env('SITE_UNDER_DEVELOPMENT', true),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Alumni Profile Invite
+    |--------------------------------------------------------------------------
+    |
+    | Masa berlaku link formulir profil alumni (hari).
+    |
+    */
+
+    'alumni_profile_invite_days' => (int) env('ALUMNI_PROFILE_INVITE_DAYS', 90),
+
 ];

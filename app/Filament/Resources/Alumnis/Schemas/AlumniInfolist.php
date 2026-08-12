@@ -67,6 +67,17 @@ class AlumniInfolist
                         IconEntry::make('is_active')
                             ->label('Aktif')
                             ->boolean(),
+                        TextEntry::make('profileFormStatusLabel')
+                            ->label('Status Formulir')
+                            ->state(fn ($record) => $record->profileFormStatusLabel()),
+                        TextEntry::make('profile_submitted_at')
+                            ->label('Diisi pada')
+                            ->dateTime('d M Y H:i')
+                            ->placeholder('-'),
+                        TextEntry::make('profile_token_expires_at')
+                            ->label('Link berlaku hingga')
+                            ->dateTime('d M Y H:i')
+                            ->placeholder('-'),
                     ]),
 
                 Section::make('Riwayat Jabatan IBGK')
