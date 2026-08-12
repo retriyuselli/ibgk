@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Alumni;
 use App\Models\AlumniBatch;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\ValidationException;
 
@@ -26,11 +27,26 @@ class AlumniSelfRegistrationService
             'bio' => ['nullable', 'string', 'max:2000'],
             'instagram' => ['nullable', 'string', 'max:255'],
             'linkedin' => ['nullable', 'url', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:30'],
             'photo' => ['nullable', 'image', 'max:5120'],
             'terms' => ['accepted'],
         ];
+    }
+
+    public function assertCanRegister(string $email): void
+    {
+        if (Alumni::query()->where('email', $email)->exists()) {
+            throw ValidationException::withMessages([
+                'email' => 'Email ini sudah terdaftar sebagai alumni. Silakan masuk ke Dashboard untuk memperbarui profil.',
+            ]);
+        }
+
+        if (User::query()->where('email', $email)->exists()) {
+            throw ValidationException::withMessages([
+                'email' => 'Email ini sudah digunakan. Silakan masuk melalui halaman Masuk.',
+            ]);
+        }
     }
 
     /** @param  array<string, mixed>  $data */

@@ -2,6 +2,37 @@
     @include('partials.auth.decorative-shapes', ['variant' => 'light', 'density' => 'default'])
 
     <div class="site-container relative z-[2]">
+        @if (session('alumni_registration_welcome'))
+            @php($welcome = session('alumni_registration_welcome'))
+            <div class="mb-6 rounded-sm border border-gold/35 bg-white px-5 py-5 text-sm text-navy shadow-sm">
+                <p class="font-display text-lg font-semibold text-navy">Terima kasih, {{ $welcome['name'] }}!</p>
+                <p class="mt-3 leading-relaxed text-muted">
+                    Pendaftaran profil alumni Anda telah kami terima. Saat ini website IBGK Sumsel masih dalam proses perbaikan,
+                    sehingga untuk sementara Anda hanya dapat mengakses Dashboard.
+                </p>
+                <div class="mt-4 rounded-md border border-navy/10 bg-cream/50 px-4 py-3">
+                    <p class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Akun Dashboard</p>
+                    <dl class="mt-3 grid gap-2 sm:grid-cols-2">
+                        <div>
+                            <dt class="text-xs text-muted">Email</dt>
+                            <dd class="mt-0.5 font-medium text-navy">{{ $welcome['email'] }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs text-muted">Password sementara</dt>
+                            <dd class="mt-0.5 font-medium text-navy">{{ $welcome['temp_password'] }}</dd>
+                        </div>
+                    </dl>
+                    <p class="mt-3 text-xs text-muted">Simpan informasi ini. Anda dapat login kembali melalui halaman Masuk jika keluar dari Dashboard.</p>
+                </div>
+            </div>
+        @endif
+
+        @if (session('development_access_notice'))
+            <div class="mb-6 rounded-sm border border-navy/10 bg-white px-5 py-4 text-sm text-navy shadow-sm">
+                {{ session('development_access_notice') }}
+            </div>
+        @endif
+
         @if (session('registration_success'))
             <div class="mb-6 rounded-sm border border-gold/35 bg-white px-5 py-4 text-sm text-navy shadow-sm">
                 {{ session('registration_success') }}
@@ -37,6 +68,26 @@
                         </dd>
                     </div>
                 </dl>
+
+                @if ($alumni ?? null)
+                    <div class="mt-6 rounded-sm border border-navy/8 bg-cream/40 px-4 py-4">
+                        <p class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Profil Alumni</p>
+                        <p class="mt-2 text-sm text-navy">
+                            {{ $alumni->batch?->name ?? 'Alumni IBGK' }}
+                            · {{ $alumni->genderLabel() }}
+                        </p>
+                        <p class="mt-1 text-xs text-muted">
+                            @if ($alumni->is_public)
+                                Profil publik aktif di website.
+                            @else
+                                Profil menunggu persetujuan pengurus sebelum tampil di website.
+                            @endif
+                        </p>
+                        <a href="{{ route('alumni.profile.edit') }}" class="mt-3 inline-flex text-xs font-semibold tracking-[0.1em] text-gold uppercase hover:text-navy">
+                            Perbaiki Data Alumni →
+                        </a>
+                    </div>
+                @endif
             </div>
 
             <div class="rounded-sm border border-navy/8 bg-white p-6 shadow-sm">

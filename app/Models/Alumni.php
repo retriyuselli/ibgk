@@ -17,6 +17,7 @@ class Alumni extends Model
     protected $fillable = [
         'alumni_batch_id',
         'participant_id',
+        'user_id',
         'gender',
         'name',
         'slug',
@@ -125,6 +126,11 @@ class Alumni extends Model
     public function alumniBatch(): BelongsTo
     {
         return $this->belongsTo(AlumniBatch::class, 'alumni_batch_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function participant(): BelongsTo

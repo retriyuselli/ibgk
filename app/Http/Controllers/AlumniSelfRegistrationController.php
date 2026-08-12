@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\OrganizationProfile;
 use App\Services\AlumniSelfRegistrationService;
+use App\Services\ProvisionAlumniUserAccount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class AlumniSelfRegistrationController extends Controller
 {
     public function __construct(
         private AlumniSelfRegistrationService $registrationService,
+        private ProvisionAlumniUserAccount $provisionAlumniUserAccount,
     ) {}
 
     public function create(): View
@@ -19,7 +22,6 @@ class AlumniSelfRegistrationController extends Controller
         return view('pages.alumni-register', [
             'profile' => OrganizationProfile::query()->first(),
             'batches' => $this->registrationService->availableBatches(),
-            'submitted' => session('alumni_registration_success'),
         ]);
     }
 
@@ -27,13 +29,20 @@ class AlumniSelfRegistrationController extends Controller
     {
         $validated = $request->validate(AlumniSelfRegistrationService::validationRules());
 
+        $this->registrationService->assertCanRegister($validated['email']);
+
         $alumni = $this->registrationService->register($validated, $request->file('photo'));
+        $user = $this->provisionAlumniUserAccount->handle($alumni);
+
+        Auth::login($user);
+        $request->session()->regenerate();
 
         return redirect()
-            ->route('alumni.register')
-            ->with('alumni_registration_success', [
+            ->route('dashboard')
+            ->with('alumni_registration_welcome', [
                 'name' => $alumni->name,
-                'batch' => $alumni->batch?->name,
+                'email' => $user->email,
+                'temp_password' => config('site.alumni_self_registration_temp_password'),
             ]);
     }
 }

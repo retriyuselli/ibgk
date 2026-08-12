@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActivityPageController;
 use App\Http\Controllers\AlumniPageController;
+use App\Http\Controllers\AlumniProfileEditController;
 use App\Http\Controllers\AlumniProfileFormController;
 use App\Http\Controllers\AlumniSelfRegistrationController;
 use App\Http\Controllers\AuthLoginController;
@@ -36,6 +37,8 @@ Route::post('/keluar', [AuthLoginController::class, 'destroy'])->middleware('aut
 
 Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/dashboard/profil-alumni', [AlumniProfileEditController::class, 'edit'])->name('alumni.profile.edit');
+    Route::put('/dashboard/profil-alumni', [AlumniProfileEditController::class, 'update'])->middleware('throttle:10,1')->name('alumni.profile.update');
 });
 
 Route::get('/daftar-bgk', ElectionRegistrationController::class)->name('election.register');

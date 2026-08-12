@@ -1,5 +1,6 @@
 @php
     $values = $alumni ?? null;
+    $emailRequired = $emailRequired ?? false;
 @endphp
 
 <fieldset class="auth-field-animate space-y-4" style="--auth-delay: 0.04s">
@@ -89,11 +90,17 @@
 
 <fieldset class="auth-field-animate space-y-4" style="--auth-delay: 0.36s">
     <legend class="text-xs font-semibold tracking-[0.14em] text-gold uppercase">Kontak (Privat)</legend>
-    <p class="text-xs text-muted">Email dan telepon hanya untuk keperluan administrasi IBGK, tidak otomatis ditampilkan di website.</p>
+    <p class="text-xs text-muted">
+        @if ($emailRequired)
+            Email digunakan untuk akun login Dashboard IBGK. Password sementara akan diberikan setelah pendaftaran.
+        @else
+            Email dan telepon hanya untuk keperluan administrasi IBGK, tidak otomatis ditampilkan di website.
+        @endif
+    </p>
     <div class="grid gap-4 sm:grid-cols-2">
         <div>
-            <label for="email" class="mb-1.5 block text-sm font-medium text-navy">Email</label>
-            <input id="email" type="email" name="email" value="{{ old('email', $values?->email) }}" class="w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2.5 text-sm outline-none transition focus:border-gold">
+            <label for="email" class="mb-1.5 block text-sm font-medium text-navy">Email@if ($emailRequired) *@endif</label>
+            <input id="email" type="email" name="email" value="{{ old('email', $values?->email) }}" @required($emailRequired) class="w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2.5 text-sm outline-none transition focus:border-gold">
             @error('email')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
         </div>
         <div>

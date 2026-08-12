@@ -4,6 +4,18 @@
         <div class="mt-3 h-px w-12 bg-gold"></div>
 
         <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            @if ($alumni)
+                <a href="{{ route('alumni.profile.edit') }}" class="dashboard-action-card group">
+                    <span class="dashboard-action-icon bg-gold/15 text-navy">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    </span>
+                    <span>
+                        <span class="block font-semibold text-navy group-hover:text-gold">Perbaiki Profil Alumni</span>
+                        <span class="mt-1 block text-xs leading-relaxed text-muted">Perbarui data profil alumni Anda.</span>
+                    </span>
+                </a>
+            @endif
+
             @if ($canAccessAdmin)
                 <a href="{{ url('/admin') }}" class="dashboard-action-card group">
                     <span class="dashboard-action-icon bg-navy text-gold">
@@ -16,25 +28,27 @@
                 </a>
             @endif
 
-            <a href="{{ route('election.register') }}" class="dashboard-action-card group">
-                <span class="dashboard-action-icon bg-gold/15 text-navy">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8.5 11a4 4 0 100-8 4 4 0 000 8zM20 8v6m3-3h-6"/></svg>
-                </span>
-                <span>
-                    <span class="block font-semibold text-navy group-hover:text-gold">Daftar BGK</span>
-                    <span class="mt-1 block text-xs leading-relaxed text-muted">Ikuti pemilihan Bujang Gadis Kampus Sumsel.</span>
-                </span>
-            </a>
+            @if ($canBrowsePublicSite)
+                <a href="{{ route('election.register') }}" class="dashboard-action-card group">
+                    <span class="dashboard-action-icon bg-gold/15 text-navy">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8.5 11a4 4 0 100-8 4 4 0 000 8zM20 8v6m3-3h-6"/></svg>
+                    </span>
+                    <span>
+                        <span class="block font-semibold text-navy group-hover:text-gold">Daftar BGK</span>
+                        <span class="mt-1 block text-xs leading-relaxed text-muted">Ikuti pemilihan Bujang Gadis Kampus Sumsel.</span>
+                    </span>
+                </a>
 
-            <a href="{{ route('home') }}" class="dashboard-action-card group">
-                <span class="dashboard-action-icon bg-cream-muted text-navy">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
-                </span>
-                <span>
-                    <span class="block font-semibold text-navy group-hover:text-gold">Beranda Situs</span>
-                    <span class="mt-1 block text-xs leading-relaxed text-muted">Kembali ke halaman utama IBGK Sumsel.</span>
-                </span>
-            </a>
+                <a href="{{ route('home') }}" class="dashboard-action-card group">
+                    <span class="dashboard-action-icon bg-cream-muted text-navy">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+                    </span>
+                    <span>
+                        <span class="block font-semibold text-navy group-hover:text-gold">Beranda Situs</span>
+                        <span class="mt-1 block text-xs leading-relaxed text-muted">Kembali ke halaman utama IBGK Sumsel.</span>
+                    </span>
+                </a>
+            @endif
 
             <form method="POST" action="{{ route('logout') }}" class="dashboard-action-card group text-left">
                 @csrf

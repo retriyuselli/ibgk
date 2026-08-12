@@ -25,4 +25,16 @@ return [
 
     'alumni_profile_invite_days' => (int) env('ALUMNI_PROFILE_INVITE_DAYS', 90),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Alumni Self Registration Account
+    |--------------------------------------------------------------------------
+    |
+    | Password sementara untuk akun pengguna yang dibuat otomatis setelah
+    | alumni mendaftar melalui formulir publik.
+    |
+    */
+
+    'alumni_self_registration_temp_password' => env('ALUMNI_SELF_REGISTRATION_TEMP_PASSWORD', '12345678'),
+
 ];

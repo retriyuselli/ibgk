@@ -51,6 +51,33 @@ class AlumniProfileInviteService
         return $alumni !== null && $alumni->hasValidProfileToken();
     }
 
+    /** @return array<string, mixed> */
+    public static function profileValidationRules(bool $requireTerms = true, bool $requireEmail = false): array
+    {
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'university' => ['nullable', 'string', 'max:255'],
+            'faculty' => ['nullable', 'string', 'max:255'],
+            'study_program' => ['nullable', 'string', 'max:255'],
+            'graduation_year' => ['nullable', 'integer', 'min:1999', 'max:'.(now()->year + 10)],
+            'profession' => ['nullable', 'string', 'max:255'],
+            'company' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'bio' => ['nullable', 'string', 'max:2000'],
+            'instagram' => ['nullable', 'string', 'max:255'],
+            'linkedin' => ['nullable', 'url', 'max:255'],
+            'email' => [$requireEmail ? 'required' : 'nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'photo' => ['nullable', 'image', 'max:5120'],
+        ];
+
+        if ($requireTerms) {
+            $rules['terms'] = ['accepted'];
+        }
+
+        return $rules;
+    }
+
     /** @param  array<string, mixed>  $data */
     public function submitProfile(Alumni $alumni, array $data, ?UploadedFile $photo = null): Alumni
     {
