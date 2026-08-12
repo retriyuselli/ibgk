@@ -13,7 +13,15 @@
     <div>
         <label for="photo" class="mb-1.5 block text-sm font-medium text-navy">Foto Profil</label>
         @if ($values?->photo)
-            <p class="mb-2 text-xs text-muted">Foto saat ini akan diganti jika Anda mengunggah file baru.</p>
+            <div class="mb-3 flex items-start gap-4 rounded-md border border-navy/10 bg-cream/40 p-3">
+                <div class="w-24 shrink-0 overflow-hidden rounded-md border border-navy/10 bg-white sm:w-28">
+                    {!! site_image_or_storage($values->photo, 'images/home/alumni-placeholder.jpg', $values->name ?? 'Foto profil', ['class' => 'aspect-[3/4] w-full object-cover']) !!}
+                </div>
+                <div class="min-w-0 pt-1">
+                    <p class="text-xs font-medium text-navy">Foto saat ini</p>
+                    <p class="mt-1 text-xs leading-relaxed text-muted">Unggah file baru di bawah jika ingin menggantinya.</p>
+                </div>
+            </div>
         @endif
         <input id="photo" type="file" name="photo" accept="image/*" class="w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-navy file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white">
         @error('photo')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
