@@ -2,32 +2,97 @@
 
 namespace Database\Seeders;
 
+use App\Models\AlumniBatch;
 use App\Models\Election;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class ElectionSeeder extends Seeder
 {
+    private const LOCATION = 'Palembang, Sumatera Selatan';
+
+    private const DEFAULT_THEME = 'Mencari Generasi Muda Kampus yang Berwawasan, Berbudaya, Berprestasi dan Berdampak.';
+
+    private const SHORT_DESCRIPTION = 'Pemilihan Bujang Gadis Kampus Sumatera Selatan adalah ajang pembinaan generasi muda kampus untuk berkembang, berkarya, dan memberikan kontribusi nyata bagi masyarakat.';
+
+    private const DESCRIPTION = 'Pemilihan Bujang Gadis Kampus Sumatera Selatan merupakan program tahunan IBGK Sumsel untuk menemukan dan membina generasi muda kampus yang berwawasan, berbudaya, berprestasi, serta siap memberikan dampak positif bagi masyarakat.';
+
     public function run(): void
     {
-        $year = (int) now()->format('Y');
+        $currentYear = (int) now()->format('Y');
+        $firstYear = AlumniBatch::FIRST_ELECTION_YEAR;
+
+        $this->cleanupDuplicateElections($firstYear, $currentYear);
+
+        for ($year = $firstYear; $year < $currentYear; $year++) {
+            $this->seedHistoricalElection($year);
+        }
+
+        $this->seedCurrentElection($currentYear);
+        $this->linkAlumniBatches();
+    }
+
+    private function cleanupDuplicateElections(int $firstYear, int $currentYear): void
+    {
+        for ($year = $firstYear; $year <= $currentYear; $year++) {
+            $canonicalSlug = 'pemilihan-bgk-'.$year;
+            $canonical = Election::query()->where('slug', $canonicalSlug)->first();
+
+            Election::query()
+                ->where('year', $year)
+                ->when($canonical, fn ($query) => $query->whereKeyNot($canonical->id))
+                ->delete();
+        }
+    }
+
+    private function seedHistoricalElection(int $year): void
+    {
+        Election::query()->updateOrCreate(
+            ['year' => $year],
+            [
+                'slug' => 'pemilihan-bgk-'.$year,
+                'name' => 'Pemilihan Bujang Gadis Kampus Sumatera Selatan '.$year,
+                'theme' => $year === AlumniBatch::FIRST_ELECTION_YEAR
+                    ? 'Pemilihan Perdana Bujang Gadis Kampus Sumatera Selatan'
+                    : self::DEFAULT_THEME,
+                'short_description' => $year === AlumniBatch::FIRST_ELECTION_YEAR
+                    ? 'Pemilihan Bujang Gadis Kampus Sumsel digelar untuk pertama kali pada tahun 2002.'
+                    : self::SHORT_DESCRIPTION,
+                'description' => self::DESCRIPTION,
+                'registration_start' => Carbon::create($year, 3, 1)->startOfDay(),
+                'registration_end' => Carbon::create($year, 5, 31)->endOfDay(),
+                'grand_final_date' => Carbon::create($year, 8, 14),
+                'location' => self::LOCATION,
+                'status' => 'finished',
+                'is_active' => false,
+            ]
+        );
+    }
+
+    private function seedCurrentElection(int $year): void
+    {
         $base = now()->setDate($year, 5, 1)->startOfDay();
 
         $election = Election::query()->updateOrCreate(
-            ['slug' => 'pemilihan-bgk-'.$year],
+            ['year' => $year],
             [
+                'slug' => 'pemilihan-bgk-'.$year,
                 'name' => 'Pemilihan Bujang Gadis Kampus Sumatera Selatan '.$year,
-                'year' => $year,
-                'theme' => 'Mencari Generasi Muda Kampus yang Berwawasan, Berbudaya, Berprestasi dan Berdampak.',
-                'short_description' => 'Pemilihan Bujang Gadis Kampus Sumatera Selatan adalah ajang pembinaan generasi muda kampus untuk berkembang, berkarya, dan memberikan kontribusi nyata bagi masyarakat.',
-                'description' => 'Pemilihan Bujang Gadis Kampus Sumatera Selatan merupakan program tahunan IBGK Sumsel untuk menemukan dan membina generasi muda kampus yang berwawasan, berbudaya, berprestasi, serta siap memberikan dampak positif bagi masyarakat.',
+                'theme' => self::DEFAULT_THEME,
+                'short_description' => self::SHORT_DESCRIPTION,
+                'description' => self::DESCRIPTION,
                 'registration_start' => now()->subDays(7)->startOfDay(),
                 'registration_end' => now()->addDays(90)->endOfDay(),
                 'grand_final_date' => $base->copy()->addDays(100),
-                'location' => 'Palembang, Sumatera Selatan',
+                'location' => self::LOCATION,
                 'status' => 'open',
                 'is_active' => true,
             ]
         );
+
+        Election::query()
+            ->whereKeyNot($election->id)
+            ->update(['is_active' => false]);
 
         $election->stages()->delete();
         $election->requirements()->delete();
@@ -82,5 +147,19 @@ class ElectionSeeder extends Seeder
                 'sort_order' => $index + 1,
             ]);
         }
+    }
+
+    private function linkAlumniBatches(): void
+    {
+        AlumniBatch::syncElectionYearBatches();
+
+        Election::query()
+            ->orderBy('year')
+            ->each(function (Election $election): void {
+                AlumniBatch::query()
+                    ->election()
+                    ->where('year', $election->year)
+                    ->update(['election_id' => $election->id]);
+            });
     }
 }
