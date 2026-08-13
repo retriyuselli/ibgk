@@ -1,12 +1,12 @@
 @php
     $websiteHost = $partner->website ? (parse_url($partner->website, PHP_URL_HOST) ?: $partner->website) : null;
     $socialHandle = $partner->showcase_social_handle;
-    $bankLabel = $partner->showcaseShortName();
+    $org = $org ?? org_profile($profile);
 @endphp
 
-<section class="showcase-footer-bar showcase-section relative mt-auto overflow-hidden bg-banking text-white">
+<section class="showcase-footer-bar showcase-section relative mt-auto overflow-hidden bg-showcase text-white">
     @include('partials.partnership.showcase.shapes', ['variant' => 'dark', 'density' => 'rich', 'section' => 'footer'])
-    <svg class="showcase-footer-bar__wave pointer-events-none absolute -top-[3.45rem] left-0 z-[2] w-full text-banking sm:-top-[4.5rem]" viewBox="0 0 1440 72" preserveAspectRatio="none" aria-hidden="true">
+    <svg class="showcase-footer-bar__wave pointer-events-none absolute -top-[3.45rem] left-0 z-[2] w-full text-showcase sm:-top-[4.5rem]" viewBox="0 0 1440 72" preserveAspectRatio="none" aria-hidden="true">
         <path fill="currentColor" d="M0,32 C360,72 720,0 1080,32 C1260,48 1380,56 1440,60 L1440,72 L0,72 Z"/>
     </svg>
 
@@ -15,7 +15,7 @@
             <blockquote class="relative pl-6 sm:pl-8">
                 <span class="pointer-events-none absolute top-0 left-0 font-display text-4xl leading-none text-gold sm:text-5xl" aria-hidden="true">“</span>
                 <p class="text-sm leading-relaxed text-white/95 sm:text-[0.95rem]">
-                    {{ $partner->showcase_footer_quote ?: 'Bersama Bank, mewujudkan generasi muda Sumatera Selatan yang cerdas finansial, berkarakter, dan siap memimpin masa depan.' }}
+                    {{ $partner->showcaseFooterQuote($org) }}
                 </p>
             </blockquote>
 
@@ -54,7 +54,7 @@
                             'iconClass' => 'h-5 w-5',
                         ])
                         <span class="text-[10px] font-semibold tracking-[0.12em] text-gold uppercase">
-                            {{ $partner->external_cta_label ?: 'Kunjungi Bank' }}
+                            {{ $partner->externalCtaLabel() }}
                         </span>
                     </a>
                 @endif

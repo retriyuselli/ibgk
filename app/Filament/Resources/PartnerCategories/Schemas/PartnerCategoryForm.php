@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\PartnerCategories\Schemas;
 
+use App\Models\PartnerCategory;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -47,6 +49,26 @@ class PartnerCategoryForm
                     Textarea::make('description')
                         ->label('Deskripsi')
                         ->rows(3)
+                        ->columnSpanFull(),
+                ]),
+            Section::make('Tampilan Showcase')
+                ->description('Pengaturan tema warna dan label untuk halaman proposal kemitraan.')
+                ->columns(2)
+                ->schema([
+                    Select::make('showcase_theme')
+                        ->label('Tema Warna Showcase')
+                        ->options(PartnerCategory::themeOptions())
+                        ->default(PartnerCategory::THEME_DEFAULT)
+                        ->required(),
+                    TextInput::make('official_partner_label')
+                        ->label('Label Official Partner')
+                        ->placeholder('Official Media Partner')
+                        ->maxLength(255)
+                        ->columnSpanFull(),
+                    TextInput::make('default_cta_label')
+                        ->label('Label Tombol CTA Default')
+                        ->placeholder('Kunjungi Website Mitra')
+                        ->maxLength(255)
                         ->columnSpanFull(),
                 ]),
         ]);

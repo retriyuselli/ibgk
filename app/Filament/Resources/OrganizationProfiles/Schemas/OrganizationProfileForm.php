@@ -113,6 +113,45 @@ class OrganizationProfileForm
                             ->maxLength(255),
                     ])
                     ->collapsed(),
+
+                Section::make('Halaman Showcase Mitra')
+                    ->description('Teks bawaan untuk halaman kemitraan mitra. Gunakan placeholder :partner untuk nama singkat mitra.')
+                    ->columns(1)
+                    ->schema([
+                        FileUpload::make('showcase_hero_background')
+                            ->label('Background Hero Showcase')
+                            ->helperText('Kosongkan untuk memakai gambar default. Unggah gambar custom atau isi path publik seperti images/home/hero-ampera.jpg.')
+                            ->image()
+                            ->directory('organization/showcase')
+                            ->disk('public')
+                            ->visibility('public')
+                            ->imageEditor(),
+                        TextInput::make('showcase_copy.strategic_heading')
+                            ->label('Judul Nilai Strategis')
+                            ->maxLength(255),
+                        TextInput::make('showcase_copy.benefits_heading')
+                            ->label('Judul Manfaat Kerja Sama')
+                            ->maxLength(255),
+                        TextInput::make('showcase_copy.kpi_heading')
+                            ->label('Judul KPI')
+                            ->maxLength(255),
+                        TextInput::make('showcase_copy.targets_heading')
+                            ->label('Judul Target Peserta')
+                            ->maxLength(255),
+                        TextInput::make('showcase_copy.contact_heading')
+                            ->label('Judul Hubungi Kami')
+                            ->maxLength(255),
+                        TextInput::make('showcase_copy.program_count_suffix')
+                            ->label('Label Jumlah Program')
+                            ->maxLength(255),
+                        Textarea::make('showcase_copy.hero_placeholder_hint')
+                            ->label('Petunjuk Placeholder Foto Hero')
+                            ->rows(2),
+                        Textarea::make('showcase_copy.default_footer_quote')
+                            ->label('Quote Footer Default')
+                            ->rows(3),
+                    ])
+                    ->collapsed(),
             ]);
     }
 }

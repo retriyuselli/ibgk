@@ -78,19 +78,20 @@ class PartnershipPageController extends Controller
             ->with('category')
             ->get();
 
-        $mainSponsor = $partners->firstWhere('is_main_sponsor', true)
-            ?? $partners->firstWhere('tier', Partner::TIER_PLATINUM);
+        $mainSponsors = $partners
+            ->where('is_main_sponsor', true)
+            ->values();
 
-        $carouselPartners = $mainSponsor
-            ? $partners->reject(fn (Partner $partner): bool => $partner->is($mainSponsor))
-            : $partners;
+        $carouselPartners = $partners->reject(
+            fn (Partner $partner): bool => $partner->is_main_sponsor
+        );
 
         $partnerCount = max($partners->count(), 20);
 
         return view('pages.partnership', [
             'profile' => $profile,
             'partners' => $partners,
-            'mainSponsor' => $mainSponsor,
+            'mainSponsors' => $mainSponsors,
             'partnerPages' => $carouselPartners->chunk(12),
             'partnershipTypes' => self::PARTNERSHIP_TYPES,
             'ctaFeatures' => self::CTA_FEATURES,
@@ -126,7 +127,7 @@ class PartnershipPageController extends Controller
 
     public function show(Partner $partner): View
     {
-        abort_unless($partner->is_active && $partner->has_showcase_page, 404);
+        abort_unless($partner->supportsShowcasePage(), 404);
 
         return view('pages.partner-showcase', [
             'profile' => OrganizationProfile::query()->first(),

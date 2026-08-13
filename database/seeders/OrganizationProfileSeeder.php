@@ -27,6 +27,8 @@ class OrganizationProfileSeeder extends Seeder
                 'tiktok' => 'https://tiktok.com/@ibgksumsel',
                 'youtube' => 'https://youtube.com/@ibgksumsel',
                 'facebook' => 'https://facebook.com/ibgksumsel',
+                'showcase_copy' => OrganizationProfile::showcaseCopyDefaults(),
+                'showcase_hero_background' => 'images/home/hero-ampera.jpg',
             ]
         );
     }

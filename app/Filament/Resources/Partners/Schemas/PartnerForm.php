@@ -3,7 +3,10 @@
 namespace App\Filament\Resources\Partners\Schemas;
 
 use App\Models\Partner;
+use App\Models\PartnerCategory;
+use App\Services\PartnerShowcasePresets;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -47,6 +50,29 @@ class PartnerForm
                         ->searchable()
                         ->preload()
                         ->nullable()
+                        ->live()
+                        ->helperText('Pilih kategori untuk tema warna dan template proposal showcase.')
+                        ->afterStateUpdated(function (Set $set, Get $get, ?string $state): void {
+                            if (blank($state)) {
+                                return;
+                            }
+
+                            $category = PartnerCategory::query()->find($state);
+
+                            if (! $category) {
+                                return;
+                            }
+
+                            if (filled($category->default_cta_label)) {
+                                $set('external_cta_label', $category->default_cta_label);
+                            }
+
+                            if (filled($get('showcase_intro'))) {
+                                return;
+                            }
+
+                            self::applyCategoryPreset($set, $get, $category);
+                        })
                         ->columnSpanFull(),
                     TextInput::make('name')
                         ->label('Nama Mitra')
@@ -107,19 +133,26 @@ class PartnerForm
                         ->inline(false),
                 ]),
 
-            Section::make('Halaman Showcase Sponsor')
-                ->description('Template halaman khusus mitra perbankan — isi nama bank, logo, dan website di admin.')
+            Section::make('Halaman Showcase Mitra')
+                ->description('Proposal deck digital per mitra. Platinum = lengkap, Gold = ringkas (max 6 program). Silver/Bronze = logo saja di halaman kemitraan.')
                 ->columns(2)
                 ->schema([
                     Select::make('tier')
                         ->label('Tier Kemitraan')
                         ->options([
-                            Partner::TIER_PLATINUM => 'Platinum Main Partner',
-                            Partner::TIER_GOLD => 'Gold Partner',
-                            Partner::TIER_SILVER => 'Silver Partner',
-                            Partner::TIER_BRONZE => 'Bronze Partner',
+                            Partner::TIER_PLATINUM => 'Platinum Main Partner (showcase lengkap)',
+                            Partner::TIER_GOLD => 'Gold Partner (showcase ringkas)',
+                            Partner::TIER_SILVER => 'Silver Partner (tanpa showcase)',
+                            Partner::TIER_BRONZE => 'Bronze Partner (tanpa showcase)',
                         ])
-                        ->nullable(),
+                        ->nullable()
+                        ->live()
+                        ->afterStateUpdated(function (Set $set, Get $get, ?string $state): void {
+                            if (in_array($state, [Partner::TIER_SILVER, Partner::TIER_BRONZE], true)) {
+                                $set('has_showcase_page', false);
+                                $set('is_main_sponsor', false);
+                            }
+                        }),
                     TextInput::make('showcase_year')
                         ->label('Tahun Kolaborasi')
                         ->numeric()
@@ -129,11 +162,13 @@ class PartnerForm
                     Toggle::make('is_main_sponsor')
                         ->label('Sponsor Utama')
                         ->default(false)
-                        ->inline(false),
+                        ->inline(false)
+                        ->helperText('Mitra ini tampil di bagian Sponsor Utama halaman kemitraan. Bisa lebih dari satu; urutan mengikuti field Urutan.'),
                     Toggle::make('has_showcase_page')
                         ->label('Punya Halaman Showcase')
                         ->default(false)
-                        ->inline(false),
+                        ->inline(false)
+                        ->helperText('Hanya tersedia untuk tier Platinum/Gold atau Sponsor Utama.'),
                     TextInput::make('tagline')
                         ->label('Tagline')
                         ->maxLength(255)
@@ -157,7 +192,7 @@ class PartnerForm
                         ->columnSpanFull(),
                     TextInput::make('showcase_partner_tagline')
                         ->label('Tagline Mitra')
-                        ->placeholder('Sahabat Finansial, Sahabat Sosial, Sahabat Spiritual')
+                        ->placeholder('Mitra Strategis Generasi Muda Sumatera Selatan')
                         ->maxLength(255)
                         ->columnSpanFull(),
                     Textarea::make('showcase_footer_quote')
@@ -166,7 +201,7 @@ class PartnerForm
                         ->columnSpanFull(),
                     TextInput::make('showcase_social_handle')
                         ->label('Handle Media Sosial')
-                        ->placeholder('@banksyariahindonesia')
+                        ->placeholder('@mitraofficial')
                         ->maxLength(255),
                     Textarea::make('showcase_privacy_note')
                         ->label('Catatan Privasi Data')
@@ -183,11 +218,31 @@ class PartnerForm
                         ->columnSpanFull(),
                     TextInput::make('external_cta_label')
                         ->label('Label Tombol Website')
-                        ->default('Kunjungi Bank')
+                        ->placeholder('Kunjungi Website Mitra')
                         ->maxLength(255)
                         ->columnSpanFull(),
+                    Hidden::make('showcase_strategic_values'),
+                    Hidden::make('showcase_programs'),
+                    Hidden::make('showcase_benefits'),
+                    Hidden::make('showcase_kpis'),
+                    Hidden::make('showcase_targets'),
+                    Hidden::make('showcase_timeline'),
+                    Hidden::make('showcase_activations'),
                 ])
                 ->collapsed(),
         ]);
+    }
+
+    public static function applyCategoryPreset(Set $set, Get $get, PartnerCategory $category): void
+    {
+        $preset = PartnerShowcasePresets::forCategory(
+            $category->slug,
+            $get('name'),
+            (int) ($get('showcase_year') ?: now()->year),
+        );
+
+        foreach ($preset as $field => $value) {
+            $set($field, $value);
+        }
     }
 }

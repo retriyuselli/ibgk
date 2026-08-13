@@ -128,7 +128,7 @@ class Partner extends Model
 
     public function showcaseUrl(): ?string
     {
-        if (! $this->has_showcase_page || ! $this->is_active) {
+        if (! $this->supportsShowcasePage()) {
             return null;
         }
 
@@ -145,16 +145,118 @@ class Partner extends Model
         return safe_url($this->website);
     }
 
-    public function showcaseShortName(): string
-    {
-        $short = trim(str($this->name)->before(' ')->toString());
-
-        return $short !== '' ? str($short)->upper()->toString() : 'BANK';
-    }
-
     public function usesOfficeIcon(): bool
     {
-        return blank($this->logo) || str_contains((string) $this->logo, 'bank-logo');
+        return $this->usesCategoryIcon();
+    }
+
+    public function usesCategoryIcon(): bool
+    {
+        return blank($this->logo);
+    }
+
+    public function categoryIconName(): string
+    {
+        return $this->category?->iconName() ?? 'handshake';
+    }
+
+    public function showcaseShortName(): string
+    {
+        if (blank($this->name)) {
+            return 'MITRA';
+        }
+
+        return str($this->name)->upper()->toString();
+    }
+
+    public function showcaseTheme(): string
+    {
+        return $this->category?->showcase_theme ?? PartnerCategory::THEME_DEFAULT;
+    }
+
+    public function officialPartnerLabel(): string
+    {
+        if (filled($this->category?->official_partner_label)) {
+            return $this->category->official_partner_label;
+        }
+
+        return match ($this->tier) {
+            self::TIER_PLATINUM => 'Official Main Partner',
+            self::TIER_GOLD => 'Official Gold Partner',
+            default => 'Strategic Partner',
+        };
+    }
+
+    public function externalCtaLabel(): string
+    {
+        if (filled($this->external_cta_label)) {
+            return $this->external_cta_label;
+        }
+
+        return $this->category?->default_cta_label ?? 'Kunjungi Website Mitra';
+    }
+
+    public function showcaseFooterQuote(?OrganizationProfile $profile = null): string
+    {
+        if (filled($this->showcase_footer_quote)) {
+            return $this->showcase_footer_quote;
+        }
+
+        if ($profile instanceof OrganizationProfile) {
+            return $profile->showcaseCopy('default_footer_quote', [
+                'partner' => $this->showcaseShortName(),
+            ]);
+        }
+
+        return strtr(OrganizationProfile::showcaseCopyDefaults()['default_footer_quote'], [
+            ':partner' => $this->showcaseShortName(),
+        ]);
+    }
+
+    public function showcaseProgramCountLabel(?OrganizationProfile $profile = null): string
+    {
+        $count = count($this->showcaseProgramsForDisplay());
+
+        if ($profile instanceof OrganizationProfile) {
+            return $profile->showcaseProgramCountLabel($count);
+        }
+
+        return trim($count.' '.OrganizationProfile::showcaseCopyDefaults()['program_count_suffix']);
+    }
+
+    public function showcaseLayout(): string
+    {
+        if ($this->tier === self::TIER_PLATINUM || $this->is_main_sponsor) {
+            return 'full';
+        }
+
+        return 'compact';
+    }
+
+    public function isFullShowcase(): bool
+    {
+        return $this->showcaseLayout() === 'full';
+    }
+
+    /** @return array<int, array<string, mixed>> */
+    public function showcaseProgramsForDisplay(): array
+    {
+        $programs = $this->showcase_programs ?? [];
+
+        if ($this->showcaseLayout() === 'compact') {
+            return array_slice($programs, 0, 6);
+        }
+
+        return $programs;
+    }
+
+    public function supportsShowcasePage(): bool
+    {
+        if (! $this->has_showcase_page || ! $this->is_active) {
+            return false;
+        }
+
+        return in_array($this->tier, [self::TIER_PLATINUM, self::TIER_GOLD], true) || $this->is_main_sponsor;
     }
 
     /** @return array<int, array{value: string, label: string, is_total?: bool}> */

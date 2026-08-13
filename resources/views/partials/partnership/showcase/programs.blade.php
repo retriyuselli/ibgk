@@ -16,9 +16,9 @@
                 <div class="mt-4 h-px w-20 bg-gold mx-auto"></div>
             </div>
 
-            <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div class="showcase-programs-grid mt-12 grid content-start gap-x-3 gap-y-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 @foreach ($partner->showcase_programs as $index => $program)
-                    <article class="showcase-program-card group relative overflow-hidden rounded-sm border border-[#0a5c58]/10 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-gold/45 hover:shadow-lg">
+                    <article class="showcase-program-card group relative flex h-full w-full flex-col overflow-hidden rounded-sm border border-[#0a5c58]/10 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-gold/45 hover:shadow-lg">
                         <div class="absolute top-0 right-0 h-16 w-16 translate-x-6 -translate-y-6 rounded-full bg-[#0a5c58]/6 transition group-hover:bg-gold/10" aria-hidden="true"></div>
 
                         <div class="relative flex items-start gap-3">
@@ -33,7 +33,7 @@
                         <h3 class="relative mt-4 text-sm font-semibold leading-snug text-navy">
                             {{ $program['title'] ?? 'Program' }}
                         </h3>
-                        <p class="relative mt-2 text-xs leading-relaxed text-muted">
+                        <p class="relative mt-2 flex-1 text-xs leading-relaxed text-muted">
                             {{ $program['description'] ?? '' }}
                         </p>
                     </article>

@@ -11,8 +11,8 @@
                 <div class="flex items-center justify-center gap-3">
                     <span class="h-px w-10 bg-gold/70 sm:w-16" aria-hidden="true"></span>
                     <span class="h-2 w-2 rounded-full bg-gold" aria-hidden="true"></span>
-                    <h2 class="font-display text-lg font-bold text-banking sm:text-xl lg:text-2xl">
-                        Mengapa Kolaborasi Ini Strategis untuk {{ $partner->showcaseShortName() }}?
+                    <h2 class="font-display text-lg font-bold text-showcase sm:text-xl lg:text-2xl">
+                        {{ org_profile($profile)->showcaseCopy('strategic_heading', ['partner' => $partner->showcaseShortName()]) }}
                     </h2>
                     <span class="h-2 w-2 rounded-full bg-gold" aria-hidden="true"></span>
                     <span class="h-px w-10 bg-gold/70 sm:w-16" aria-hidden="true"></span>
@@ -27,10 +27,10 @@
                         $icon = is_array($value) ? ($value['icon'] ?? $defaultIcons[$index] ?? 'default') : ($defaultIcons[$index] ?? 'default');
                     @endphp
                     <li class="text-center">
-                        <span class="mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-full bg-banking text-white shadow-md shadow-banking/20">
+                        <span class="mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-full bg-showcase text-white shadow-md shadow-showcase-soft">
                             @include('partials.partnership.showcase.icons', ['name' => $icon, 'class' => 'h-6 w-6'])
                         </span>
-                        <h3 class="mt-4 text-xs font-bold leading-snug text-banking uppercase">
+                        <h3 class="mt-4 text-xs font-bold leading-snug text-showcase uppercase">
                             {{ $title }}
                         </h3>
                         @if ($description)

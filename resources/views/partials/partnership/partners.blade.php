@@ -1,18 +1,5 @@
 @php
-    $fallbackPartners = [
-        'Dinas Pendidikan',
-        'Universitas Sriwijaya',
-        'POLSRI',
-        'Bank Sumsel Babel',
-        'Bank Indonesia',
-        'Telkomsel',
-        'Wardah',
-        'Aston Palembang',
-        'Palembang Indah Mall',
-        'Sriwijaya Post',
-        'Sonora FM',
-        'Pemprov Sumsel',
-    ];
+    $fallbackPartners = array_values(\App\Models\PartnerCategory::partnerNames());
 @endphp
 
 <section class="relative overflow-hidden bg-white py-14 sm:py-16 lg:py-20">

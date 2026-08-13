@@ -17,6 +17,22 @@ if (! function_exists('safe_url')) {
     }
 }
 
+if (! function_exists('org_profile')) {
+    function org_profile(?App\Models\OrganizationProfile $profile = null): App\Models\OrganizationProfile
+    {
+        if ($profile instanceof App\Models\OrganizationProfile) {
+            return $profile;
+        }
+
+        static $fallback = null;
+
+        return $fallback ??= App\Models\OrganizationProfile::make([
+            'name' => 'Organisasi',
+            'showcase_copy' => App\Models\OrganizationProfile::showcaseCopyDefaults(),
+        ]);
+    }
+}
+
 if (! function_exists('site_image')) {
     /**
      * @param  array<string, mixed>  $attributes

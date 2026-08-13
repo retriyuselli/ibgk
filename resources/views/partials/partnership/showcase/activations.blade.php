@@ -12,7 +12,7 @@
 
             <div class="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($partner->showcase_activations as $index => $activation)
-                    <article class="flex items-start gap-4 rounded-sm border border-[#0a5c58]/10 bg-[#f4faf9] p-5">
+                    <article class="flex items-start gap-4 rounded-sm border border-[#0a5c58]/10 bg-showcase-surface p-5">
                         <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0a5c58] text-white">
                             @include('partials.partnership.showcase.icons', ['name' => $activation['icon'] ?? $activationIcons[$index] ?? 'default', 'class' => 'h-5 w-5'])
                         </span>

@@ -12,7 +12,7 @@
 @else
     <div class="flex min-h-32 flex-col items-center justify-center gap-3 rounded-sm border border-navy/8 bg-cream/40 px-4 py-5 text-center shadow-sm transition hover:border-gold/35 hover:shadow-md">
 @endif
-    @if ($partner->usesOfficeIcon())
+    @if ($partner->usesCategoryIcon())
         @include('partials.partnership.showcase.partner-brand', [
             'partner' => $partner,
             'boxClass' => 'h-14 w-14 rounded-lg',
@@ -28,8 +28,8 @@
     @endif
     <span @class([
         'font-semibold leading-snug tracking-wide text-navy/75 uppercase',
-        'text-[10px]' => $partner->logoUrl() || $partner->usesOfficeIcon(),
-        'text-[11px]' => ! $partner->logoUrl() && ! $partner->usesOfficeIcon(),
+        'text-[10px]' => $partner->logoUrl() || $partner->usesCategoryIcon(),
+        'text-[11px]' => ! $partner->logoUrl() && ! $partner->usesCategoryIcon(),
     ])>{{ $partner->name }}</span>
     @if ($partner->has_showcase_page)
         <span class="text-[10px] font-medium tracking-wide text-gold uppercase">Lihat Kolaborasi</span>
