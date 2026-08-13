@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $election?->name ?? 'Pemilihan BGK Sumatera Selatan')
+@php($org = org_profile($profile))
 
-@section('meta_description', $election?->short_description ?? 'Pemilihan Bujang Gadis Kampus Sumatera Selatan — tahapan, jadwal, persyaratan, dan manfaat.')
+@section('title', $election?->name ?? $org->electionCopy('hero_title_fallback'))
+
+@section('meta_description', $election?->short_description ?? $org->electionCopy('short_description_fallback'))
 
 @section('content')
     @include('partials.election.hero')

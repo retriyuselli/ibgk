@@ -47,6 +47,16 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasOne(Alumni::class);
     }
 
+    public function participants(): HasMany
+    {
+        return $this->hasMany(Participant::class);
+    }
+
+    public function participant(): HasOne
+    {
+        return $this->hasOne(Participant::class)->latestOfMany();
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->hasAnyRole(Roles::panelAccessRoles());

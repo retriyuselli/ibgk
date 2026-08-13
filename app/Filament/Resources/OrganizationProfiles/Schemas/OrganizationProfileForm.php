@@ -4,7 +4,9 @@ namespace App\Filament\Resources\OrganizationProfiles\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -150,6 +152,146 @@ class OrganizationProfileForm
                         Textarea::make('showcase_copy.default_footer_quote')
                             ->label('Quote Footer Default')
                             ->rows(3),
+                    ])
+                    ->collapsed(),
+
+                Section::make('Halaman Pemilihan BGK')
+                    ->description('Teks dan pilar untuk /pemilihan-bgk. Placeholder: :org_short, :org_formal, :org_region, :year.')
+                    ->columns(1)
+                    ->schema([
+                        TextInput::make('election_copy.breadcrumb_label')
+                            ->label('Label Breadcrumb')
+                            ->maxLength(255),
+                        TextInput::make('election_copy.hero_title_fallback')
+                            ->label('Judul Hero (jika pemilihan aktif kosong)')
+                            ->maxLength(255),
+                        TextInput::make('election_copy.register_button_label')
+                            ->label('Tombol Daftar')
+                            ->maxLength(255),
+                        TextInput::make('election_copy.about_title')
+                            ->label('Judul Section Tentang')
+                            ->maxLength(255),
+                        Textarea::make('election_copy.about_second_paragraph')
+                            ->label('Paragraf Kedua Tentang')
+                            ->rows(3),
+                        TextInput::make('election_copy.about_link_label')
+                            ->label('Teks Link Tentang IBGK')
+                            ->maxLength(255),
+                        Repeater::make('election_pillars')
+                            ->label('Pilar Tentang Pemilihan')
+                            ->schema([
+                                TextInput::make('title')
+                                    ->label('Judul')
+                                    ->required()
+                                    ->maxLength(255),
+                                Textarea::make('text')
+                                    ->label('Deskripsi')
+                                    ->required()
+                                    ->rows(2),
+                                Select::make('icon')
+                                    ->label('Ikon')
+                                    ->options([
+                                        'user' => 'Pengembangan Diri',
+                                        'building' => 'Kebudayaan',
+                                        'heart' => 'Kontribusi Sosial',
+                                        'trophy' => 'Prestasi',
+                                    ])
+                                    ->default('user')
+                                    ->required(),
+                            ])
+                            ->columns(1)
+                            ->defaultItems(4)
+                            ->columnSpanFull(),
+                        TextInput::make('election_copy.stages_title')
+                            ->label('Judul Tahapan Seleksi')
+                            ->maxLength(255),
+                        TextInput::make('election_copy.schedule_title')
+                            ->label('Judul Jadwal')
+                            ->maxLength(255),
+                        Textarea::make('election_copy.schedule_footnote')
+                            ->label('Catatan Jadwal')
+                            ->rows(2),
+                        TextInput::make('election_copy.requirements_title')
+                            ->label('Judul Persyaratan')
+                            ->maxLength(255),
+                        TextInput::make('election_copy.benefits_title')
+                            ->label('Judul Manfaat')
+                            ->maxLength(255),
+                        FileUpload::make('election_benefits_image')
+                            ->label('Gambar Samping Manfaat')
+                            ->helperText('Kosongkan untuk gambar default.')
+                            ->image()
+                            ->directory('organization/election')
+                            ->disk('public')
+                            ->visibility('public')
+                            ->imageEditor(),
+                        TextInput::make('election_copy.participants_title')
+                            ->label('Judul Peserta')
+                            ->maxLength(255),
+                        Textarea::make('election_copy.participants_intro')
+                            ->label('Intro Peserta')
+                            ->rows(2),
+                        TextInput::make('election_copy.cta_heading')
+                            ->label('Judul CTA Bawah')
+                            ->maxLength(255),
+                        Textarea::make('election_copy.cta_description')
+                            ->label('Deskripsi CTA Bawah')
+                            ->rows(2),
+                        TextInput::make('election_copy.cta_button_label')
+                            ->label('Tombol CTA Bawah')
+                            ->maxLength(255),
+                    ])
+                    ->collapsed(),
+
+                Section::make('Halaman Daftar BGK')
+                    ->description('Teks untuk /daftar-bgk. Placeholder: :org_short, :org_formal, :year, :name.')
+                    ->columns(1)
+                    ->schema([
+                        TextInput::make('registration_copy.breadcrumb_label')
+                            ->label('Label Breadcrumb')
+                            ->maxLength(255),
+                        TextInput::make('registration_copy.hero_title')
+                            ->label('Judul Hero')
+                            ->maxLength(255),
+                        TextInput::make('registration_copy.hero_subtitle')
+                            ->label('Subjudul Hero')
+                            ->maxLength(255),
+                        Textarea::make('registration_copy.hero_description_fallback')
+                            ->label('Deskripsi Hero (jika ringkasan pemilihan kosong)')
+                            ->rows(3),
+                        TextInput::make('registration_copy.form_title')
+                            ->label('Judul Formulir')
+                            ->maxLength(255),
+                        Textarea::make('registration_copy.form_intro')
+                            ->label('Intro Formulir')
+                            ->rows(2),
+                        TextInput::make('registration_copy.submit_label')
+                            ->label('Tombol Kirim')
+                            ->maxLength(255),
+                        Textarea::make('registration_copy.terms_text')
+                            ->label('Teks Persetujuan')
+                            ->rows(3),
+                        TextInput::make('registration_copy.success_title')
+                            ->label('Judul Sukses')
+                            ->maxLength(255),
+                        Textarea::make('registration_copy.success_intro')
+                            ->label('Intro Sukses')
+                            ->rows(2),
+                        Textarea::make('registration_copy.success_footnote')
+                            ->label('Catatan Sukses')
+                            ->rows(2),
+                        TextInput::make('registration_copy.closed_title')
+                            ->label('Judul Pendaftaran Tertutup')
+                            ->maxLength(255),
+                        Textarea::make('registration_copy.closed_description')
+                            ->label('Deskripsi Pendaftaran Tertutup')
+                            ->rows(2),
+                        TextInput::make('registration_copy.sidebar_help_title')
+                            ->label('Judul Bantuan Sidebar')
+                            ->maxLength(255),
+                        Textarea::make('registration_copy.sidebar_help_text')
+                            ->label('Teks Bantuan Sidebar')
+                            ->rows(2),
                     ])
                     ->collapsed(),
             ]);

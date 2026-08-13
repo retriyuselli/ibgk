@@ -13,7 +13,7 @@
                     <h2 class="font-display text-2xl font-semibold text-navy">Masuk ke Akun</h2>
                     <div class="mt-3 h-px w-12 bg-gold"></div>
                     <p class="mt-4 text-sm text-muted">
-                        Masukkan email dan kata sandi yang telah diberikan oleh pengurus IBGK Sumsel.
+                        Masukkan email dan kata sandi akun Anda. Peserta BGK memakai email yang didaftarkan pada formulir pendaftaran.
                     </p>
                 </div>
 

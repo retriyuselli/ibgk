@@ -16,8 +16,8 @@ class StoreCompressedImage
         ?int $maxDimension = null,
         ?int $quality = null,
     ): string {
-        $maxDimension ??= (int) config('site.alumni_profile_photo_max_dimension', 1000);
-        $quality ??= (int) config('site.alumni_profile_photo_quality', 82);
+        $maxDimension ??= (int) config('site.profile_photo_max_dimension', config('site.alumni_profile_photo_max_dimension', 1000));
+        $quality ??= (int) config('site.profile_photo_quality', config('site.alumni_profile_photo_quality', 82));
 
         $directory = trim($directory, '/');
         $filename = Str::uuid()->toString().'.jpg';

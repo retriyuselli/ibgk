@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar BGK '.($election?->year ?? now()->year))
+@php($org = org_profile($profile))
 
-@section('meta_description', 'Formulir pendaftaran Pemilihan Bujang Gadis Kampus Sumatera Selatan.')
+@section('title', $org->registrationCopy('hero_title', ['year' => $election?->year ?? now()->year]))
+
+@section('meta_description', $election?->short_description ?? $org->registrationCopy('hero_description_fallback'))
 
 @section('content')
     @include('partials.registration.hero')

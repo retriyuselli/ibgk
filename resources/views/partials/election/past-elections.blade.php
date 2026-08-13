@@ -1,9 +1,10 @@
 @if ($pastElections->isNotEmpty())
+    @php($org = $org ?? org_profile($profile))
     <section class="relative bg-white py-14 sm:py-16">
         <div class="site-container">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <h2 class="section-title">Pemilihan Sebelumnya</h2>
+                    <h2 class="section-title">{{ $org->electionCopy('past_elections_title') }}</h2>
                     <div class="mt-3 h-px w-16 bg-gold"></div>
                 </div>
             </div>

@@ -29,6 +29,10 @@ class OrganizationProfileSeeder extends Seeder
                 'facebook' => 'https://facebook.com/ibgksumsel',
                 'showcase_copy' => OrganizationProfile::showcaseCopyDefaults(),
                 'showcase_hero_background' => 'images/home/hero-ampera.jpg',
+                'election_copy' => OrganizationProfile::electionCopyDefaults(),
+                'election_pillars' => OrganizationProfile::electionPillarDefaults(),
+                'election_benefits_image' => 'images/home/sejarah-grand-final.jpg',
+                'registration_copy' => OrganizationProfile::registrationCopyDefaults(),
             ]
         );
     }

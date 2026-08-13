@@ -1,4 +1,6 @@
 @php
+    $org = $org ?? org_profile($profile);
+
     $fallbackRequirements = [
         'Mahasiswa/i aktif perguruan tinggi di Sumatera Selatan',
         'Usia 18–25 tahun pada tahun pemilihan',
@@ -29,7 +31,7 @@
 
     <div class="site-container relative grid gap-10 lg:grid-cols-2 lg:gap-14">
         <div>
-            <h2 class="section-title">Persyaratan Peserta</h2>
+            <h2 class="section-title">{{ $org->electionCopy('requirements_title') }}</h2>
             <div class="mt-3 h-px w-16 bg-gold"></div>
 
             <ul class="mt-8 space-y-3">
@@ -50,16 +52,16 @@
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
                     </svg>
-                    Unduh Panduan Lengkap
+                    {{ $org->electionCopy('download_guide_full_label') }}
                 </a>
             @else
-                <p class="mt-8 text-sm text-muted">Panduan lengkap akan segera tersedia.</p>
+                <p class="mt-8 text-sm text-muted">{{ $org->electionCopy('guide_unavailable_text') }}</p>
             @endif
         </div>
 
         <div class="grid items-start gap-6 sm:grid-cols-[1fr_0.85fr]">
             <div>
-                <h2 class="section-title">Apa yang Anda Dapatkan?</h2>
+                <h2 class="section-title">{{ $org->electionCopy('benefits_title') }}</h2>
                 <div class="mt-3 h-px w-16 bg-gold"></div>
 
                 <ul class="mt-8 space-y-5">
@@ -80,7 +82,12 @@
             </div>
 
             <figure class="overflow-hidden rounded-lg shadow-md shadow-navy/10">
-                {!! site_image('images/home/sejarah-grand-final.jpg', 'Suasana Grand Final BGK', ['class' => 'aspect-[3/4] h-full w-full object-cover']) !!}
+                {!! site_image_or_storage(
+                    $org->electionBenefitsImageStoragePath(),
+                    $org->electionBenefitsImagePath(),
+                    'Suasana Grand Final BGK',
+                    ['class' => 'aspect-[3/4] h-full w-full object-cover']
+                ) !!}
             </figure>
         </div>
     </div>

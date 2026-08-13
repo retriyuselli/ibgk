@@ -23,7 +23,8 @@
                 </div>
             </div>
         @endif
-        <input id="photo" type="file" name="photo" accept="image/*" class="w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-navy file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white">
+        <input id="photo" type="file" name="photo" accept="image/*" data-compress-image class="w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-navy file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white">
+        <p class="mt-1 text-xs text-muted" data-compress-status>Foto akan dikompres otomatis ke ukuran standar.</p>
         @error('photo')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
     </div>
 </fieldset>

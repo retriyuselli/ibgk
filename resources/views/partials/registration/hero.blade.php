@@ -1,10 +1,11 @@
 @php
+    $org = $org ?? org_profile($profile ?? null);
     $year = $election?->year ?? now()->year;
 @endphp
 
 <section class="relative isolate overflow-hidden bg-navy text-white">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
-    {!! site_image_or_storage($election?->banner, 'images/home/hero-ampera.jpg', 'Daftar BGK Sumatera Selatan', ['class' => 'absolute inset-0 h-full w-full object-cover opacity-35', 'lazy' => false]) !!}
+    {!! site_image_or_storage($election?->banner, $org->registrationCopy('hero_banner_fallback'), $org->registrationCopy('hero_banner_alt'), ['class' => 'absolute inset-0 h-full w-full object-cover opacity-35', 'lazy' => false]) !!}
     <div class="absolute inset-0 bg-gradient-to-b from-navy-deep/95 via-navy/88 to-navy-deep/90"></div>
 
     <div class="site-container relative py-16 text-center sm:py-20 lg:py-24">
@@ -12,17 +13,17 @@
             <ol class="flex flex-wrap items-center justify-center gap-2">
                 <li><a href="{{ route('home') }}" class="hover:text-gold">Beranda</a></li>
                 <li aria-hidden="true">›</li>
-                <li><a href="{{ route('election') }}" class="hover:text-gold">Pemilihan BGK</a></li>
+                <li><a href="{{ route('election') }}" class="hover:text-gold">{{ $org->electionCopy('breadcrumb_label') }}</a></li>
                 <li aria-hidden="true">›</li>
-                <li class="text-white/90">Daftar</li>
+                <li class="text-white/90">{{ $org->registrationCopy('breadcrumb_label') }}</li>
             </ol>
         </nav>
 
         <h1 class="hero-animate-delay mt-8 font-display text-3xl font-semibold tracking-tight text-gold sm:text-4xl lg:text-5xl">
-            Daftar BGK {{ $year }}
+            {{ $org->registrationCopy('hero_title', ['year' => $year]) }}
         </h1>
         <p class="hero-animate-delay mt-2 font-display text-xl text-white/90 sm:text-2xl">
-            IBGK Sumatera Selatan
+            {{ $org->registrationCopy('hero_subtitle') }}
         </p>
 
         <div class="ornament-divider hero-animate-delay mt-5">
@@ -32,12 +33,13 @@
         </div>
 
         <p class="hero-animate-delay-2 mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
-            {{ $election?->short_description ?? 'Isi formulir pendaftaran resmi Pemilihan Bujang Gadis Kampus Sumatera Selatan dan jadilah bagian dari generasi muda kampus yang berdampak.' }}
+            {{ $election?->short_description ?? $org->registrationCopy('hero_description_fallback') }}
         </p>
 
         @if ($election?->registration_start && $election?->registration_end)
             <p class="hero-animate-delay-2 mt-4 text-xs font-semibold tracking-[0.12em] text-gold uppercase">
-                Pendaftaran: {{ $election->registration_start->translatedFormat('d F Y') }} – {{ $election->registration_end->translatedFormat('d F Y') }}
+                {{ $org->registrationCopy('registration_period_prefix') }}
+                {{ $election->registration_start->translatedFormat('d F Y') }} – {{ $election->registration_end->translatedFormat('d F Y') }}
             </p>
         @endif
     </div>

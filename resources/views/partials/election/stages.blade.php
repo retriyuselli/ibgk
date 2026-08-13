@@ -1,4 +1,6 @@
 @php
+    $org = $org ?? org_profile($profile);
+
     $fallbackStages = [
         ['Pendaftaran', 'Pendaftaran online bagi mahasiswa/i Sumatera Selatan.'],
         ['Seleksi Administrasi', 'Verifikasi berkas dan kelengkapan persyaratan.'],
@@ -23,7 +25,7 @@
 
     <div class="site-container relative">
         <div class="stages-header stages-animate mx-auto max-w-3xl text-center">
-            <h2 class="font-display text-3xl font-semibold text-gold sm:text-4xl">Tahapan Seleksi</h2>
+            <h2 class="font-display text-3xl font-semibold text-gold sm:text-4xl">{{ $org->electionCopy('stages_title') }}</h2>
             <div class="ornament-divider mt-4">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M12 2l1.8 5.5L20 9.2l-4.5 3.5L17 19l-5-3.2L7 19l1.5-6.3L4 9.2l6.2-1.7L12 2z"/>

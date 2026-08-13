@@ -50,4 +50,20 @@ return [
 
     'alumni_profile_photo_quality' => (int) env('ALUMNI_PROFILE_PHOTO_QUALITY', 82),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Profile Photo Upload (peserta & alumni)
+    |--------------------------------------------------------------------------
+    |
+    | File asli boleh besar; setelah upload dikompres ke sisi terpanjang
+    | dan kualitas JPEG di bawah ini.
+    |
+    */
+
+    'profile_photo_max_upload_kb' => (int) env('PROFILE_PHOTO_MAX_UPLOAD_KB', 10240),
+
+    'profile_photo_max_dimension' => (int) env('PROFILE_PHOTO_MAX_DIMENSION', env('ALUMNI_PROFILE_PHOTO_MAX_DIMENSION', 1000)),
+
+    'profile_photo_quality' => (int) env('PROFILE_PHOTO_QUALITY', env('ALUMNI_PROFILE_PHOTO_QUALITY', 82)),
+
 ];

@@ -158,7 +158,11 @@ class AlumniForm
                             ->disk('public')
                             ->visibility('public')
                             ->imageEditor()
-                            ->maxSize(5120)
+                            ->maxSize((int) config('site.profile_photo_max_upload_kb', 10240))
+                            ->imageResizeMode('contain')
+                            ->imageResizeTargetWidth((string) config('site.profile_photo_max_dimension', 1000))
+                            ->imageResizeTargetHeight((string) config('site.profile_photo_max_dimension', 1000))
+                            ->imageResizeUpscale(false)
                             ->columnSpanFull(),
                     ]),
 

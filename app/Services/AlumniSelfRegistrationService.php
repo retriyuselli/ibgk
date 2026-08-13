@@ -33,7 +33,7 @@ class AlumniSelfRegistrationService
             'linkedin' => ['nullable', 'url', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:30'],
-            'photo' => ['nullable', 'image', 'max:5120'],
+            'photo' => ['nullable', 'image', 'max:'.config('site.profile_photo_max_upload_kb', 10240)],
             'terms' => ['accepted'],
         ];
     }

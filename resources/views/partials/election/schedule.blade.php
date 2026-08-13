@@ -1,4 +1,7 @@
 @php
+    $org = $org ?? org_profile($profile);
+    $year = $election?->year ?? now()->year;
+
     $months = [
         1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
         5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
@@ -13,7 +16,7 @@
         return $date->format('j').' '.$months[(int) $date->format('n')].' '.$date->format('Y');
     };
 
-    $formatRange = function ($start, $end) use ($formatDate): string {
+    $formatRange = function ($start, $end) use ($formatDate, $org): string {
         if ($start && $end) {
             if ($start->isSameDay($end)) {
                 return $formatDate($start);
@@ -22,10 +25,8 @@
             return $formatDate($start).' – '.$formatDate($end);
         }
 
-        return 'Menyesuaikan jadwal';
+        return $org->electionCopy('schedule_tbd_label');
     };
-
-    $year = $election?->year ?? now()->year;
 
     $cards = $election?->stages?->isNotEmpty()
         ? $election->stages
@@ -41,7 +42,7 @@
 <section id="jadwal" class="relative bg-cream-muted py-16 sm:py-20 lg:py-24 overflow-hidden">
     <div class="site-container">
         <div class="mx-auto max-w-3xl text-center">
-            <h2 class="section-title">Informasi Pemilihan BGK Sumsel {{ $year }}</h2>
+            <h2 class="section-title">{{ $org->electionCopy('schedule_title', ['year' => $year]) }}</h2>
             <div class="ornament-divider mt-4">
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M12 2l1.8 5.5L20 9.2l-4.5 3.5L17 19l-5-3.2L7 19l1.5-6.3L4 9.2l6.2-1.7L12 2z"/>
@@ -91,7 +92,7 @@
         </div>
 
         <p class="mt-6 text-center text-xs text-muted italic">
-            * Jadwal dapat berubah sewaktu-waktu mengikuti keputusan panitia resmi.
+            {{ $org->electionCopy('schedule_footnote') }}
         </p>
     </div>
 </section>

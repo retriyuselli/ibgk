@@ -2,6 +2,30 @@
     @include('partials.auth.decorative-shapes', ['variant' => 'light', 'density' => 'default'])
 
     <div class="site-container relative z-[2]">
+        @if (session('participant_registration_welcome'))
+            @php($welcome = session('participant_registration_welcome'))
+            <div class="mb-6 rounded-sm border border-gold/35 bg-white px-5 py-5 text-sm text-navy shadow-sm">
+                <p class="font-display text-lg font-semibold text-navy">Pendaftaran berhasil, {{ $welcome['name'] }}!</p>
+                <p class="mt-3 leading-relaxed text-muted">
+                    Akun Dashboard Peserta sudah aktif. Gunakan email yang didaftarkan untuk masuk kembali nanti.
+                    Status lulus atau tidak lulus tiap tahap akan tampil di halaman ini setelah panitia mengumumkan hasilnya.
+                </p>
+                <div class="mt-4 rounded-md border border-navy/10 bg-cream/50 px-4 py-3">
+                    <p class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Akun Peserta</p>
+                    <dl class="mt-3 grid gap-2 sm:grid-cols-2">
+                        <div>
+                            <dt class="text-xs text-muted">Email</dt>
+                            <dd class="mt-0.5 font-medium text-navy">{{ $welcome['email'] }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs text-muted">Nomor Registrasi</dt>
+                            <dd class="mt-0.5 font-medium text-navy">{{ $welcome['number'] }}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        @endif
+
         @if (session('alumni_registration_welcome'))
             @php($welcome = session('alumni_registration_welcome'))
             <div class="mb-6 rounded-sm border border-gold/35 bg-white px-5 py-5 text-sm text-navy shadow-sm">
@@ -95,6 +119,75 @@
                                 </a>
                             </div>
                         </div>
+                    </div>
+                @endif
+
+                @if ($participant ?? null)
+                    @php
+                        $currentStage = $participant->currentStage;
+                        $nextStage = $participant->nextStage();
+                        $result = $participant->stage_result ?: 'pending';
+                    @endphp
+                    <div class="mt-6 rounded-sm border border-navy/8 bg-cream/40 px-4 py-4">
+                        <p class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Status Seleksi Peserta</p>
+                        <p class="mt-2 text-sm font-medium text-navy">
+                            {{ $participant->election?->name ?? 'Pemilihan BGK' }}
+                            · {{ $participant->registration_number }}
+                        </p>
+                        <p class="mt-1 text-xs text-muted">
+                            Tahap saat ini: {{ $currentStage?->name ?? 'Menunggu penjadwalan tahap' }}
+                        </p>
+
+                        <div class="mt-4 rounded-md border px-4 py-3
+                            @if ($result === 'passed') border-emerald-200 bg-emerald-50 text-emerald-900
+                            @elseif ($result === 'failed') border-rose-200 bg-rose-50 text-rose-900
+                            @else border-navy/10 bg-white text-navy
+                            @endif">
+                            <p class="text-xs font-semibold tracking-[0.12em] uppercase">
+                                {{ $participant->stageResultLabel() }}
+                            </p>
+                            <p class="mt-2 text-sm leading-relaxed">
+                                @if ($result === 'passed' && $nextStage)
+                                    Selamat, Anda dinyatakan lulus tahap
+                                    <strong>{{ $currentStage?->name ?? 'saat ini' }}</strong>.
+                                    Tahap selanjutnya: <strong>{{ $nextStage->name }}</strong>.
+                                @elseif ($result === 'passed')
+                                    Selamat, Anda dinyatakan lulus seluruh tahapan yang diumumkan saat ini.
+                                @elseif ($result === 'failed')
+                                    Mohon maaf, Anda dinyatakan tidak lulus pada tahap
+                                    <strong>{{ $currentStage?->name ?? 'saat ini' }}</strong>
+                                    dan tidak berlanjut ke tahap selanjutnya.
+                                @else
+                                    Pendaftaran Anda sudah diterima. Panitia akan mengumumkan apakah Anda lulus atau tidak untuk tahap selanjutnya di dashboard ini.
+                                @endif
+                            </p>
+                            @if (filled($participant->stage_notes))
+                                <p class="mt-2 text-xs leading-relaxed opacity-80">{{ $participant->stage_notes }}</p>
+                            @endif
+                        </div>
+
+                        @if ($participant->election?->stages?->isNotEmpty())
+                            <ol class="mt-4 space-y-2">
+                                @foreach ($participant->election->stages->sortBy('sort_order') as $stage)
+                                    @php
+                                        $isCurrent = $participant->current_stage_id === $stage->id;
+                                    @endphp
+                                    <li class="flex items-start gap-3 text-xs">
+                                        <span @class([
+                                            'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold',
+                                            'bg-gold text-navy-deep' => $isCurrent,
+                                            'bg-navy/8 text-navy' => ! $isCurrent,
+                                        ])>{{ $loop->iteration }}</span>
+                                        <span>
+                                            <span class="font-semibold text-navy">{{ $stage->name }}</span>
+                                            @if ($isCurrent)
+                                                <span class="text-gold"> · tahap Anda saat ini</span>
+                                            @endif
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ol>
+                        @endif
                     </div>
                 @endif
             </div>

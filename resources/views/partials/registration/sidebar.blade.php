@@ -1,4 +1,5 @@
 @php
+    $org = $org ?? org_profile($profile ?? null);
     $year = $election?->year ?? now()->year;
 
     $fallbackRequirements = [
@@ -18,7 +19,7 @@
 
 <aside class="space-y-6">
     <div class="rounded-sm border border-navy/8 bg-white p-5 shadow-sm">
-        <h2 class="font-display text-lg font-semibold text-navy">Informasi Pemilihan</h2>
+        <h2 class="font-display text-lg font-semibold text-navy">{{ $org->registrationCopy('sidebar_info_title') }}</h2>
         <div class="mt-3 h-px w-10 bg-gold"></div>
         <dl class="mt-5 space-y-3 text-sm">
             <div>
@@ -45,12 +46,12 @@
             @endif
         </dl>
         <a href="{{ route('election') }}" class="mt-5 inline-flex text-sm font-semibold text-gold hover:text-navy">
-            Lihat detail pemilihan →
+            {{ $org->registrationCopy('sidebar_election_link') }}
         </a>
     </div>
 
     <div class="rounded-sm border border-navy/8 bg-white p-5 shadow-sm">
-        <h2 class="font-display text-lg font-semibold text-navy">Persyaratan Peserta</h2>
+        <h2 class="font-display text-lg font-semibold text-navy">{{ $org->registrationCopy('sidebar_requirements_title') }}</h2>
         <div class="mt-3 h-px w-10 bg-gold"></div>
         <ul class="mt-5 space-y-3">
             @foreach ($items as $requirement)
@@ -64,7 +65,7 @@
 
     @if ($stages->isNotEmpty())
         <div class="rounded-sm border border-navy/8 bg-white p-5 shadow-sm">
-            <h2 class="font-display text-lg font-semibold text-navy">Tahapan Seleksi</h2>
+            <h2 class="font-display text-lg font-semibold text-navy">{{ $org->registrationCopy('sidebar_stages_title') }}</h2>
             <div class="mt-3 h-px w-10 bg-gold"></div>
             <ol class="mt-5 space-y-3">
                 @foreach ($stages->take(5) as $index => $stage)
@@ -83,12 +84,12 @@
     @endif
 
     <div class="rounded-sm bg-navy p-5 text-white shadow-sm">
-        <h2 class="font-display text-lg font-semibold text-gold">Butuh Bantuan?</h2>
+        <h2 class="font-display text-lg font-semibold text-gold">{{ $org->registrationCopy('sidebar_help_title') }}</h2>
         <p class="mt-3 text-xs leading-relaxed text-white/75">
-            Hubungi panitia Pemilihan BGK {{ $year }} jika ada pertanyaan seputar pendaftaran.
+            {{ $org->registrationCopy('sidebar_help_text', ['year' => $year]) }}
         </p>
         <a href="{{ route('contact') }}" class="btn-outline-gold mt-5 inline-flex text-xs">
-            Hubungi Panitia
+            {{ $org->registrationCopy('sidebar_help_button') }}
         </a>
     </div>
 </aside>

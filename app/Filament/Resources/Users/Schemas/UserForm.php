@@ -52,7 +52,7 @@ class UserForm
                             ->where('name', Roles::PENGUNJUNG)
                             ->pluck('id')
                             ->all())
-                        ->helperText('Super Admin dan Admin dapat mengakses panel admin. Pengunjung dan Anggota hanya dashboard pengguna.')
+                        ->helperText('Super Admin dan Admin dapat mengakses panel admin. Pengunjung, Peserta, dan Anggota hanya dashboard pengguna.')
                         ->columnSpanFull(),
                 ]),
         ]);

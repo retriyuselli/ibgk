@@ -8,6 +8,8 @@ class Roles
 
     public const PENGUNJUNG = 'pengunjung';
 
+    public const PESERTA = 'peserta';
+
     public const ANGGOTA = 'anggota';
 
     public const ADMIN = 'admin';
@@ -18,6 +20,7 @@ class Roles
         return [
             self::SUPER_ADMIN,
             self::PENGUNJUNG,
+            self::PESERTA,
             self::ANGGOTA,
             self::ADMIN,
         ];
@@ -29,6 +32,7 @@ class Roles
         return [
             self::SUPER_ADMIN => 'Super Admin',
             self::PENGUNJUNG => 'Pengunjung',
+            self::PESERTA => 'Peserta',
             self::ANGGOTA => 'Anggota',
             self::ADMIN => 'Admin',
         ];

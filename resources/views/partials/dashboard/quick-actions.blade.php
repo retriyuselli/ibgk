@@ -28,7 +28,7 @@
                 </a>
             @endif
 
-            @if ($canBrowsePublicSite)
+            @if ($canBrowsePublicSite && ! ($participant ?? null))
                 <a href="{{ route('election.register') }}" class="dashboard-action-card group">
                     <span class="dashboard-action-icon bg-gold/15 text-navy">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8.5 11a4 4 0 100-8 4 4 0 000 8zM20 8v6m3-3h-6"/></svg>
@@ -38,7 +38,9 @@
                         <span class="mt-1 block text-xs leading-relaxed text-muted">Ikuti pemilihan Bujang Gadis Kampus Sumsel.</span>
                     </span>
                 </a>
+            @endif
 
+            @if ($canBrowsePublicSite)
                 <a href="{{ route('home') }}" class="dashboard-action-card group">
                     <span class="dashboard-action-icon bg-cream-muted text-navy">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>

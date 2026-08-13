@@ -168,4 +168,82 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    const maxPhotoDimension = 1000;
+    const photoQuality = 0.82;
+
+    const compressImageFile = (file, maxDimension, quality) => new Promise((resolve, reject) => {
+        if (! file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+            resolve(file);
+            return;
+        }
+
+        const image = new Image();
+        const objectUrl = URL.createObjectURL(file);
+
+        image.onload = () => {
+            URL.revokeObjectURL(objectUrl);
+
+            const longest = Math.max(image.width, image.height);
+            const scale = longest > maxDimension ? maxDimension / longest : 1;
+            const width = Math.max(1, Math.round(image.width * scale));
+            const height = Math.max(1, Math.round(image.height * scale));
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+
+            const context = canvas.getContext('2d');
+            context.fillStyle = '#ffffff';
+            context.fillRect(0, 0, width, height);
+            context.drawImage(image, 0, 0, width, height);
+
+            canvas.toBlob((blob) => {
+                if (! blob) {
+                    reject(new Error('Gagal mengompres foto.'));
+                    return;
+                }
+
+                const name = file.name.replace(/\.[^.]+$/, '.jpg');
+                resolve(new File([blob], name, { type: 'image/jpeg', lastModified: Date.now() }));
+            }, 'image/jpeg', quality);
+        };
+
+        image.onerror = () => {
+            URL.revokeObjectURL(objectUrl);
+            resolve(file);
+        };
+
+        image.src = objectUrl;
+    });
+
+    document.querySelectorAll('input[data-compress-image]').forEach((input) => {
+        input.addEventListener('change', async () => {
+            const file = input.files?.[0];
+            const status = input.parentElement?.querySelector('[data-compress-status]');
+
+            if (! file) {
+                return;
+            }
+
+            if (status) {
+                status.textContent = 'Mengompres foto...';
+            }
+
+            try {
+                const compressed = await compressImageFile(file, maxPhotoDimension, photoQuality);
+                const transfer = new DataTransfer();
+                transfer.items.add(compressed);
+                input.files = transfer.files;
+
+                if (status) {
+                    const sizeKb = Math.max(1, Math.round(compressed.size / 1024));
+                    status.textContent = `Foto dikompres ke ukuran standar (${sizeKb} KB).`;
+                }
+            } catch {
+                if (status) {
+                    status.textContent = 'Foto akan dikompres otomatis di server.';
+                }
+            }
+        });
+    });
 });
