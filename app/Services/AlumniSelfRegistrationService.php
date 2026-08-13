@@ -58,7 +58,7 @@ class AlumniSelfRegistrationService
     {
         $batch = AlumniBatch::query()->find($data['alumni_batch_id'] ?? null);
 
-        if (! $batch || ! $batch->isElection() || ! $batch->is_active) {
+        if (! $batch || ! $batch->is_active || (! $batch->isElection() && ! $batch->isFounders())) {
             throw ValidationException::withMessages([
                 'alumni_batch_id' => 'Angkatan yang dipilih tidak valid.',
             ]);
@@ -99,13 +99,6 @@ class AlumniSelfRegistrationService
     /** @return \Illuminate\Database\Eloquent\Collection<int, AlumniBatch> */
     public function availableBatches()
     {
-        AlumniBatch::syncElectionYearBatches();
-
-        return AlumniBatch::query()
-            ->election()
-            ->where('is_active', true)
-            ->whereBetween('year', [AlumniBatch::FIRST_ELECTION_YEAR, (int) now()->format('Y')])
-            ->orderByDesc('year')
-            ->get();
+        return AlumniBatch::orderedForPublicSite();
     }
 }
