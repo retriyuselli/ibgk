@@ -3,7 +3,9 @@
 
     <div class="site-container relative z-[2]">
         @if (session('participant_registration_welcome'))
-            @php($welcome = session('participant_registration_welcome'))
+            @php
+                $welcome = session('participant_registration_welcome');
+            @endphp
             <div class="mb-6 rounded-sm border border-gold/35 bg-white px-5 py-5 text-sm text-navy shadow-sm">
                 <p class="font-display text-lg font-semibold text-navy">Pendaftaran berhasil, {{ $welcome['name'] }}!</p>
                 <p class="mt-3 leading-relaxed text-muted">
@@ -27,7 +29,9 @@
         @endif
 
         @if (session('alumni_registration_welcome'))
-            @php($welcome = session('alumni_registration_welcome'))
+            @php
+                $welcome = session('alumni_registration_welcome');
+            @endphp
             <div class="mb-6 rounded-sm border border-gold/35 bg-white px-5 py-5 text-sm text-navy shadow-sm">
                 <p class="font-display text-lg font-semibold text-navy">Terima kasih, {{ $welcome['name'] }}!</p>
                 <p class="mt-3 leading-relaxed text-muted">
@@ -63,8 +67,9 @@
             </div>
         @endif
 
-        <div class="grid gap-6 lg:grid-cols-3">
-            <div class="rounded-sm border border-navy/8 bg-white p-6 shadow-sm lg:col-span-2">
+        <div class="rounded-sm border border-navy/8 bg-white p-6 shadow-sm sm:p-8">
+            <div class="grid items-start gap-8 lg:grid-cols-3 lg:gap-10">
+                <div class="min-w-0 lg:col-span-2">
                 <h2 class="font-display text-xl font-semibold text-navy">Informasi Akun</h2>
                 <div class="mt-3 h-px w-12 bg-gold"></div>
 
@@ -126,7 +131,7 @@
                     @php
                         $currentStage = $participant->currentStage;
                         $nextStage = $participant->nextStage();
-                        $result = $participant->stage_result ?: 'pending';
+                        $stageResult = $participant->stage_result ?: 'pending';
                     @endphp
                     <div class="mt-6 rounded-sm border border-navy/8 bg-cream/40 px-4 py-4">
                         <p class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Status Seleksi Peserta</p>
@@ -138,22 +143,23 @@
                             Tahap saat ini: {{ $currentStage?->name ?? 'Menunggu penjadwalan tahap' }}
                         </p>
 
-                        <div class="mt-4 rounded-md border px-4 py-3
-                            @if ($result === 'passed') border-emerald-200 bg-emerald-50 text-emerald-900
-                            @elseif ($result === 'failed') border-rose-200 bg-rose-50 text-rose-900
-                            @else border-navy/10 bg-white text-navy
-                            @endif">
+                        <div @class([
+                            'mt-4 rounded-md border px-4 py-3',
+                            'border-emerald-200 bg-emerald-50 text-emerald-900' => $stageResult === 'passed',
+                            'border-rose-200 bg-rose-50 text-rose-900' => $stageResult === 'failed',
+                            'border-navy/10 bg-white text-navy' => $stageResult === 'pending',
+                        ])>
                             <p class="text-xs font-semibold tracking-[0.12em] uppercase">
                                 {{ $participant->stageResultLabel() }}
                             </p>
                             <p class="mt-2 text-sm leading-relaxed">
-                                @if ($result === 'passed' && $nextStage)
+                                @if ($stageResult === 'passed' && $nextStage)
                                     Selamat, Anda dinyatakan lulus tahap
                                     <strong>{{ $currentStage?->name ?? 'saat ini' }}</strong>.
                                     Tahap selanjutnya: <strong>{{ $nextStage->name }}</strong>.
-                                @elseif ($result === 'passed')
+                                @elseif ($stageResult === 'passed')
                                     Selamat, Anda dinyatakan lulus seluruh tahapan yang diumumkan saat ini.
-                                @elseif ($result === 'failed')
+                                @elseif ($stageResult === 'failed')
                                     Mohon maaf, Anda dinyatakan tidak lulus pada tahap
                                     <strong>{{ $currentStage?->name ?? 'saat ini' }}</strong>
                                     dan tidak berlanjut ke tahap selanjutnya.
@@ -192,7 +198,7 @@
                 @endif
             </div>
 
-            <div class="rounded-sm border border-navy/8 bg-white p-6 shadow-sm">
+            <aside class="min-w-0 border-t border-navy/8 pt-8 lg:col-span-1 lg:border-t-0 lg:border-l lg:px-10 lg:pt-0">
                 <h2 class="font-display text-xl font-semibold text-navy">Status Akun</h2>
                 <div class="mt-3 h-px w-12 bg-gold"></div>
 
@@ -220,6 +226,7 @@
                         </span>
                     </li>
                 </ul>
+            </aside>
             </div>
         </div>
     </div>
