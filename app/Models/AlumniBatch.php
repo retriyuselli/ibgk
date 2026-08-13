@@ -231,18 +231,44 @@ class AlumniBatch extends Model
         return $batches->values();
     }
 
+    /** @return Collection<int, self> */
+    public static function batchesWithPublicAlumniOrdered(): Collection
+    {
+        static::syncElectionYearBatches();
+        static::syncFoundersBatch();
+
+        return static::query()
+            ->where('is_active', true)
+            ->where(function (Builder $query): void {
+                $query
+                    ->where(fn (Builder $builder) => $builder
+                        ->election()
+                        ->whereBetween('year', [self::FIRST_ELECTION_YEAR, (int) now()->format('Y')]))
+                    ->orWhere(fn (Builder $builder) => $builder->founders());
+            })
+            ->withPublicMemberCount()
+            ->orderByDesc('year')
+            ->get()
+            ->filter(fn (self $batch): bool => $batch->publicMemberCount() > 0)
+            ->values();
+    }
+
+    /** @return Collection<int, self> */
+    public static function sidebarBatchesOrdered(): Collection
+    {
+        return static::batchesWithPublicAlumniOrdered();
+    }
+
     public static function sidebarPageCount(): int
     {
-        return max(1, (int) ceil(static::electionBatchesOrdered()->count() / self::SIDEBAR_PAGE_SIZE));
+        $count = static::sidebarBatchesOrdered()->count();
+
+        return max(1, (int) ceil($count / self::SIDEBAR_PAGE_SIZE));
     }
 
     public static function sidebarPageForBatch(self $batch): int
     {
-        if ($batch->isFounders()) {
-            return static::sidebarPageCount();
-        }
-
-        $index = static::electionBatchesOrdered()->search(
+        $index = static::sidebarBatchesOrdered()->search(
             fn (self $item): bool => $item->id === $batch->id
         );
 
@@ -257,19 +283,10 @@ class AlumniBatch extends Model
     public static function sidebarBatchesForPage(int $page): Collection
     {
         $page = max(1, min($page, static::sidebarPageCount()));
-        $items = static::electionBatchesOrdered()
+
+        return static::sidebarBatchesOrdered()
             ->slice(($page - 1) * self::SIDEBAR_PAGE_SIZE, self::SIDEBAR_PAGE_SIZE)
             ->values();
-
-        if ($page === static::sidebarPageCount()) {
-            $founders = static::foundersBatch();
-
-            if ($founders) {
-                return $items->push($founders)->values();
-            }
-        }
-
-        return $items;
     }
 
     public static function syncFoundersBatch(): void

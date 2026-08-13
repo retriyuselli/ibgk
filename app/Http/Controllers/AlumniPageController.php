@@ -24,7 +24,7 @@ class AlumniPageController extends Controller
 
     public function __invoke(Request $request): View|JsonResponse
     {
-        $batches = AlumniBatch::orderedForPublicSite();
+        $batches = AlumniBatch::batchesWithPublicAlumniOrdered();
 
         $angkatanSlug = trim($request->string('angkatan')->toString());
         $selectedBatch = $batches->firstWhere('slug', $angkatanSlug) ?? $batches->first();
