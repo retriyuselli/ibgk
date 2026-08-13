@@ -26,7 +26,17 @@
             <div class="mx-auto mt-3 h-px w-12 bg-gold"></div>
             <p class="mt-4 text-sm leading-relaxed text-muted">
                 Halaman website IBGK Sumatera Selatan saat ini masih dalam tahap pengembangan.
-                Silakan masuk dengan akun Anda untuk mengakses aplikasi.
+                Pendaftaran Peserta BGK tetap dibuka. Silakan daftar, atau masuk jika sudah punya akun.
+            </p>
+        </div>
+
+        <div class="auth-field-animate mt-6" style="--auth-delay: 0.06s">
+            <a href="{{ route('election.register') }}" class="btn-gold w-full justify-center">
+                Daftar Peserta BGK
+                <span aria-hidden="true">→</span>
+            </a>
+            <p class="mt-3 text-center text-xs text-muted">
+                <a href="{{ route('election') }}" class="font-semibold text-gold hover:text-navy">Lihat info Pemilihan BGK</a>
             </p>
         </div>
 

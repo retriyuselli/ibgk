@@ -22,6 +22,9 @@ class EnsureDevelopmentAccess
         'alumni.profile.form.submit',
         'alumni.register',
         'alumni.register.store',
+        'election',
+        'election.register',
+        'election.register.submit',
     ];
 
     /** @var list<string> */
