@@ -8,6 +8,17 @@
         </span>
     </div>
 
+    @if (filled($selectedBatch?->photo))
+        <figure class="mt-5 overflow-hidden rounded-md border border-navy/8 bg-white shadow-sm">
+            {!! site_image_or_storage($selectedBatch->photo, 'images/home/alumni-placeholder.jpg', 'Foto angkatan '.$selectedBatch->name, ['class' => 'aspect-[16/9] w-full object-cover sm:aspect-[21/9]']) !!}
+            @if (filled($selectedBatch->description))
+                <figcaption class="border-t border-navy/8 px-4 py-3 text-sm leading-relaxed text-muted">
+                    {{ $selectedBatch->description }}
+                </figcaption>
+            @endif
+        </figure>
+    @endif
+
     @if ($alumni->isNotEmpty())
         <div id="alumni-grid" class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3 2xl:grid-cols-4">
             @include('partials.alumni.card-items')
