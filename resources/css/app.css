@@ -1496,7 +1496,7 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-tabs {
-    @apply flex gap-1 overflow-x-auto border-b border-navy/10;
+    @apply flex justify-center gap-1 overflow-x-auto border-b border-navy/10;
     scrollbar-width: none;
 }
 
