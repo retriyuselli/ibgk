@@ -83,4 +83,15 @@ class OrganizationMember extends Model
     {
         return filled($this->photo) ? $this->photo : $this->alumni?->photo;
     }
+
+    public function alumniShowUrl(): ?string
+    {
+        $alumni = $this->alumni;
+
+        if ($alumni === null || blank($alumni->slug)) {
+            return null;
+        }
+
+        return route('alumni.show', $alumni);
+    }
 }

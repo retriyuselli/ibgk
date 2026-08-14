@@ -1559,6 +1559,10 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
     @apply h-full w-full;
 }
 
+a.board-member-card {
+    @apply text-inherit no-underline;
+}
+
 @media (min-width: 640px) {
     .board-org-officers {
         grid-template-columns: repeat(2, minmax(0, 1fr));
