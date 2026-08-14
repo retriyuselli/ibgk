@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HonoraryMember;
 use App\Models\OrganizationMember;
 use App\Models\OrganizationPeriod;
 use App\Models\OrganizationProfile;
@@ -64,11 +63,6 @@ class BoardController extends Controller
         $hasMore = $ungroupedMembers->isNotEmpty()
             || $divisionGroups->contains(fn (array $group): bool => $group['anggota']->isNotEmpty());
 
-        $honoraryMembers = HonoraryMember::query()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->get();
-
         return view('pages.board', [
             'profile' => $profile,
             'period' => $period,
@@ -78,7 +72,6 @@ class BoardController extends Controller
             'divisionGroups' => $divisionGroups,
             'ungroupedMembers' => $ungroupedMembers,
             'hasMore' => $hasMore,
-            'honoraryMembers' => $honoraryMembers,
             'hasStructure' => $members->isNotEmpty(),
         ]);
     }

@@ -1505,14 +1505,19 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-member-grid {
-    @apply grid w-full gap-4;
-    grid-template-columns: 1fr;
+    @apply flex w-full flex-wrap justify-center gap-4;
+}
+
+.board-member-grid > .board-member-card {
+    flex: 0 0 18rem;
+    width: 18rem;
+    max-width: 100%;
 }
 
 .board-slide-card {
-    flex: 0 0 16.5rem;
-    width: 16.5rem;
-    max-width: 16.5rem;
+    flex: 0 0 18rem;
+    width: 18rem;
+    max-width: 18rem;
 }
 
 .board-anggota-track::before,
@@ -1523,24 +1528,12 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
     scroll-snap-align: none;
 }
 
-@media (min-width: 640px) {
-    .board-member-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (min-width: 1024px) {
-    .board-member-grid {
-        grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr));
-    }
-}
-
 .board-tabs::-webkit-scrollbar {
     display: none;
 }
 
 .board-tab {
-    @apply flex min-w-[7.5rem] flex-col items-center gap-2 px-4 py-3 text-[11px] font-semibold tracking-wide text-muted uppercase transition sm:min-w-[9rem] sm:text-xs;
+    @apply flex min-w-[8.5rem] max-w-[13rem] flex-col items-center gap-2 px-3 py-3 text-center text-[11px] font-semibold tracking-wide text-muted uppercase transition sm:min-w-[10rem] sm:max-w-[15rem] sm:px-4 sm:text-xs;
 }
 
 .board-tab svg {
@@ -1566,7 +1559,8 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-org-chair {
-    @apply w-full max-w-sm;
+    width: 100%;
+    max-width: 20rem;
 }
 
 .board-org-stem {
@@ -1578,14 +1572,12 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-org-officers {
-    @apply relative grid w-full gap-4;
-    grid-template-columns: 1fr;
+    @apply relative flex w-full flex-col items-center gap-4;
 }
 
 .board-org-node {
     width: 100%;
-    max-width: 22rem;
-    justify-self: center;
+    max-width: 20rem;
 }
 
 .board-org-bar,
@@ -1615,14 +1607,24 @@ a.board-member-card {
 
 @media (min-width: 640px) {
     .board-org-officers {
-        grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr));
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.25rem;
+        width: auto;
+        max-width: 100%;
     }
 
     .board-org-node {
-        max-width: none;
+        flex: 0 0 18rem;
+        width: 18rem;
+        max-width: 100%;
     }
 
     .board-org-officers.is-single .board-org-node {
+        flex-basis: 20rem;
+        width: 20rem;
         max-width: 22rem;
     }
 }
@@ -1632,8 +1634,8 @@ a.board-member-card {
         display: block;
         position: absolute;
         top: 0;
-        left: calc(100% / (var(--board-count, 4) * 2));
-        width: calc(100% * (var(--board-count, 4) - 1) / var(--board-count, 4));
+        left: 9rem;
+        right: 9rem;
         border-top: 2px dotted #c5c9d0;
     }
 

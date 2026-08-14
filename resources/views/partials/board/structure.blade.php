@@ -35,7 +35,7 @@
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4l2.1 4.3 4.7.7-3.4 3.3.8 4.7L12 14.8 7.8 17l.8-4.7-3.4-3.3 4.7-.7L12 4z"/>
                 </svg>
-                <span>Dewan Pembina</span>
+                <span>Dewan Pertimbangan Organisasi</span>
             </button>
 
             @if ($showBidangTab)
@@ -138,20 +138,10 @@
             aria-labelledby="board-tab-pembina"
             hidden
         >
-            @if ($honoraryMembers->isNotEmpty())
-                <div class="board-member-grid">
-                    @foreach ($honoraryMembers as $member)
-                        @include('partials.board.honorary-card', ['member' => $member])
-                    @endforeach
-                </div>
-            @else
-                <div class="rounded-lg border border-navy/10 bg-white px-6 py-14 text-center">
-                    <p class="font-display text-xl font-semibold text-navy">Dewan Pembina belum tersedia</p>
-                    <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
-                        Nama dewan pembina atau anggota kehormatan akan tampil di sini setelah data diisi melalui panel admin.
-                    </p>
-                </div>
-            @endif
+            <div class="rounded-lg border border-navy/10 bg-white px-6 py-16 text-center sm:py-20">
+                <p class="text-xs font-semibold tracking-[0.2em] text-gold uppercase">Dewan Pertimbangan Organisasi</p>
+                <p class="mt-4 font-display text-3xl font-semibold text-navy sm:text-4xl">Coming Soon</p>
+            </div>
         </div>
 
         @if ($showBidangTab)
@@ -170,7 +160,7 @@
                                 Bidang {{ $group['division']?->displayName() ?? '' }}
                             </h3>
                             @if ($group['lead'])
-                                <div class="mx-auto mb-6 max-w-sm">
+                                <div class="mx-auto mb-6 w-full max-w-[18rem]">
                                     @include('partials.board.member-card', ['member' => $group['lead']])
                                 </div>
                             @endif
