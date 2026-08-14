@@ -1627,34 +1627,28 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
     flex-wrap: wrap;
     justify-content: flex-start;
     width: 100%;
+    max-width: 18rem;
     margin-inline: auto;
     gap: 1rem;
 }
 
 .board-anggota-grid > .board-member-card {
-    flex: 0 0 100%;
-    width: 100%;
-    max-width: 20rem;
+    flex: 0 0 18rem;
+    width: 18rem;
+    max-width: 100%;
     min-width: 0;
 }
 
 @media (min-width: 640px) {
-    .board-anggota-grid > .board-member-card {
-        flex: 0 0 calc((100% - 1rem) / 2);
-        width: calc((100% - 1rem) / 2);
-        max-width: none;
+    .board-anggota-grid {
+        max-width: calc((18rem * 2) + 1rem);
     }
 }
 
 @media (min-width: 1024px) {
     .board-anggota-grid {
+        max-width: calc((18rem * 4) + (1.25rem * 3));
         gap: 1.25rem;
-    }
-
-    .board-anggota-grid > .board-member-card {
-        flex: 0 0 calc((100% - 3.75rem) / 4);
-        width: calc((100% - 3.75rem) / 4);
-        max-width: none;
     }
 }
 
