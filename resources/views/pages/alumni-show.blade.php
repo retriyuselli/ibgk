@@ -91,9 +91,9 @@
                         </div>
                     @endif
 
-                    @if ($alumni->instagram || $alumni->linkedin)
+                    @if ($alumni->instagramUrl() || $alumni->linkedin)
                         <div class="hero-animate-delay-3 mt-8 flex flex-wrap gap-3">
-                            @if ($alumni->instagram && ($instagramUrl = safe_url($alumni->instagram)))
+                            @if ($instagramUrl = $alumni->instagramUrl())
                                 <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" class="btn-outline-gold text-xs transition-transform duration-300 hover:scale-[1.02]">
                                     Instagram
                                 </a>

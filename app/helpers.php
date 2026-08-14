@@ -17,6 +17,13 @@ if (! function_exists('safe_url')) {
     }
 }
 
+if (! function_exists('instagram_url')) {
+    function instagram_url(?string $value): ?string
+    {
+        return SafeUrl::forInstagram($value);
+    }
+}
+
 if (! function_exists('org_profile')) {
     function org_profile(?App\Models\OrganizationProfile $profile = null): App\Models\OrganizationProfile
     {

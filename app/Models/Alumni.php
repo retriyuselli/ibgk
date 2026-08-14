@@ -109,6 +109,11 @@ class Alumni extends Model
         return $this->isGadis() ? 'Gadis' : 'Bujang';
     }
 
+    public function instagramUrl(): ?string
+    {
+        return instagram_url($this->instagram);
+    }
+
     public function scopeGenderCategory(Builder $query, string $category): Builder
     {
         return match ($category) {

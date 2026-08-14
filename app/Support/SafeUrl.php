@@ -33,4 +33,32 @@ class SafeUrl
 
         return $url;
     }
+
+    public static function forInstagram(?string $value): ?string
+    {
+        if (blank($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        if (preg_match('~(?:https?://)?(?:www\.)?instagram\.com/(.+)$~i', $value, $matches)) {
+            $path = trim(explode('#', explode('?', $matches[1])[0])[0], '/');
+
+            if ($path === '') {
+                return null;
+            }
+
+            return self::forHref('https://www.instagram.com/'.$path);
+        }
+
+        $handle = ltrim($value, '@');
+        $handle = trim($handle);
+
+        if (preg_match('/^[A-Za-z0-9._]{1,30}$/', $handle) !== 1) {
+            return null;
+        }
+
+        return self::forHref('https://www.instagram.com/'.$handle);
+    }
 }

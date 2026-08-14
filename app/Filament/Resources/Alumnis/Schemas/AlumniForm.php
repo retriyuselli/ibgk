@@ -212,7 +212,7 @@ class AlumniForm
                         TextInput::make('instagram')
                             ->label('Instagram')
                             ->maxLength(255)
-                            ->helperText('Boleh username atau URL.'),
+                            ->helperText('Boleh username (@sheila), ID saja (sheila), atau URL lengkap.'),
                         TextInput::make('linkedin')
                             ->label('LinkedIn')
                             ->url()
