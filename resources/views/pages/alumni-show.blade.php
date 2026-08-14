@@ -51,35 +51,41 @@
 
                         <p class="mt-2 text-sm text-muted">
                             {{ $alumni->genderLabel() }}
-                            @if ($alumni->city)
-                                · {{ $alumni->city }}
+                            @if ($alumni->titleCase($alumni->city) !== '')
+                                · {{ $alumni->titleCase($alumni->city) }}
                             @endif
                         </p>
                     </div>
 
                     <dl class="hero-animate-delay-2 mt-8 space-y-4 text-sm">
-                        @if ($alumni->university)
+                        @if ($alumni->titleCase($alumni->university) !== '')
                             <div>
                                 <dt class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Perguruan Tinggi</dt>
-                                <dd class="mt-1 text-navy">{{ $alumni->university }}</dd>
+                                <dd class="mt-1 text-navy">{{ $alumni->titleCase($alumni->university) }}</dd>
                             </div>
                         @endif
-                        @if ($alumni->study_program)
+                        @if ($alumni->titleCase($alumni->faculty) !== '')
+                            <div>
+                                <dt class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Fakultas</dt>
+                                <dd class="mt-1 text-navy">{{ $alumni->titleCase($alumni->faculty) }}</dd>
+                            </div>
+                        @endif
+                        @if ($alumni->titleCase($alumni->study_program) !== '')
                             <div>
                                 <dt class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Program Studi</dt>
-                                <dd class="mt-1 text-navy">{{ $alumni->study_program }}</dd>
+                                <dd class="mt-1 text-navy">{{ $alumni->titleCase($alumni->study_program) }}</dd>
                             </div>
                         @endif
-                        @if ($alumni->profession)
+                        @if ($alumni->titleCase($alumni->profession) !== '')
                             <div>
                                 <dt class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Profesi</dt>
-                                <dd class="mt-1 text-navy">{{ $alumni->profession }}</dd>
+                                <dd class="mt-1 text-navy">{{ $alumni->titleCase($alumni->profession) }}</dd>
                             </div>
                         @endif
-                        @if ($alumni->company)
+                        @if ($alumni->titleCase($alumni->company) !== '')
                             <div>
                                 <dt class="text-xs font-semibold tracking-[0.12em] text-gold uppercase">Instansi / Perusahaan</dt>
-                                <dd class="mt-1 text-navy">{{ $alumni->company }}</dd>
+                                <dd class="mt-1 text-navy">{{ $alumni->titleCase($alumni->company) }}</dd>
                             </div>
                         @endif
                     </dl>

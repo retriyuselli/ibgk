@@ -112,13 +112,18 @@ class Alumni extends Model
 
     public function displayName(): string
     {
-        $name = trim(preg_replace('/\s+/u', ' ', (string) $this->name) ?? '');
+        return $this->titleCase($this->name);
+    }
 
-        if ($name === '') {
+    public function titleCase(?string $value): string
+    {
+        $value = trim(preg_replace('/\s+/u', ' ', (string) $value) ?? '');
+
+        if ($value === '' || $value === '-') {
             return '';
         }
 
-        return Str::title(mb_strtolower($name, 'UTF-8'));
+        return Str::title(mb_strtolower($value, 'UTF-8'));
     }
 
     public function instagramUrl(): ?string
