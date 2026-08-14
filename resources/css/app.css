@@ -1493,3 +1493,107 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 nav[role='navigation'][aria-label='Pagination Navigation'] a {
     @apply text-navy transition hover:text-gold;
 }
+
+.board-tabs {
+    @apply flex gap-1 overflow-x-auto border-b border-navy/10;
+    scrollbar-width: none;
+}
+
+.board-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.board-tab {
+    @apply flex min-w-[7.5rem] flex-col items-center gap-2 px-4 py-3 text-[11px] font-semibold tracking-wide text-muted uppercase transition sm:min-w-[9rem] sm:text-xs;
+}
+
+.board-tab svg {
+    @apply text-muted/70 transition;
+}
+
+.board-tab:hover,
+.board-tab.is-active {
+    @apply text-navy;
+}
+
+.board-tab.is-active {
+    box-shadow: inset 0 -2px 0 var(--color-gold);
+}
+
+.board-tab.is-active svg,
+.board-tab:hover svg {
+    @apply text-gold;
+}
+
+.board-org-chart {
+    @apply flex flex-col items-center;
+}
+
+.board-org-chair {
+    @apply w-full max-w-sm;
+}
+
+.board-org-stem {
+    width: 2px;
+    height: 1.75rem;
+    background-image: linear-gradient(to bottom, #c5c9d0 50%, transparent 50%);
+    background-size: 2px 8px;
+    background-repeat: repeat-y;
+}
+
+.board-org-officers {
+    @apply relative grid w-full gap-4;
+    grid-template-columns: 1fr;
+}
+
+.board-org-bar,
+.board-org-twig {
+    display: none;
+}
+
+.board-more-btn {
+    @apply inline-flex items-center gap-2 rounded-md border border-navy/15 bg-white px-4 py-2.5 text-sm font-semibold text-muted shadow-sm transition hover:border-gold hover:text-navy;
+}
+
+.board-member-card {
+    @apply h-full w-full;
+}
+
+@media (min-width: 640px) {
+    .board-org-officers {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .board-org-officers {
+        grid-template-columns: repeat(var(--board-count, 4), minmax(0, 1fr));
+    }
+
+    .board-org-bar {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: calc(100% / (var(--board-count, 4) * 2));
+        width: calc(100% * (var(--board-count, 4) - 1) / var(--board-count, 4));
+        border-top: 2px dotted #c5c9d0;
+    }
+
+    .board-org-node {
+        position: relative;
+        padding-top: 1.25rem;
+    }
+
+    .board-org-twig {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 1.25rem;
+        background-image: linear-gradient(to bottom, #c5c9d0 50%, transparent 50%);
+        background-size: 2px 8px;
+        background-repeat: repeat-y;
+        transform: translateX(-50%);
+    }
+}

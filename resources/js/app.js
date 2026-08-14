@@ -231,6 +231,63 @@ document.addEventListener('DOMContentLoaded', () => {
         image.src = objectUrl;
     });
 
+    const boardTabs = document.querySelectorAll('[data-board-tab]');
+    const boardPanels = document.querySelectorAll('[data-board-panel]');
+
+    if (boardTabs.length > 0 && boardPanels.length > 0) {
+        boardTabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.boardTab;
+
+                boardTabs.forEach((item) => {
+                    const active = item === tab;
+                    item.classList.toggle('is-active', active);
+                    item.setAttribute('aria-selected', String(active));
+                });
+
+                boardPanels.forEach((panel) => {
+                    const active = panel.dataset.boardPanel === target;
+                    panel.classList.toggle('hidden', !active);
+                    panel.hidden = !active;
+                });
+            });
+        });
+    }
+
+    const boardMore = document.getElementById('board-more');
+    const boardMoreToggle = document.getElementById('board-more-toggle');
+
+    if (boardMore && boardMoreToggle) {
+        boardMoreToggle.addEventListener('click', () => {
+            const expanded = boardMoreToggle.getAttribute('aria-expanded') === 'true';
+            boardMoreToggle.setAttribute('aria-expanded', String(!expanded));
+            boardMore.classList.toggle('hidden', expanded);
+            boardMore.hidden = expanded;
+
+            const label = boardMoreToggle.querySelector('[data-board-more-label]');
+            if (label) {
+                label.textContent = expanded ? 'Lihat Selengkapnya' : 'Sembunyikan';
+            }
+
+            boardMoreToggle.querySelector('[data-board-more-icon]')?.classList.toggle('rotate-180', !expanded);
+        });
+    }
+
+    const boardBidangTrack = document.getElementById('board-bidang-track');
+    const boardBidangPrev = document.getElementById('board-bidang-prev');
+    const boardBidangNext = document.getElementById('board-bidang-next');
+
+    if (boardBidangTrack && boardBidangPrev && boardBidangNext) {
+        const scrollBidang = (direction) => {
+            const card = boardBidangTrack.querySelector('.alumni-card');
+            const amount = card ? card.getBoundingClientRect().width + 16 : 280;
+            boardBidangTrack.scrollBy({ left: direction * amount, behavior: 'smooth' });
+        };
+
+        boardBidangPrev.addEventListener('click', () => scrollBidang(-1));
+        boardBidangNext.addEventListener('click', () => scrollBidang(1));
+    }
+
     document.querySelectorAll('input[data-compress-image]').forEach((input) => {
         input.addEventListener('change', async () => {
             const file = input.files?.[0];

@@ -6,6 +6,7 @@
             'title' => 'Tentang IBGK',
             'links' => [
                 ['Profil', route('about')],
+                ['Kepengurusan', route('board')],
                 ['Visi & Misi', route('about').'#visi-misi'],
                 ['Sejarah', route('about')],
             ],

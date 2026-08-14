@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Str;
 
 class Alumni extends Model
 {
@@ -123,7 +122,7 @@ class Alumni extends Model
             return '';
         }
 
-        return Str::title(mb_strtolower($value, 'UTF-8'));
+        return title_case($value);
     }
 
     public function instagramUrl(): ?string

@@ -55,6 +55,10 @@
             <p class="mt-4 text-sm leading-relaxed text-muted">
                 Anggota kehormatan ditetapkan atas kontribusi istimewa terhadap perjalanan dan reputasi IBGK Sumatera Selatan.
             </p>
+            <a href="{{ route('board') }}" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-gold hover:text-navy">
+                Lihat struktur kepengurusan
+                <span aria-hidden="true">→</span>
+            </a>
 
             <ol class="relative mt-8 space-y-4">
                 @forelse ($honoraryMembers as $index => $member)

@@ -25,4 +25,14 @@ class HonoraryMember extends Model
             'is_active' => 'boolean',
         ];
     }
+
+    public function displayName(): string
+    {
+        return title_case($this->name);
+    }
+
+    public function displayTitle(): string
+    {
+        return title_case($this->title) ?: 'Anggota Kehormatan IBGK Sumsel';
+    }
 }

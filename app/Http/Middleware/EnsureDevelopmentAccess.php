@@ -25,6 +25,7 @@ class EnsureDevelopmentAccess
         'election',
         'election.register',
         'election.register.submit',
+        'board',
     ];
 
     /** @var list<string> */

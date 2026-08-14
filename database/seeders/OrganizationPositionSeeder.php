@@ -4,26 +4,26 @@ namespace Database\Seeders;
 
 use App\Models\OrganizationPosition;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class OrganizationPositionSeeder extends Seeder
 {
     public function run(): void
     {
         $positions = [
-            'Ketua Umum',
-            'Wakil Ketua',
-            'Sekretaris',
-            'Bendahara',
-            'Ketua Bidang',
-            'Anggota',
+            ['name' => 'Ketua Umum', 'slug' => 'ketua-umum'],
+            ['name' => 'Wakil Ketua Umum', 'slug' => 'wakil-ketua'],
+            ['name' => 'Sekretaris Umum', 'slug' => 'sekretaris'],
+            ['name' => 'Bendahara Umum', 'slug' => 'bendahara'],
+            ['name' => 'Humas & Publikasi', 'slug' => 'humas-publikasi'],
+            ['name' => 'Ketua Bidang', 'slug' => 'ketua-bidang'],
+            ['name' => 'Anggota', 'slug' => 'anggota'],
         ];
 
-        foreach ($positions as $index => $name) {
+        foreach ($positions as $index => $position) {
             OrganizationPosition::query()->updateOrCreate(
-                ['slug' => Str::slug($name)],
+                ['slug' => $position['slug']],
                 [
-                    'name' => $name,
+                    'name' => $position['name'],
                     'sort_order' => $index + 1,
                     'is_active' => true,
                 ]

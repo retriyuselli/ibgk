@@ -1,7 +1,7 @@
 @php
     $profile = $profile ?? null;
     $isHome = request()->routeIs('home');
-    $isAbout = request()->routeIs('about');
+    $isAbout = request()->routeIs('about', 'board');
     $isElection = request()->routeIs('election');
     $isAlumni = request()->routeIs('alumni');
     $isActivities = request()->routeIs('activities');
@@ -35,7 +35,20 @@
 
         <nav class="hidden items-center gap-4 xl:gap-5 lg:flex" aria-label="Navigasi utama">
             <a href="{{ route('home') }}" @class(['nav-link', 'nav-link-active' => $isHome])>Beranda</a>
-            <a href="{{ route('about') }}" @class(['nav-link', 'nav-link-active' => $isAbout])>Tentang IBGK</a>
+            <div class="relative group">
+                <a href="{{ route('about') }}" @class(['nav-link inline-flex items-center gap-1', 'nav-link-active' => $isAbout])>
+                    Tentang IBGK
+                    <svg class="h-3 w-3 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
+                    </svg>
+                </a>
+                <div class="invisible absolute left-1/2 top-full z-50 w-48 -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                    <div class="rounded-md border border-white/10 bg-navy-deep py-2 shadow-lg">
+                        <a href="{{ route('about') }}" class="block px-4 py-2 text-[11px] font-semibold tracking-[0.14em] text-white/80 uppercase hover:text-gold">Profil</a>
+                        <a href="{{ route('board') }}" class="block px-4 py-2 text-[11px] font-semibold tracking-[0.14em] text-white/80 uppercase hover:text-gold">Kepengurusan</a>
+                    </div>
+                </div>
+            </div>
             <a href="{{ route('election') }}" @class(['nav-link', 'nav-link-active' => $isElection])>Pemilihan BGK</a>
             @if (\App\Support\Roles::canAccessAlumniDirectory())
                 <a href="{{ route('alumni') }}" @class(['nav-link', 'nav-link-active' => $isAlumni])>Alumni</a>
@@ -88,7 +101,8 @@
     <div id="mobile-nav" class="hidden border-t border-white/10 bg-navy lg:hidden">
         <nav class="site-container flex flex-col gap-1 py-4" aria-label="Navigasi mobile">
             <a href="{{ route('home') }}" @class(['rounded-md px-3 py-2.5 text-sm font-medium', $isHome ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Beranda</a>
-            <a href="{{ route('about') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isAbout ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Tentang IBGK</a>
+            <a href="{{ route('about') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isAbout && request()->routeIs('about') ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Tentang IBGK</a>
+            <a href="{{ route('board') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', request()->routeIs('board') ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Kepengurusan</a>
             <a href="{{ route('election') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isElection ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Pemilihan BGK</a>
             @if (\App\Support\Roles::canAccessAlumniDirectory())
                 <a href="{{ route('alumni') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isAlumni ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Alumni</a>

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             PageSeeder::class,
             OrganizationProfileSeeder::class,
             OrganizationPositionSeeder::class,
+            OrganizationPeriodSeeder::class,
             HonoraryMemberSeeder::class,
             ActivityCategorySeeder::class,
             NewsCategorySeeder::class,

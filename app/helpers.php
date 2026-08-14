@@ -10,6 +10,19 @@ if (! function_exists('clean_html')) {
     }
 }
 
+if (! function_exists('title_case')) {
+    function title_case(?string $value): string
+    {
+        $value = trim(preg_replace('/\s+/u', ' ', (string) $value) ?? '');
+
+        if ($value === '' || $value === '-') {
+            return '';
+        }
+
+        return \Illuminate\Support\Str::title(mb_strtolower($value, 'UTF-8'));
+    }
+}
+
 if (! function_exists('safe_url')) {
     function safe_url(?string $url): ?string
     {

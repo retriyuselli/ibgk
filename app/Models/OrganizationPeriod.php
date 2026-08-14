@@ -43,6 +43,19 @@ class OrganizationPeriod extends Model
         });
     }
 
+    public function yearRange(): string
+    {
+        if ($this->start_year && $this->end_year) {
+            return $this->start_year.' - '.$this->end_year;
+        }
+
+        if ($this->start_year) {
+            return (string) $this->start_year;
+        }
+
+        return title_case($this->name) ?: 'Periode Aktif';
+    }
+
     public function members(): HasMany
     {
         return $this->hasMany(OrganizationMember::class);

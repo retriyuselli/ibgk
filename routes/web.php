@@ -9,6 +9,7 @@ use App\Http\Controllers\AlumniProfileFormController;
 use App\Http\Controllers\AlumniSelfRegistrationController;
 use App\Http\Controllers\AuthLoginController;
 use App\Http\Controllers\AuthRegisterController;
+use App\Http\Controllers\BoardController;
 use App\Http\Controllers\ElectionPageController;
 use App\Http\Controllers\ElectionRegistrationController;
 use App\Http\Controllers\ContactPageController;
@@ -26,6 +27,7 @@ Route::get('/apple-touch-icon.png', [FaviconController::class, 'appleTouchIcon']
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/tentang', AboutController::class)->name('about');
+Route::get('/kepengurusan', BoardController::class)->name('board');
 Route::get('/pemilihan-bgk', ElectionPageController::class)->name('election');
 Route::get('/dokumen/{document:slug}/unduh', DocumentDownloadController::class)->name('documents.download');
 Route::middleware('guest')->group(function (): void {

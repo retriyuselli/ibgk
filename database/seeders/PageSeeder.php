@@ -22,6 +22,12 @@ class PageSeeder extends Seeder
                 'meta_title' => 'Tentang IBGK Sumatera Selatan',
                 'meta_description' => 'Kenali sejarah, visi, misi, dan perjalanan IBGK Sumatera Selatan.',
             ],
+            'kepengurusan' => [
+                'title' => 'Kepengurusan IBGK Sumsel',
+                'excerpt' => 'Muda, Berbudaya, Berprestasi, dan Menginspirasi.',
+                'meta_title' => 'Struktur Organisasi',
+                'meta_description' => 'Struktur kepengurusan Ikatan Bujang Gadis Kampus Sumatera Selatan.',
+            ],
             'alumni' => [
                 'title' => 'Alumni IBGK Sumatera Selatan',
                 'excerpt' => 'Keluarga besar IBGK Sumsel terdiri dari finalis Pemilihan Bujang Gadis Kampus dari berbagai perguruan tinggi di Sumatera Selatan yang terus berkarya dan berkontribusi.',

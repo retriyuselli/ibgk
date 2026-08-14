@@ -45,4 +45,42 @@ class OrganizationMember extends Model
     {
         return $this->belongsTo(Alumni::class);
     }
+
+    public function displayName(): string
+    {
+        return title_case($this->name) ?: title_case($this->alumni?->name);
+    }
+
+    public function displayPosition(): string
+    {
+        return title_case($this->position?->name) ?: 'Pengurus';
+    }
+
+    public function displayUniversity(): string
+    {
+        return title_case($this->alumni?->university);
+    }
+
+    public function displaySubtitle(): string
+    {
+        $alumni = $this->alumni;
+
+        if ($alumni) {
+            $year = $alumni->alumniBatch?->year ?? $alumni->graduation_year;
+            $label = $alumni->genderLabel().' Sumatera Selatan';
+
+            return $year ? $label.' '.$year : $label;
+        }
+
+        if (filled($this->bio)) {
+            return \Illuminate\Support\Str::limit(trim(strip_tags($this->bio)), 72);
+        }
+
+        return 'Pengurus IBGK Sumatera Selatan';
+    }
+
+    public function photoPath(): ?string
+    {
+        return filled($this->photo) ? $this->photo : $this->alumni?->photo;
+    }
 }

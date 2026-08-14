@@ -30,4 +30,41 @@ class OrganizationPosition extends Model
     {
         return $this->hasMany(OrganizationMember::class);
     }
+
+    public function isChair(): bool
+    {
+        $haystack = strtolower(trim($this->slug.' '.$this->name));
+
+        if (str_contains($haystack, 'wakil') || str_contains($haystack, 'bidang')) {
+            return false;
+        }
+
+        return str_contains($haystack, 'ketua-umum')
+            || str_contains($haystack, 'ketua umum')
+            || $this->slug === 'ketua';
+    }
+
+    public function isCoreOfficer(): bool
+    {
+        if ($this->isChair()) {
+            return false;
+        }
+
+        $haystack = strtolower(trim($this->slug.' '.$this->name));
+
+        foreach (['wakil', 'sekretaris', 'bendahara', 'humas', 'publikasi'] as $needle) {
+            if (str_contains($haystack, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isDivisionLead(): bool
+    {
+        $haystack = strtolower(trim($this->slug.' '.$this->name));
+
+        return str_contains($haystack, 'bidang') || str_contains($haystack, 'divisi') || str_contains($haystack, 'departemen');
+    }
 }
