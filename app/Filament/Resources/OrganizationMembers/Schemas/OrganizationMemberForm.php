@@ -14,6 +14,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class OrganizationMemberForm
 {
@@ -59,7 +60,33 @@ class OrganizationMemberForm
                             ->preload()
                             ->visible(fn (Get $get): bool => self::positionRequiresDivision($get('organization_position_id')))
                             ->required(fn (Get $get): bool => self::positionRequiresDivision($get('organization_position_id')))
-                            ->helperText('Anggota akan tampil di bawah Ketua Bidang yang sama.')
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('Nama Bidang')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->helperText('Contoh: Pendidikan, Sosial, Seni & Budaya.')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function (Set $set, Get $get, ?string $state, ?string $old): void {
+                                        $currentSlug = $get('slug');
+                                        if (blank($currentSlug) || $currentSlug === Str::slug((string) $old)) {
+                                            $set('slug', Str::slug((string) $state));
+                                        }
+                                    }),
+                                TextInput::make('slug')
+                                    ->label('Slug')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('sort_order')
+                                    ->label('Urutan')
+                                    ->numeric()
+                                    ->default(0)
+                                    ->required(),
+                                Toggle::make('is_active')
+                                    ->label('Aktif')
+                                    ->default(true),
+                            ])
+                            ->helperText('Jika daftar masih kosong, klik tombol + di kanan field ini untuk menambah bidang.')
                             ->columnSpanFull(),
                         Select::make('alumni_id')
                             ->label('Alumni')
