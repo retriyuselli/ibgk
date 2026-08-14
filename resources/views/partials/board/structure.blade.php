@@ -23,21 +23,6 @@
                 <span>Struktur Kepengurusan</span>
             </button>
 
-            <button
-                type="button"
-                class="board-tab"
-                id="board-tab-pembina"
-                data-board-tab="pembina"
-                role="tab"
-                aria-selected="false"
-                aria-controls="board-panel-pembina"
-            >
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4l2.1 4.3 4.7.7-3.4 3.3.8 4.7L12 14.8 7.8 17l.8-4.7-3.4-3.3 4.7-.7L12 4z"/>
-                </svg>
-                <span>Dewan Pertimbangan Organisasi</span>
-            </button>
-
             @if ($showBidangTab)
                 <button
                     type="button"
@@ -56,6 +41,21 @@
                     <span>Bidang</span>
                 </button>
             @endif
+
+            <button
+                type="button"
+                class="board-tab"
+                id="board-tab-pembina"
+                data-board-tab="pembina"
+                role="tab"
+                aria-selected="false"
+                aria-controls="board-panel-pembina"
+            >
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4l2.1 4.3 4.7.7-3.4 3.3.8 4.7L12 14.8 7.8 17l.8-4.7-3.4-3.3 4.7-.7L12 4z"/>
+                </svg>
+                <span>Dewan Pertimbangan Organisasi</span>
+            </button>
         </div>
 
         <div
@@ -130,20 +130,6 @@
             @endif
         </div>
 
-        <div
-            id="board-panel-pembina"
-            class="mt-10 hidden sm:mt-12"
-            role="tabpanel"
-            data-board-panel="pembina"
-            aria-labelledby="board-tab-pembina"
-            hidden
-        >
-            <div class="board-soon rounded-lg border border-navy/10 bg-white px-6 py-16 text-center sm:py-20">
-                <p class="board-soon-kicker text-xs font-semibold tracking-[0.2em] text-gold uppercase">Dewan Pertimbangan Organisasi</p>
-                <p class="board-soon-title mt-4 font-display text-3xl font-semibold text-navy sm:text-4xl">Coming Soon</p>
-            </div>
-        </div>
-
         @if ($showBidangTab)
             <div
                 id="board-panel-bidang"
@@ -170,5 +156,19 @@
                 </div>
             </div>
         @endif
+
+        <div
+            id="board-panel-pembina"
+            class="mt-10 hidden sm:mt-12"
+            role="tabpanel"
+            data-board-panel="pembina"
+            aria-labelledby="board-tab-pembina"
+            hidden
+        >
+            <div class="board-soon rounded-lg border border-navy/10 bg-white px-6 py-16 text-center sm:py-20">
+                <p class="board-soon-kicker text-xs font-semibold tracking-[0.2em] text-gold uppercase">Dewan Pertimbangan Organisasi</p>
+                <p class="board-soon-title mt-4 font-display text-3xl font-semibold text-navy sm:text-4xl">Coming Soon</p>
+            </div>
+        </div>
     </div>
 </section>
