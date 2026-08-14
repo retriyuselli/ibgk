@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Alumni extends Model
 {
@@ -107,6 +108,17 @@ class Alumni extends Model
     public function genderShortLabel(): string
     {
         return $this->isGadis() ? 'Gadis' : 'Bujang';
+    }
+
+    public function displayName(): string
+    {
+        $name = trim(preg_replace('/\s+/u', ' ', (string) $this->name) ?? '');
+
+        if ($name === '') {
+            return '';
+        }
+
+        return Str::title(mb_strtolower($name, 'UTF-8'));
     }
 
     public function instagramUrl(): ?string

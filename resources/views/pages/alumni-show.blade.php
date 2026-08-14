@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $alumni->name.' — Alumni IBGK Sumsel')
+@section('title', $alumni->displayName().' — Alumni IBGK Sumsel')
 
 @section('meta_description', $alumni->bio ?: 'Profil alumni IBGK Sumatera Selatan.')
 
@@ -26,7 +26,7 @@
                     <li aria-hidden="true">›</li>
                     <li><a href="{{ route('alumni') }}" class="transition hover:text-gold">Alumni</a></li>
                     <li aria-hidden="true">›</li>
-                    <li class="text-navy">{{ $alumni->name }}</li>
+                    <li class="text-navy">{{ $alumni->displayName() }}</li>
                 </ol>
             </nav>
 
@@ -35,7 +35,7 @@
                     @include('partials.partnership.showcase.shapes', ['variant' => 'light', 'density' => 'rich', 'section' => 'alumni-photo'])
 
                     <div class="relative z-10">
-                        {!! site_image_or_storage($alumni->photo, 'images/home/alumni-placeholder.jpg', $alumni->name, ['class' => 'aspect-[3/4] w-full object-cover transition duration-700 hover:scale-[1.02]']) !!}
+                        {!! site_image_or_storage($alumni->photo, 'images/home/alumni-placeholder.jpg', $alumni->displayName(), ['class' => 'aspect-[3/4] w-full object-cover transition duration-700 hover:scale-[1.02]']) !!}
                     </div>
                 </figure>
 
@@ -47,7 +47,7 @@
                             </p>
                         @endif
 
-                        <h1 class="section-title mt-3">{{ $alumni->name }}</h1>
+                        <h1 class="section-title mt-3">{{ $alumni->displayName() }}</h1>
 
                         <p class="mt-2 text-sm text-muted">
                             {{ $alumni->genderLabel() }}
