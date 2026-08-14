@@ -29,7 +29,7 @@
     };
 
     $cards = $election?->stages?->isNotEmpty()
-        ? $election->stages
+        ? $election->stages->sortBy('sort_order')->values()
         : collect([
             (object) ['name' => 'Pendaftaran', 'start_date' => null, 'end_date' => null],
             (object) ['name' => 'Seleksi Administrasi', 'start_date' => null, 'end_date' => null],
@@ -50,45 +50,54 @@
             </div>
         </div>
 
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            @foreach ($cards as $index => $card)
-                @php
-                    $isFinal = str_contains(strtolower($card->name), 'grand');
-                @endphp
-                <article @class([
-                    'flex flex-col items-center px-4 py-6 text-center shadow-sm',
-                    'border border-gold/30 bg-white text-navy' => ! $isFinal,
-                    'bg-navy text-white' => $isFinal,
-                ])>
-                    <span @class([
-                        'flex h-11 w-11 items-center justify-center rounded-full border',
-                        'border-gold/40 text-gold' => ! $isFinal,
-                        'border-gold text-gold' => $isFinal,
-                    ])>
-                        @if ($isFinal)
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l2 4 4 .6-3 2.9.8 4.5L12 13.2 8.2 15l.8-4.5-3-2.9 4-.6L12 3z"/></svg>
-                        @else
-                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M6 5h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>
-                        @endif
-                    </span>
+        <div class="relative mt-10">
+            <button type="button" id="schedule-prev" class="absolute top-1/2 left-0 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-navy/15 bg-white text-navy shadow-sm transition hover:border-gold hover:text-gold sm:-left-1" aria-label="Sebelumnya">
+                ←
+            </button>
+            <button type="button" id="schedule-next" class="absolute top-1/2 right-0 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-navy/15 bg-white text-navy shadow-sm transition hover:border-gold hover:text-gold sm:-right-1" aria-label="Berikutnya">
+                →
+            </button>
 
-                    <h3 @class([
-                        'mt-4 text-[11px] font-semibold tracking-[0.12em] uppercase',
-                        'text-navy' => ! $isFinal,
-                        'text-gold' => $isFinal,
+            <div id="schedule-track" class="alumni-track px-10 sm:px-12">
+                @foreach ($cards as $index => $card)
+                    @php
+                        $isFinal = str_contains(strtolower($card->name), 'grand');
+                    @endphp
+                    <article @class([
+                        'alumni-card flex h-full min-h-[13rem] w-44 shrink-0 flex-col items-center px-4 py-6 text-center shadow-sm sm:w-48',
+                        'border border-gold/30 bg-white text-navy' => ! $isFinal,
+                        'bg-navy text-white' => $isFinal,
                     ])>
-                        {{ $card->name }}
-                    </h3>
+                        <span @class([
+                            'flex h-11 w-11 items-center justify-center rounded-full border',
+                            'border-gold/40 text-gold' => ! $isFinal,
+                            'border-gold text-gold' => $isFinal,
+                        ])>
+                            @if ($isFinal)
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l2 4 4 .6-3 2.9.8 4.5L12 13.2 8.2 15l.8-4.5-3-2.9 4-.6L12 3z"/></svg>
+                            @else
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M6 5h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>
+                            @endif
+                        </span>
 
-                    <p @class([
-                        'mt-2 text-sm font-medium',
-                        'text-muted' => ! $isFinal,
-                        'text-gold-light' => $isFinal,
-                    ])>
-                        {{ $formatRange($card->start_date ?? null, $card->end_date ?? null) }}
-                    </p>
-                </article>
-            @endforeach
+                        <h3 @class([
+                            'mt-4 text-[11px] font-semibold tracking-[0.12em] uppercase',
+                            'text-navy' => ! $isFinal,
+                            'text-gold' => $isFinal,
+                        ])>
+                            {{ $card->name }}
+                        </h3>
+
+                        <p @class([
+                            'mt-2 text-sm font-medium',
+                            'text-muted' => ! $isFinal,
+                            'text-gold-light' => $isFinal,
+                        ])>
+                            {{ $formatRange($card->start_date ?? null, $card->end_date ?? null) }}
+                        </p>
+                    </article>
+                @endforeach
+            </div>
         </div>
 
         <p class="mt-6 text-center text-xs text-muted italic">

@@ -49,6 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
         galleryNext.addEventListener('click', () => scrollGallery(1));
     }
 
+    const scheduleTrack = document.getElementById('schedule-track');
+    const schedulePrev = document.getElementById('schedule-prev');
+    const scheduleNext = document.getElementById('schedule-next');
+
+    if (scheduleTrack && schedulePrev && scheduleNext) {
+        const scrollSchedule = (direction) => {
+            const card = scheduleTrack.querySelector('.alumni-card');
+            const amount = card ? card.getBoundingClientRect().width + 16 : 208;
+            scheduleTrack.scrollBy({ left: direction * amount, behavior: 'smooth' });
+        };
+
+        schedulePrev.addEventListener('click', () => scrollSchedule(-1));
+        scheduleNext.addEventListener('click', () => scrollSchedule(1));
+    }
+
     const previewTrack = document.getElementById('preview-track');
     const previewPrev = document.getElementById('preview-prev');
     const previewNext = document.getElementById('preview-next');
