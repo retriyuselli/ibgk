@@ -1515,6 +1515,14 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
     max-width: 16.5rem;
 }
 
+.board-anggota-track::before,
+.board-anggota-track::after {
+    content: '';
+    flex: 1 1 0;
+    min-width: 0;
+    scroll-snap-align: none;
+}
+
 @media (min-width: 640px) {
     .board-member-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
