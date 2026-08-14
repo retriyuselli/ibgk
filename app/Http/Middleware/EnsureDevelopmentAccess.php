@@ -35,6 +35,12 @@ class EnsureDevelopmentAccess
         'logout',
     ];
 
+    /** @var list<string> */
+    private array $alumniDirectoryRoutes = [
+        'alumni',
+        'alumni.show',
+    ];
+
     public function handle(Request $request, Closure $next): Response
     {
         if (! config('site.under_development')) {
@@ -55,12 +61,26 @@ class EnsureDevelopmentAccess
             return $next($request);
         }
 
+        if ($request->routeIs(...$this->alumniDirectoryRoutes)) {
+            if ($user->hasAnyRole(Roles::alumniDirectoryRoles())) {
+                return $next($request);
+            }
+
+            return redirect()
+                ->route('dashboard')
+                ->with('development_access_notice', 'Halaman Alumni hanya dapat diakses oleh akun Pengunjung dan Anggota.');
+        }
+
         if ($request->routeIs(...$this->restrictedUserRoutes)) {
             return $next($request);
         }
 
+        $message = $user->hasAnyRole(Roles::alumniDirectoryRoles())
+            ? 'Saat ini website masih dalam proses perbaikan. Anda hanya dapat mengakses Dashboard dan halaman Alumni.'
+            : 'Saat ini website masih dalam proses perbaikan. Anda hanya dapat mengakses Dashboard.';
+
         return redirect()
             ->route('dashboard')
-            ->with('development_access_notice', 'Saat ini website masih dalam proses perbaikan. Anda hanya dapat mengakses Dashboard.');
+            ->with('development_access_notice', $message);
     }
 }

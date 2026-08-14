@@ -37,7 +37,9 @@
             <a href="{{ route('home') }}" @class(['nav-link', 'nav-link-active' => $isHome])>Beranda</a>
             <a href="{{ route('about') }}" @class(['nav-link', 'nav-link-active' => $isAbout])>Tentang IBGK</a>
             <a href="{{ route('election') }}" @class(['nav-link', 'nav-link-active' => $isElection])>Pemilihan BGK</a>
-            <a href="{{ route('alumni') }}" @class(['nav-link', 'nav-link-active' => $isAlumni])>Alumni</a>
+            @if (\App\Support\Roles::canAccessAlumniDirectory())
+                <a href="{{ route('alumni') }}" @class(['nav-link', 'nav-link-active' => $isAlumni])>Alumni</a>
+            @endif
             <a href="{{ route('activities') }}" @class(['nav-link', 'nav-link-active' => $isActivities])>Kegiatan</a>
             <a href="{{ route('news') }}" @class(['nav-link', 'nav-link-active' => $isNews])>Berita</a>
             <a href="{{ route('gallery') }}" @class(['nav-link', 'nav-link-active' => $isGallery])>Galeri</a>
@@ -88,7 +90,9 @@
             <a href="{{ route('home') }}" @class(['rounded-md px-3 py-2.5 text-sm font-medium', $isHome ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Beranda</a>
             <a href="{{ route('about') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isAbout ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Tentang IBGK</a>
             <a href="{{ route('election') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isElection ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Pemilihan BGK</a>
-            <a href="{{ route('alumni') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isAlumni ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Alumni</a>
+            @if (\App\Support\Roles::canAccessAlumniDirectory())
+                <a href="{{ route('alumni') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isAlumni ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Alumni</a>
+            @endif
             <a href="{{ route('activities') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isActivities ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Kegiatan</a>
             <a href="{{ route('news') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isNews ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Berita</a>
             <a href="{{ route('gallery') }}" @class(['mobile-nav-link rounded-md px-3 py-2.5 text-sm font-medium', $isGallery ? 'text-gold' : 'text-white/90 hover:bg-white/5'])>Galeri</a>

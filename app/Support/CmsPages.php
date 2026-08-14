@@ -68,4 +68,39 @@ class CmsPages
             'imageAlt' => $fallbacks['imageAlt'] ?? $title,
         ];
     }
+
+    /**
+     * @return list<array{src: ?string, fallback: string, alt: string, class: string}>
+     */
+    public function aboutCollage(): array
+    {
+        $page = $this->get('about');
+
+        return [
+            [
+                'src' => $page?->about_image_1,
+                'fallback' => 'images/home/about-1.jpg',
+                'alt' => 'Kegiatan IBGK',
+                'class' => 'aspect-[4/5] w-full rounded-sm object-cover shadow-sm',
+            ],
+            [
+                'src' => $page?->about_image_2,
+                'fallback' => 'images/home/about-2.jpg',
+                'alt' => 'Pengabdian masyarakat',
+                'class' => 'aspect-[4/3] w-full rounded-sm object-cover shadow-sm',
+            ],
+            [
+                'src' => $page?->about_image_3,
+                'fallback' => 'images/home/about-3.jpg',
+                'alt' => 'Acara budaya',
+                'class' => 'aspect-[4/3] w-full rounded-sm object-cover shadow-sm',
+            ],
+            [
+                'src' => $page?->about_image_4,
+                'fallback' => 'images/home/about-4.jpg',
+                'alt' => 'Keluarga besar IBGK',
+                'class' => 'aspect-[4/5] w-full rounded-sm object-cover shadow-sm',
+            ],
+        ];
+    }
 }

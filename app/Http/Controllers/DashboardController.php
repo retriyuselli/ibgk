@@ -30,6 +30,7 @@ class DashboardController extends Controller
             'roles' => $user->getRoleNames()->map(fn (string $role): string => Roles::label($role)),
             'canAccessAdmin' => $user->canAccessPanel(Filament::getPanel('admin')),
             'canBrowsePublicSite' => ! config('site.under_development') || $user->canAccessPanel(Filament::getPanel('admin')),
+            'canViewAlumniDirectory' => Roles::canAccessAlumniDirectory($user),
         ]);
     }
 }

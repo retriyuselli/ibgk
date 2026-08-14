@@ -28,6 +28,18 @@
                 </a>
             @endif
 
+            @if ($canViewAlumniDirectory ?? false)
+                <a href="{{ route('alumni') }}" class="dashboard-action-card group">
+                    <span class="dashboard-action-icon bg-gold/15 text-navy">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-1a3 3 0 00-3-3H6a3 3 0 00-3 3v1"/><circle cx="10" cy="8" r="3"/><path d="M21 20v-1a3 3 0 00-2-2.83M16 4.13a3 3 0 010 5.74"/></svg>
+                    </span>
+                    <span>
+                        <span class="block font-semibold text-navy group-hover:text-gold">Direktori Alumni</span>
+                        <span class="mt-1 block text-xs leading-relaxed text-muted">Lihat angkatan dan profil alumni IBGK Sumsel.</span>
+                    </span>
+                </a>
+            @endif
+
             @if ($canBrowsePublicSite && ! ($participant ?? null))
                 <a href="{{ route('election.register') }}" class="dashboard-action-card group">
                     <span class="dashboard-action-icon bg-gold/15 text-navy">

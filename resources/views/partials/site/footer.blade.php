@@ -18,13 +18,19 @@
                 ['Jadwal', route('election').'#tahapan'],
             ],
         ],
-        [
+    ];
+
+    if (\App\Support\Roles::canAccessAlumniDirectory()) {
+        $footerColumns[] = [
             'title' => 'Alumni',
             'links' => [
                 ['Angkatan', route('alumni')],
                 ['Direktori', route('alumni')],
             ],
-        ],
+        ];
+    }
+
+    $footerColumns = array_merge($footerColumns, [
         [
             'title' => 'Kegiatan',
             'links' => [
@@ -40,7 +46,7 @@
                 ['Kontak', route('contact')],
             ],
         ],
-    ];
+    ]);
 @endphp
 
 <footer id="kontak" class="site-footer footer-section relative isolate overflow-hidden bg-navy-deep text-white">

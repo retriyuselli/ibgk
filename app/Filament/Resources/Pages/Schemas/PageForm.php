@@ -39,6 +39,7 @@ class PageForm
                         ->required()
                         ->maxLength(255)
                         ->unique(ignoreRecord: true)
+                        ->live(onBlur: true)
                         ->columnSpanFull(),
                     Textarea::make('excerpt')
                         ->label('Ringkasan')
@@ -55,6 +56,7 @@ class PageForm
                 ]),
 
             Section::make('Media')
+                ->columns(2)
                 ->schema([
                     FileUpload::make('banner')
                         ->label('Banner Hero')
@@ -66,8 +68,11 @@ class PageForm
                         ->imageEditor()
                         ->maxSize(5120)
                         ->columnSpanFull(),
-                ])
-                ->collapsed(),
+                    self::aboutImageUpload('about_image_1', 'Foto Tentang 1', 'Kolase beranda, kiri atas.'),
+                    self::aboutImageUpload('about_image_2', 'Foto Tentang 2', 'Kolase beranda, kiri bawah.'),
+                    self::aboutImageUpload('about_image_3', 'Foto Tentang 3', 'Kolase beranda, kanan atas.'),
+                    self::aboutImageUpload('about_image_4', 'Foto Tentang 4', 'Kolase beranda, kanan bawah.'),
+                ]),
 
             Section::make('SEO')
                 ->schema([
@@ -96,5 +101,19 @@ class PageForm
                         ->seconds(false),
                 ]),
         ]);
+    }
+
+    protected static function aboutImageUpload(string $field, string $label, string $helper): FileUpload
+    {
+        return FileUpload::make($field)
+            ->label($label)
+            ->helperText($helper.' Kosongkan untuk gambar bawaan.')
+            ->image()
+            ->directory('pages/about')
+            ->disk('public')
+            ->visibility('public')
+            ->imageEditor()
+            ->maxSize(5120)
+            ->visible(fn (Get $get): bool => $get('slug') === 'about');
     }
 }

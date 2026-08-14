@@ -27,14 +27,17 @@
             </a>
         </div>
 
+        @php
+            $aboutImages = $cmsPages->aboutCollage();
+        @endphp
         <div class="grid grid-cols-2 gap-3 sm:gap-4">
             <div class="space-y-3 sm:space-y-4">
-                {!! site_image('images/home/about-1.jpg', 'Kegiatan IBGK', ['class' => 'aspect-[4/5] w-full rounded-sm object-cover shadow-sm']) !!}
-                {!! site_image('images/home/about-2.jpg', 'Pengabdian masyarakat', ['class' => 'aspect-[4/3] w-full rounded-sm object-cover shadow-sm']) !!}
+                {!! site_image_or_storage($aboutImages[0]['src'], $aboutImages[0]['fallback'], $aboutImages[0]['alt'], ['class' => $aboutImages[0]['class']]) !!}
+                {!! site_image_or_storage($aboutImages[1]['src'], $aboutImages[1]['fallback'], $aboutImages[1]['alt'], ['class' => $aboutImages[1]['class']]) !!}
             </div>
             <div class="mt-6 space-y-3 sm:mt-10 sm:space-y-4">
-                {!! site_image('images/home/about-3.jpg', 'Acara budaya', ['class' => 'aspect-[4/3] w-full rounded-sm object-cover shadow-sm']) !!}
-                {!! site_image('images/home/about-4.jpg', 'Keluarga besar IBGK', ['class' => 'aspect-[4/5] w-full rounded-sm object-cover shadow-sm']) !!}
+                {!! site_image_or_storage($aboutImages[2]['src'], $aboutImages[2]['fallback'], $aboutImages[2]['alt'], ['class' => $aboutImages[2]['class']]) !!}
+                {!! site_image_or_storage($aboutImages[3]['src'], $aboutImages[3]['fallback'], $aboutImages[3]['alt'], ['class' => $aboutImages[3]['class']]) !!}
             </div>
         </div>
     </div>
