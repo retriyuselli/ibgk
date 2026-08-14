@@ -82,14 +82,14 @@
                     @if ($hasMore)
                         <div id="board-more" class="board-org-more hidden w-full" hidden>
                             @foreach ($divisionGroups as $group)
-                                @if ($group['members']->isNotEmpty())
+                                @if ($group['anggota']->isNotEmpty())
                                     <div class="board-division-block">
                                         <h3 class="board-division-title">
                                             Bidang {{ $group['division']?->displayName() ?? '' }}
                                         </h3>
                                         <div class="board-member-grid">
-                                            @foreach ($group['members'] as $member)
-                                                @include('partials.board.member-card', ['member' => $member])
+                                            @foreach ($group['anggota'] as $alumni)
+                                                @include('partials.board.anggota-card', ['alumni' => $alumni])
                                             @endforeach
                                         </div>
                                     </div>
@@ -178,10 +178,10 @@
                                     @include('partials.board.member-card', ['member' => $group['lead']])
                                 </div>
                             @endif
-                            @if ($group['members']->isNotEmpty())
+                            @if ($group['anggota']->isNotEmpty())
                                 <div class="board-member-grid">
-                                    @foreach ($group['members'] as $member)
-                                        @include('partials.board.member-card', ['member' => $member])
+                                    @foreach ($group['anggota'] as $alumni)
+                                        @include('partials.board.anggota-card', ['alumni' => $alumni])
                                     @endforeach
                                 </div>
                             @endif

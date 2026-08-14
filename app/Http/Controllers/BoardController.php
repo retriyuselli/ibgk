@@ -20,7 +20,7 @@ class BoardController extends Controller
             ?? OrganizationPeriod::query()->orderByDesc('start_year')->first();
 
         $members = OrganizationMember::query()
-            ->with(['position', 'division', 'alumni.alumniBatch'])
+            ->with(['position', 'division', 'alumni.alumniBatch', 'anggota.alumniBatch'])
             ->where('is_active', true)
             ->when(
                 $period,
@@ -62,7 +62,7 @@ class BoardController extends Controller
             ->values();
 
         $hasMore = $ungroupedMembers->isNotEmpty()
-            || $divisionGroups->contains(fn (array $group): bool => $group['members']->isNotEmpty());
+            || $divisionGroups->contains(fn (array $group): bool => $group['anggota']->isNotEmpty());
 
         $honoraryMembers = HonoraryMember::query()
             ->where('is_active', true)
@@ -85,7 +85,7 @@ class BoardController extends Controller
 
     /**
      * @param  Collection<int, OrganizationMember>  $members
-     * @return Collection<int, array{division: mixed, lead: ?OrganizationMember, members: Collection<int, OrganizationMember>}>
+     * @return Collection<int, array{division: mixed, lead: ?OrganizationMember, anggota: Collection}>
      */
     private function divisionGroups(Collection $members): Collection
     {
@@ -97,13 +97,21 @@ class BoardController extends Controller
                     fn (OrganizationMember $member): bool => (bool) $member->position?->isDivisionLead()
                 );
 
+                $fallbackAnggota = $groupMembers
+                    ->reject(fn (OrganizationMember $member): bool => $lead && $member->id === $lead->id)
+                    ->filter(fn (OrganizationMember $member): bool => (bool) $member->position?->isMember())
+                    ->map(fn (OrganizationMember $member) => $member->alumni)
+                    ->filter()
+                    ->values();
+
+                $anggota = $lead?->anggota?->isNotEmpty()
+                    ? $lead->anggota
+                    : $fallbackAnggota;
+
                 return [
                     'division' => $groupMembers->first()?->division,
                     'lead' => $lead,
-                    'members' => $groupMembers
-                        ->reject(fn (OrganizationMember $member): bool => $lead && $member->id === $lead->id)
-                        ->sortBy(fn (OrganizationMember $member): int => (int) $member->sort_order)
-                        ->values(),
+                    'anggota' => $anggota,
                 ];
             })
             ->sortBy(fn (array $group): int => (int) ($group['division']?->sort_order ?? 99))

@@ -52,7 +52,14 @@ class OrganizationMembersTable
                     ->color('info')
                     ->sortable(),
                 TextColumn::make('alumni.name')
-                    ->label('Alumni')
+                    ->label('Profil Alumni')
+                    ->placeholder('-')
+                    ->toggleable(),
+                TextColumn::make('anggota.name')
+                    ->label('Anggota')
+                    ->badge()
+                    ->separator(',')
+                    ->limitList(3)
                     ->placeholder('-')
                     ->toggleable(),
                 IconColumn::make('is_active')

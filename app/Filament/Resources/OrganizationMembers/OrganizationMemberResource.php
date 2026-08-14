@@ -54,7 +54,7 @@ class OrganizationMemberResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->with(['period', 'position', 'division', 'alumni']);
+            ->with(['period', 'position', 'division', 'alumni', 'anggota']);
     }
 
     public static function getRelations(): array

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class OrganizationMember extends Model
 {
@@ -41,6 +42,14 @@ class OrganizationMember extends Model
                 $member->organization_division_id = null;
             }
         });
+
+        static::saved(function (OrganizationMember $member): void {
+            $member->loadMissing('position');
+
+            if (! $member->position?->isDivisionLead() && $member->anggota()->exists()) {
+                $member->anggota()->detach();
+            }
+        });
     }
 
     public function period(): BelongsTo
@@ -61,6 +70,14 @@ class OrganizationMember extends Model
     public function alumni(): BelongsTo
     {
         return $this->belongsTo(Alumni::class);
+    }
+
+    public function anggota(): BelongsToMany
+    {
+        return $this->belongsToMany(Alumni::class, 'organization_member_alumni')
+            ->withPivot('sort_order')
+            ->withTimestamps()
+            ->orderByPivot('sort_order');
     }
 
     public function displayName(): string

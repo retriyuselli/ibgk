@@ -33,8 +33,13 @@ class OrganizationMemberInfolist
                             ->label('Bidang')
                             ->placeholder('-'),
                         TextEntry::make('alumni.name')
-                            ->label('Alumni')
+                            ->label('Profil Alumni')
                             ->placeholder('-'),
+                        TextEntry::make('anggota.name')
+                            ->label('Anggota')
+                            ->listWithLineBreaks()
+                            ->placeholder('-')
+                            ->columnSpanFull(),
                         TextEntry::make('email')
                             ->label('Email'),
                         TextEntry::make('phone')

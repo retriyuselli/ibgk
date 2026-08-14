@@ -88,8 +88,27 @@ class OrganizationMemberForm
                             ])
                             ->helperText('Jika daftar masih kosong, klik tombol + di kanan field ini untuk menambah bidang.')
                             ->columnSpanFull(),
+                        Select::make('anggota')
+                            ->label('Anggota')
+                            ->multiple()
+                            ->relationship(
+                                name: 'anggota',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn ($query) => $query->with('batch')->orderBy('name'),
+                            )
+                            ->getOptionLabelFromRecordUsing(
+                                fn (Alumni $record): string => trim(
+                                    $record->name.' — '.($record->batch?->name ?? 'Tanpa angkatan')
+                                )
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->visible(fn (Get $get): bool => self::positionIsDivisionLead($get('organization_position_id')))
+                            ->dehydrated(fn (Get $get): bool => self::positionIsDivisionLead($get('organization_position_id')))
+                            ->helperText('Pilih satu atau lebih anggota. Mereka akan tampil di bawah ketua bidang ini pada halaman kepengurusan.')
+                            ->columnSpanFull(),
                         Select::make('alumni_id')
-                            ->label('Alumni')
+                            ->label('Profil Alumni')
                             ->relationship(
                                 name: 'alumni',
                                 titleAttribute: 'name',
@@ -103,7 +122,7 @@ class OrganizationMemberForm
                             ->searchable()
                             ->preload()
                             ->nullable()
-                            ->helperText('Opsional. Hubungkan pengurus ke data alumni jika tersedia.')
+                            ->helperText('Opsional. Hubungkan orang di jabatan ini ke profil alumni (foto, kampus, dan tautan halaman alumni).')
                             ->columnSpanFull(),
                     ]),
 
@@ -161,5 +180,14 @@ class OrganizationMemberForm
         }
 
         return (bool) OrganizationPosition::query()->find($positionId)?->requiresDivision();
+    }
+
+    private static function positionIsDivisionLead(mixed $positionId): bool
+    {
+        if (blank($positionId)) {
+            return false;
+        }
+
+        return (bool) OrganizationPosition::query()->find($positionId)?->isDivisionLead();
     }
 }
