@@ -4,7 +4,7 @@
 @endphp
 @if ($count > 0)
     <div class="board-org-stem" aria-hidden="true"></div>
-    <div class="board-org-officers" style="--board-count: {{ min(4, $count) }}">
+    <div @class(['board-org-officers', 'is-single' => $count === 1]) style="--board-count: {{ max($count, 1) }}">
         <div class="board-org-bar" aria-hidden="true"></div>
         @foreach ($rowMembers as $member)
             <div class="board-org-node">

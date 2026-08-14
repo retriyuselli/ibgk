@@ -6,7 +6,7 @@
 <section class="relative overflow-hidden bg-cream py-14 sm:py-16 lg:py-20">
     @include('partials.site.section-shapes', ['variant' => 'light'])
 
-    <div class="site-container relative">
+    <div class="board-structure-wrap relative">
         <div class="board-tabs" role="tablist" aria-label="Bagian kepengurusan">
             <button
                 type="button"
@@ -87,7 +87,7 @@
                                         <h3 class="board-division-title">
                                             Bidang {{ $group['division']?->displayName() ?? '' }}
                                         </h3>
-                                        <div class="grid w-full gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                                        <div class="board-member-grid">
                                             @foreach ($group['members'] as $member)
                                                 @include('partials.board.member-card', ['member' => $member])
                                             @endforeach
@@ -99,7 +99,7 @@
                             @if ($ungroupedMembers->isNotEmpty())
                                 <div class="board-division-block">
                                     <h3 class="board-division-title">Pengurus Lainnya</h3>
-                                    <div class="grid w-full gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                                    <div class="board-member-grid">
                                         @foreach ($ungroupedMembers as $member)
                                             @include('partials.board.member-card', ['member' => $member])
                                         @endforeach
@@ -143,7 +143,7 @@
             hidden
         >
             @if ($honoraryMembers->isNotEmpty())
-                <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                <div class="board-member-grid">
                     @foreach ($honoraryMembers as $member)
                         @include('partials.board.honorary-card', ['member' => $member])
                     @endforeach
@@ -179,7 +179,7 @@
                                 </div>
                             @endif
                             @if ($group['members']->isNotEmpty())
-                                <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                                <div class="board-member-grid">
                                     @foreach ($group['members'] as $member)
                                         @include('partials.board.member-card', ['member' => $member])
                                     @endforeach
