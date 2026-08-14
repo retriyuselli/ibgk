@@ -1622,23 +1622,31 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
     max-width: 100%;
 }
 
-.board-slide-card {
-    display: flex;
-    flex: 0 0 18rem;
-    width: 18rem;
-    max-width: 18rem;
+.board-anggota-grid {
+    display: grid;
+    width: 100%;
+    margin-inline: auto;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    max-width: 20rem;
 }
 
-.board-anggota-track {
-    align-items: stretch;
-}
-
-.board-anggota-track::before,
-.board-anggota-track::after {
-    content: '';
-    flex: 1 1 0;
+.board-anggota-grid > .board-member-card {
     min-width: 0;
-    scroll-snap-align: none;
+}
+
+@media (min-width: 640px) {
+    .board-anggota-grid {
+        max-width: none;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .board-anggota-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1.25rem;
+    }
 }
 
 .board-tabs::-webkit-scrollbar {

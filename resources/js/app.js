@@ -280,25 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.querySelectorAll('[data-board-slider]').forEach((track) => {
-        const wrap = track.parentElement;
-        const prev = wrap?.querySelector('.board-slide-prev');
-        const next = wrap?.querySelector('.board-slide-next');
-
-        if (! prev || ! next) {
-            return;
-        }
-
-        const scrollTrack = (direction) => {
-            const card = track.querySelector('.alumni-card');
-            const amount = card ? card.getBoundingClientRect().width + 16 : 300;
-            track.scrollBy({ left: direction * amount, behavior: 'smooth' });
-        };
-
-        prev.addEventListener('click', () => scrollTrack(-1));
-        next.addEventListener('click', () => scrollTrack(1));
-    });
-
     document.querySelectorAll('input[data-compress-image]').forEach((input) => {
         input.addEventListener('change', async () => {
             const file = input.files?.[0];
