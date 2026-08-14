@@ -3,7 +3,7 @@
     $leadCount = $divisionLeads->count();
     $showBidangTab = $divisionGroups->isNotEmpty();
 @endphp
-<section class="relative overflow-hidden bg-cream py-14 sm:py-16 lg:py-20">
+<section class="board-section relative overflow-hidden bg-cream py-14 sm:py-16 lg:py-20">
     @include('partials.site.section-shapes', ['variant' => 'light'])
 
     <div class="board-structure-wrap relative">
@@ -72,18 +72,18 @@
                     </div>
 
                     @if ($officerCount > 0)
-                        @include('partials.board.org-row', ['members' => $officers])
+                        @include('partials.board.org-row', ['members' => $officers, 'delay' => '0.22s'])
                     @endif
 
                     @if ($leadCount > 0)
-                        @include('partials.board.org-row', ['members' => $divisionLeads])
+                        @include('partials.board.org-row', ['members' => $divisionLeads, 'delay' => '0.52s'])
                     @endif
 
                     @if ($hasMore)
                         <div id="board-more" class="board-org-more hidden w-full" hidden>
                             @foreach ($divisionGroups as $group)
                                 @if ($group['anggota']->isNotEmpty())
-                                    <div class="board-division-block">
+                                    <div class="board-division-block" style="--board-i: {{ $loop->index }}">
                                         <h3 class="board-division-title">
                                             Bidang {{ $group['division']?->displayName() ?? '' }}
                                         </h3>
@@ -138,9 +138,9 @@
             aria-labelledby="board-tab-pembina"
             hidden
         >
-            <div class="rounded-lg border border-navy/10 bg-white px-6 py-16 text-center sm:py-20">
-                <p class="text-xs font-semibold tracking-[0.2em] text-gold uppercase">Dewan Pertimbangan Organisasi</p>
-                <p class="mt-4 font-display text-3xl font-semibold text-navy sm:text-4xl">Coming Soon</p>
+            <div class="board-soon rounded-lg border border-navy/10 bg-white px-6 py-16 text-center sm:py-20">
+                <p class="board-soon-kicker text-xs font-semibold tracking-[0.2em] text-gold uppercase">Dewan Pertimbangan Organisasi</p>
+                <p class="board-soon-title mt-4 font-display text-3xl font-semibold text-navy sm:text-4xl">Coming Soon</p>
             </div>
         </div>
 
@@ -155,7 +155,7 @@
             >
                 <div class="space-y-12">
                     @foreach ($divisionGroups as $group)
-                        <section>
+                        <section class="board-bidang-block" style="--board-i: {{ $loop->index }}">
                             <h3 class="board-division-title">
                                 Bidang {{ $group['division']?->displayName() ?? '' }}
                             </h3>

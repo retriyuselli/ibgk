@@ -1405,6 +1405,73 @@
     }
 }
 
+@keyframes board-rise {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes board-stem-draw {
+    from {
+        transform: scaleY(0);
+        opacity: 0.4;
+    }
+    to {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+@keyframes board-bar-draw {
+    from {
+        transform: scaleX(0);
+        opacity: 0.4;
+    }
+    to {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+@keyframes board-twig-draw {
+    from {
+        transform: translateX(-50%) scaleY(0);
+        opacity: 0.4;
+    }
+    to {
+        transform: translateX(-50%) scaleY(1);
+        opacity: 1;
+    }
+}
+
+@keyframes board-panel-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes board-soon-glow {
+    0%,
+    100% {
+        text-shadow: 0 0 0 color-mix(in oklab, var(--color-gold) 0%, transparent);
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0 0 24px color-mix(in oklab, var(--color-gold) 35%, transparent);
+        transform: scale(1.015);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .section-shapes .shape-ring-sm,
     .section-shapes .shape-diamond,
@@ -1430,10 +1497,28 @@
     .stages-animate,
     .stages-connector,
     .participants-animate,
-    .footer-animate {
+    .footer-animate,
+    .board-tab,
+    .board-org-chair,
+    .board-org-node,
+    .board-org-stem,
+    .board-org-bar,
+    .board-soon,
+    .board-soon-title,
+    .board-about-animate,
+    .board-about-line,
+    .board-panel-enter,
+    #board-more .board-division-block,
+    .board-bidang-block {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    .board-org-twig {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: translateX(-50%) !important;
     }
 
     .partner-showcase .section-shapes .shape-ring-sm,
@@ -1469,10 +1554,33 @@
     .stages-section.is-visible .stages-animate,
     .stages-section.is-visible .stages-connector,
     .participants-section.is-visible .participants-animate,
-    .footer-section.is-visible .footer-animate {
+    .footer-section.is-visible .footer-animate,
+    .board-section.is-visible .board-tab,
+    .board-section.is-visible .board-org-chair,
+    .board-section.is-visible .board-org-node,
+    .board-section.is-visible .board-org-stem,
+    .board-section.is-visible .board-org-bar,
+    .board-about-section.is-visible .board-about-animate,
+    .board-about-section.is-visible .board-about-line {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    .board-org-twig,
+    .board-section.is-visible .board-org-twig {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: translateX(-50%) !important;
+    }
+
+    .board-member-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .board-member-card:hover .board-member-photo img {
+        transform: none;
     }
 
     .participant-card:hover {
@@ -1563,6 +1671,10 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
     @apply flex flex-col items-center;
 }
 
+.board-org-row {
+    @apply flex w-full flex-col items-center;
+}
+
 .board-org-chair {
     width: 100%;
     max-width: 20rem;
@@ -1574,6 +1686,8 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
     background-image: linear-gradient(to bottom, #c5c9d0 50%, transparent 50%);
     background-size: 2px 8px;
     background-repeat: repeat-y;
+    transform: scaleY(0);
+    transform-origin: top center;
 }
 
 .board-org-officers {
@@ -1592,7 +1706,14 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-more-btn {
-    @apply inline-flex items-center gap-2 rounded-md border border-navy/15 bg-white px-4 py-2.5 text-sm font-semibold text-muted shadow-sm transition hover:border-gold hover:text-navy;
+    @apply inline-flex items-center gap-2 rounded-md border border-navy/15 bg-white px-4 py-2.5 text-sm font-semibold text-muted shadow-sm;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.board-more-btn:hover {
+    @apply border-gold text-navy;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px color-mix(in oklab, var(--color-navy) 8%, transparent);
 }
 
 .board-division-block {
@@ -1605,14 +1726,28 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 
 .board-member-card {
     @apply flex h-full w-full items-start gap-3 rounded-lg border border-navy/8 bg-white p-3 shadow-sm sm:gap-3.5 sm:p-3.5;
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 a.board-member-card {
     @apply text-inherit no-underline;
 }
 
+.board-member-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in oklab, var(--color-gold) 40%, transparent);
+    box-shadow:
+        0 12px 28px color-mix(in oklab, var(--color-navy) 10%, transparent),
+        0 0 0 3px color-mix(in oklab, var(--color-gold) 12%, transparent);
+}
+
+.board-member-card.is-link:hover .board-member-name,
+.board-member-card.is-link:focus-visible .board-member-name {
+    @apply text-gold;
+}
+
 a.board-member-card.is-link {
-    @apply transition hover:border-gold/35 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold;
 }
 
 .board-member-photo {
@@ -1628,6 +1763,11 @@ a.board-member-card.is-link {
 
 .board-member-photo img {
     @apply h-full w-full object-cover object-top;
+    transition: transform 0.55s ease;
+}
+
+.board-member-card:hover .board-member-photo img {
+    transform: scale(1.06);
 }
 
 .board-member-copy {
@@ -1704,6 +1844,8 @@ a.board-member-card.is-link {
         left: 9rem;
         right: 9rem;
         border-top: 2px dotted #c5c9d0;
+        transform: scaleX(0);
+        transform-origin: center;
     }
 
     .board-org-officers.is-single .board-org-bar {
@@ -1725,6 +1867,87 @@ a.board-member-card.is-link {
         background-image: linear-gradient(to bottom, #c5c9d0 50%, transparent 50%);
         background-size: 2px 8px;
         background-repeat: repeat-y;
-        transform: translateX(-50%);
+        transform: translateX(-50%) scaleY(0);
+        transform-origin: top center;
     }
+}
+
+.board-tab {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.board-org-chair,
+.board-org-node {
+    opacity: 0;
+    transform: translateY(18px);
+}
+
+.board-section.is-visible .board-tab {
+    animation: board-rise 0.55s ease-out both;
+}
+
+.board-section.is-visible .board-tab:nth-child(1) { animation-delay: 0.02s; }
+.board-section.is-visible .board-tab:nth-child(2) { animation-delay: 0.1s; }
+.board-section.is-visible .board-tab:nth-child(3) { animation-delay: 0.18s; }
+
+.board-section.is-visible .board-org-chair {
+    animation: board-rise 0.7s ease-out 0.12s both;
+}
+
+.board-section.is-visible .board-org-row .board-org-stem {
+    animation: board-stem-draw 0.4s ease-out both;
+    animation-delay: var(--board-row-delay, 0.22s);
+}
+
+.board-section.is-visible .board-org-row .board-org-bar {
+    animation: board-bar-draw 0.5s ease-out both;
+    animation-delay: calc(var(--board-row-delay, 0.22s) + 0.12s);
+}
+
+.board-section.is-visible .board-org-row .board-org-twig {
+    animation: board-twig-draw 0.35s ease-out both;
+    animation-delay: calc(var(--board-row-delay, 0.22s) + 0.2s + (var(--board-i, 0) * 0.07s));
+}
+
+.board-section.is-visible .board-org-row .board-org-node {
+    animation: board-rise 0.65s ease-out both;
+    animation-delay: calc(var(--board-row-delay, 0.22s) + 0.24s + (var(--board-i, 0) * 0.08s));
+}
+
+.board-panel-enter {
+    animation: board-panel-in 0.45s ease-out both;
+}
+
+.board-soon-title {
+    animation: board-soon-glow 2.8s ease-in-out infinite;
+}
+
+#board-more .board-division-block {
+    opacity: 0;
+    transform: translateY(16px);
+}
+
+#board-more.is-open .board-division-block {
+    animation: board-rise 0.55s ease-out both;
+    animation-delay: calc(var(--board-i, 0) * 0.1s);
+}
+
+.board-about-animate {
+    opacity: 0;
+    transform: translateY(16px);
+}
+
+.board-about-line {
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.board-about-section.is-visible .board-about-animate {
+    animation: board-rise 0.7s ease-out both;
+    animation-delay: var(--board-delay, 0s);
+}
+
+.board-about-section.is-visible .board-about-line {
+    animation: board-bar-draw 0.7s ease-out 0.18s both;
 }

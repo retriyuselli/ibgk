@@ -21,13 +21,13 @@
         ],
     ];
 @endphp
-<section class="relative bg-white py-14 sm:py-16 lg:py-20">
+<section class="board-about-section relative bg-white py-14 sm:py-16 lg:py-20">
     <div class="site-container">
         <div class="rounded-xl border border-navy/8 bg-cream-muted/60 p-6 sm:p-8 lg:p-10">
             <div class="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-14">
-                <div>
+                <div class="board-about-animate" style="--board-delay: 0s">
                     <h2 class="section-title text-2xl sm:text-3xl">Tentang Kepengurusan</h2>
-                    <div class="mt-3 h-px w-16 bg-gold"></div>
+                    <div class="board-about-line mt-3 h-px w-16 bg-gold"></div>
                     <p class="mt-5 text-sm leading-relaxed text-muted sm:text-base">
                         {{ $aboutText }}
                     </p>
@@ -39,7 +39,7 @@
 
                 <div class="space-y-5">
                     @foreach ($values as $value)
-                        <div class="flex gap-4">
+                        <div class="board-about-animate flex gap-4" style="--board-delay: {{ 0.12 + ($loop->index * 0.1) }}s">
                             <span class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gold/15 text-gold">
                                 @if ($value['icon'] === 'people')
                                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">

@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.querySelectorAll('.history-section, .journey-section, .stages-section, .participants-section, .footer-section').forEach((section) => {
+    document.querySelectorAll('.history-section, .journey-section, .stages-section, .participants-section, .footer-section, .board-section, .board-about-section').forEach((section) => {
         if (section.classList.contains('is-visible')) {
             return;
         }
@@ -249,6 +249,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     const active = panel.dataset.boardPanel === target;
                     panel.classList.toggle('hidden', !active);
                     panel.hidden = !active;
+                    panel.classList.remove('board-panel-enter');
+
+                    if (active) {
+                        void panel.offsetWidth;
+                        panel.classList.add('board-panel-enter');
+                    }
                 });
             });
         });
@@ -263,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
             boardMoreToggle.setAttribute('aria-expanded', String(!expanded));
             boardMore.classList.toggle('hidden', expanded);
             boardMore.hidden = expanded;
+            boardMore.classList.toggle('is-open', !expanded);
 
             const label = boardMoreToggle.querySelector('[data-board-more-label]');
             if (label) {
