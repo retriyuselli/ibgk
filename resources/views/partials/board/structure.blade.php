@@ -87,11 +87,7 @@
                                         <h3 class="board-division-title">
                                             Bidang {{ $group['division']?->displayName() ?? '' }}
                                         </h3>
-                                        <div class="board-member-grid">
-                                            @foreach ($group['anggota'] as $alumni)
-                                                @include('partials.board.anggota-card', ['alumni' => $alumni])
-                                            @endforeach
-                                        </div>
+                                        @include('partials.board.anggota-slider', ['anggota' => $group['anggota']])
                                     </div>
                                 @endif
                             @endforeach
@@ -178,13 +174,7 @@
                                     @include('partials.board.member-card', ['member' => $group['lead']])
                                 </div>
                             @endif
-                            @if ($group['anggota']->isNotEmpty())
-                                <div class="board-member-grid">
-                                    @foreach ($group['anggota'] as $alumni)
-                                        @include('partials.board.anggota-card', ['alumni' => $alumni])
-                                    @endforeach
-                                </div>
-                            @endif
+                            @include('partials.board.anggota-slider', ['anggota' => $group['anggota']])
                         </section>
                     @endforeach
                 </div>

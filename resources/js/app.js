@@ -273,20 +273,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const boardBidangTrack = document.getElementById('board-bidang-track');
-    const boardBidangPrev = document.getElementById('board-bidang-prev');
-    const boardBidangNext = document.getElementById('board-bidang-next');
+    document.querySelectorAll('[data-board-slider]').forEach((track) => {
+        const wrap = track.parentElement;
+        const prev = wrap?.querySelector('.board-slide-prev');
+        const next = wrap?.querySelector('.board-slide-next');
 
-    if (boardBidangTrack && boardBidangPrev && boardBidangNext) {
-        const scrollBidang = (direction) => {
-            const card = boardBidangTrack.querySelector('.alumni-card');
-            const amount = card ? card.getBoundingClientRect().width + 16 : 280;
-            boardBidangTrack.scrollBy({ left: direction * amount, behavior: 'smooth' });
+        if (! prev || ! next) {
+            return;
+        }
+
+        const scrollTrack = (direction) => {
+            const card = track.querySelector('.alumni-card');
+            const amount = card ? card.getBoundingClientRect().width + 16 : 300;
+            track.scrollBy({ left: direction * amount, behavior: 'smooth' });
         };
 
-        boardBidangPrev.addEventListener('click', () => scrollBidang(-1));
-        boardBidangNext.addEventListener('click', () => scrollBidang(1));
-    }
+        prev.addEventListener('click', () => scrollTrack(-1));
+        next.addEventListener('click', () => scrollTrack(1));
+    });
 
     document.querySelectorAll('input[data-compress-image]').forEach((input) => {
         input.addEventListener('change', async () => {

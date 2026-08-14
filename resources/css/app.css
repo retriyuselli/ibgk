@@ -431,6 +431,7 @@
         @apply flex gap-4 overflow-x-auto scroll-smooth pb-2;
         scroll-snap-type: x mandatory;
         scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
     }
 
     .alumni-track::-webkit-scrollbar {
