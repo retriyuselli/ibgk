@@ -19,9 +19,9 @@
             →
         </button>
 
-        <div class="alumni-track board-anggota-track px-10 sm:px-12" data-board-slider>
+        <div class="alumni-track board-anggota-track px-8 sm:px-10" data-board-slider>
             @foreach ($people as $alumni)
-                <div class="alumni-card w-[17.5rem] shrink-0 sm:w-[18.75rem]">
+                <div class="alumni-card board-slide-card">
                     @include('partials.board.anggota-card', ['alumni' => $alumni])
                 </div>
             @endforeach
