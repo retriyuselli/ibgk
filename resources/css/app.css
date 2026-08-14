@@ -1623,29 +1623,38 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-anggota-grid {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     width: 100%;
     margin-inline: auto;
     gap: 1rem;
-    grid-template-columns: 1fr;
-    max-width: 20rem;
 }
 
 .board-anggota-grid > .board-member-card {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 20rem;
     min-width: 0;
 }
 
 @media (min-width: 640px) {
-    .board-anggota-grid {
+    .board-anggota-grid > .board-member-card {
+        flex: 0 0 calc((100% - 1rem) / 2);
+        width: calc((100% - 1rem) / 2);
         max-width: none;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @media (min-width: 1024px) {
     .board-anggota-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 1.25rem;
+    }
+
+    .board-anggota-grid > .board-member-card {
+        flex: 0 0 calc((100% - 3.75rem) / 4);
+        width: calc((100% - 3.75rem) / 4);
+        max-width: none;
     }
 }
 
