@@ -1515,9 +1515,14 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-slide-card {
+    display: flex;
     flex: 0 0 18rem;
     width: 18rem;
     max-width: 18rem;
+}
+
+.board-anggota-track {
+    align-items: stretch;
 }
 
 .board-anggota-track::before,
@@ -1576,6 +1581,7 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-org-node {
+    display: flex;
     width: 100%;
     max-width: 20rem;
 }
@@ -1598,11 +1604,71 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-member-card {
-    @apply h-full w-full;
+    @apply flex h-full w-full items-start gap-3 rounded-lg border border-navy/8 bg-white p-3 shadow-sm sm:gap-3.5 sm:p-3.5;
 }
 
 a.board-member-card {
     @apply text-inherit no-underline;
+}
+
+a.board-member-card.is-link {
+    @apply transition hover:border-gold/35 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold;
+}
+
+.board-member-photo {
+    @apply shrink-0 overflow-hidden rounded-md bg-cream;
+    width: 4.25rem;
+    height: 5.75rem;
+}
+
+.board-member-card.is-lg .board-member-photo {
+    width: 5rem;
+    height: 6.75rem;
+}
+
+.board-member-photo img {
+    @apply h-full w-full object-cover object-top;
+}
+
+.board-member-copy {
+    @apply min-w-0 flex-1;
+}
+
+.board-member-role {
+    @apply text-[10px] font-semibold tracking-[0.14em] text-gold uppercase sm:text-[11px];
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
+.board-member-division {
+    @apply mt-0.5 text-[11px] leading-snug text-navy/70;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.board-member-name {
+    @apply mt-1 font-semibold leading-snug text-navy sm:text-[15px];
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.board-member-meta,
+.board-member-campus {
+    @apply mt-0.5 text-[11px] leading-snug text-muted sm:text-xs;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
+.board-member-campus {
+    @apply text-navy/70;
 }
 
 @media (min-width: 640px) {
@@ -1610,6 +1676,7 @@ a.board-member-card {
         display: inline-flex;
         flex-direction: row;
         flex-wrap: wrap;
+        align-items: stretch;
         justify-content: center;
         gap: 1rem 1.25rem;
         width: auto;

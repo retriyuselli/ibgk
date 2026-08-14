@@ -11,19 +11,21 @@
         aria-label="Lihat profil alumni {{ $alumni->displayName() }}"
     @endif
     @class([
-        'board-member-card flex items-center gap-3 rounded-lg border border-navy/8 bg-white p-3 shadow-sm sm:gap-4 sm:p-4',
-        'group transition hover:border-gold/35 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold' => (bool) $alumniUrl,
+        'board-member-card',
+        'is-link group' => (bool) $alumniUrl,
     ])
 >
-    <div class="h-24 w-16 shrink-0 overflow-hidden rounded-md bg-cream sm:h-[6.5rem] sm:w-[4.5rem]">
-        {!! site_image_or_storage($alumni->photo, 'images/home/alumni-placeholder.jpg', $alumni->displayName(), ['class' => 'h-full w-full object-cover']) !!}
+    <div class="board-member-photo">
+        {!! site_image_or_storage($alumni->photo, 'images/home/alumni-placeholder.jpg', $alumni->displayName(), ['class' => 'h-full w-full object-cover object-top']) !!}
     </div>
-    <div class="min-w-0">
-        <p class="text-[10px] font-semibold tracking-[0.14em] text-gold uppercase sm:text-xs">Anggota</p>
-        <p @class(['mt-1 font-semibold text-navy sm:text-base', 'transition group-hover:text-gold' => (bool) $alumniUrl])>{{ $alumni->displayName() }}</p>
-        <p class="mt-1 text-[11px] leading-relaxed text-muted sm:text-xs">{{ $subtitle }}</p>
+    <div class="board-member-copy">
+        <p class="board-member-role">Anggota</p>
+        <p @class(['board-member-name', 'transition group-hover:text-gold' => (bool) $alumniUrl]) title="{{ $alumni->displayName() }}">
+            {{ $alumni->displayName() }}
+        </p>
+        <p class="board-member-meta" title="{{ $subtitle }}">{{ $subtitle }}</p>
         @if ($university !== '')
-            <p class="mt-0.5 text-[11px] text-navy/70 sm:text-xs">{{ $university }}</p>
+            <p class="board-member-campus" title="{{ $university }}">{{ $university }}</p>
         @endif
     </div>
 </{{ $tag }}>
