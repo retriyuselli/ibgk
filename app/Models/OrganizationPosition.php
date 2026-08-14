@@ -67,4 +67,20 @@ class OrganizationPosition extends Model
 
         return str_contains($haystack, 'bidang') || str_contains($haystack, 'divisi') || str_contains($haystack, 'departemen');
     }
+
+    public function isMember(): bool
+    {
+        if ($this->isChair() || $this->isCoreOfficer() || $this->isDivisionLead()) {
+            return false;
+        }
+
+        $haystack = strtolower(trim($this->slug.' '.$this->name));
+
+        return $this->slug === 'anggota' || str_contains($haystack, 'anggota');
+    }
+
+    public function requiresDivision(): bool
+    {
+        return $this->isDivisionLead() || $this->isMember();
+    }
 }

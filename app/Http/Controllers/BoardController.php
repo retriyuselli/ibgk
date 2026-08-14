@@ -6,6 +6,7 @@ use App\Models\HonoraryMember;
 use App\Models\OrganizationMember;
 use App\Models\OrganizationPeriod;
 use App\Models\OrganizationProfile;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class BoardController extends Controller
@@ -19,7 +20,7 @@ class BoardController extends Controller
             ?? OrganizationPeriod::query()->orderByDesc('start_year')->first();
 
         $members = OrganizationMember::query()
-            ->with(['position', 'alumni.alumniBatch'])
+            ->with(['position', 'division', 'alumni.alumniBatch'])
             ->where('is_active', true)
             ->when(
                 $period,
@@ -41,24 +42,27 @@ class BoardController extends Controller
             ->filter(fn (OrganizationMember $member): bool => (bool) $member->position?->isCoreOfficer())
             ->values();
 
-        if ($officers->count() < 4) {
-            $officers = $officers
-                ->concat($remaining->reject(fn (OrganizationMember $member): bool => $officers->contains('id', $member->id)))
-                ->take(4)
-                ->values();
-        } else {
-            $officers = $officers->take(4)->values();
-        }
-
-        $visibleIds = collect([$chair])->filter()->concat($officers)->pluck('id');
-
-        $moreMembers = $remaining
-            ->reject(fn (OrganizationMember $member): bool => $visibleIds->contains($member->id))
+        $divisionGroups = $this->divisionGroups($remaining);
+        $divisionLeads = $divisionGroups
+            ->pluck('lead')
+            ->filter()
+            ->concat(
+                $remaining->filter(function (OrganizationMember $member): bool {
+                    return (bool) $member->position?->isDivisionLead()
+                        && blank($member->organization_division_id);
+                })
+            )
+            ->unique('id')
             ->values();
 
-        $divisionMembers = $members
-            ->filter(fn (OrganizationMember $member): bool => (bool) $member->position?->isDivisionLead())
+        $ungroupedMembers = $remaining
+            ->reject(fn (OrganizationMember $member): bool => $officers->contains('id', $member->id))
+            ->reject(fn (OrganizationMember $member): bool => $divisionLeads->contains('id', $member->id))
+            ->reject(fn (OrganizationMember $member): bool => filled($member->organization_division_id))
             ->values();
+
+        $hasMore = $ungroupedMembers->isNotEmpty()
+            || $divisionGroups->contains(fn (array $group): bool => $group['members']->isNotEmpty());
 
         $honoraryMembers = HonoraryMember::query()
             ->where('is_active', true)
@@ -70,10 +74,39 @@ class BoardController extends Controller
             'period' => $period,
             'chair' => $chair,
             'officers' => $officers,
-            'moreMembers' => $moreMembers,
-            'divisionMembers' => $divisionMembers,
+            'divisionLeads' => $divisionLeads,
+            'divisionGroups' => $divisionGroups,
+            'ungroupedMembers' => $ungroupedMembers,
+            'hasMore' => $hasMore,
             'honoraryMembers' => $honoraryMembers,
             'hasStructure' => $members->isNotEmpty(),
         ]);
+    }
+
+    /**
+     * @param  Collection<int, OrganizationMember>  $members
+     * @return Collection<int, array{division: mixed, lead: ?OrganizationMember, members: Collection<int, OrganizationMember>}>
+     */
+    private function divisionGroups(Collection $members): Collection
+    {
+        return $members
+            ->filter(fn (OrganizationMember $member): bool => filled($member->organization_division_id))
+            ->groupBy('organization_division_id')
+            ->map(function (Collection $groupMembers): array {
+                $lead = $groupMembers->first(
+                    fn (OrganizationMember $member): bool => (bool) $member->position?->isDivisionLead()
+                );
+
+                return [
+                    'division' => $groupMembers->first()?->division,
+                    'lead' => $lead,
+                    'members' => $groupMembers
+                        ->reject(fn (OrganizationMember $member): bool => $lead && $member->id === $lead->id)
+                        ->sortBy(fn (OrganizationMember $member): int => (int) $member->sort_order)
+                        ->values(),
+                ];
+            })
+            ->sortBy(fn (array $group): int => (int) ($group['division']?->sort_order ?? 99))
+            ->values();
     }
 }

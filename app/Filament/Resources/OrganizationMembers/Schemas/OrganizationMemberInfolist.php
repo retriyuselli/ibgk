@@ -29,6 +29,9 @@ class OrganizationMemberInfolist
                             ->label('Periode'),
                         TextEntry::make('position.name')
                             ->label('Jabatan'),
+                        TextEntry::make('division.name')
+                            ->label('Bidang')
+                            ->placeholder('-'),
                         TextEntry::make('alumni.name')
                             ->label('Alumni')
                             ->placeholder('-'),

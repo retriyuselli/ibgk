@@ -4,12 +4,15 @@ namespace App\Filament\Resources\OrganizationMembers\Schemas;
 
 use App\Models\Alumni;
 use App\Models\OrganizationPeriod;
+use App\Models\OrganizationPosition;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 class OrganizationMemberForm
@@ -37,7 +40,27 @@ class OrganizationMemberForm
                             )
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->required()
+                            ->live()
+                            ->afterStateUpdated(function (Set $set, mixed $state): void {
+                                if (! self::positionRequiresDivision($state)) {
+                                    $set('organization_division_id', null);
+                                }
+                            })
+                            ->helperText('Ketua Bidang dan Anggota wajib memilih Bidang.'),
+                        Select::make('organization_division_id')
+                            ->label('Bidang')
+                            ->relationship(
+                                name: 'division',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn ($query) => $query->orderBy('sort_order'),
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->visible(fn (Get $get): bool => self::positionRequiresDivision($get('organization_position_id')))
+                            ->required(fn (Get $get): bool => self::positionRequiresDivision($get('organization_position_id')))
+                            ->helperText('Anggota akan tampil di bawah Ketua Bidang yang sama.')
+                            ->columnSpanFull(),
                         Select::make('alumni_id')
                             ->label('Alumni')
                             ->relationship(
@@ -102,5 +125,14 @@ class OrganizationMemberForm
                             ->inline(false),
                     ]),
             ]);
+    }
+
+    private static function positionRequiresDivision(mixed $positionId): bool
+    {
+        if (blank($positionId)) {
+            return false;
+        }
+
+        return (bool) OrganizationPosition::query()->find($positionId)?->requiresDivision();
     }
 }

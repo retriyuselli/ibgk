@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\OrganizationPeriods\RelationManagers;
+namespace App\Filament\Resources\OrganizationDivisions\RelationManagers;
 
 use App\Filament\Resources\OrganizationMembers\OrganizationMemberResource;
 use Filament\Actions\CreateAction;
@@ -18,7 +18,7 @@ class MembersRelationManager extends RelationManager
 
     protected static ?string $relatedResource = OrganizationMemberResource::class;
 
-    protected static ?string $title = 'Pengurus';
+    protected static ?string $title = 'Pengurus Bidang';
 
     public function table(Table $table): Table
     {
@@ -37,13 +37,11 @@ class MembersRelationManager extends RelationManager
                     ->label('Jabatan')
                     ->badge()
                     ->sortable(),
-                TextColumn::make('division.name')
-                    ->label('Bidang')
+                TextColumn::make('period.name')
+                    ->label('Periode')
+                    ->badge()
+                    ->color('info')
                     ->placeholder('-'),
-                TextColumn::make('alumni.name')
-                    ->label('Alumni')
-                    ->placeholder('-')
-                    ->toggleable(),
                 IconColumn::make('is_active')
                     ->label('Aktif')
                     ->boolean(),

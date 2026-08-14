@@ -13,6 +13,7 @@ class OrganizationMember extends Model
     protected $fillable = [
         'organization_period_id',
         'organization_position_id',
+        'organization_division_id',
         'alumni_id',
         'name',
         'photo',
@@ -31,6 +32,17 @@ class OrganizationMember extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::saving(function (OrganizationMember $member): void {
+            $member->loadMissing('position');
+
+            if (! $member->position?->requiresDivision()) {
+                $member->organization_division_id = null;
+            }
+        });
+    }
+
     public function period(): BelongsTo
     {
         return $this->belongsTo(OrganizationPeriod::class, 'organization_period_id');
@@ -39,6 +51,11 @@ class OrganizationMember extends Model
     public function position(): BelongsTo
     {
         return $this->belongsTo(OrganizationPosition::class, 'organization_position_id');
+    }
+
+    public function division(): BelongsTo
+    {
+        return $this->belongsTo(OrganizationDivision::class, 'organization_division_id');
     }
 
     public function alumni(): BelongsTo
@@ -53,7 +70,18 @@ class OrganizationMember extends Model
 
     public function displayPosition(): string
     {
-        return title_case($this->position?->name) ?: 'Pengurus';
+        $position = title_case($this->position?->name) ?: 'Pengurus';
+        $division = $this->division?->displayName() ?? '';
+
+        if ($division === '' || ! $this->position?->isDivisionLead()) {
+            return $position;
+        }
+
+        if (str_contains(mb_strtolower($position, 'UTF-8'), mb_strtolower($division, 'UTF-8'))) {
+            return $position;
+        }
+
+        return $position.' '.$division;
     }
 
     public function displayUniversity(): string

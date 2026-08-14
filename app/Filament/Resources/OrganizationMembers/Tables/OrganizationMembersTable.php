@@ -42,6 +42,10 @@ class OrganizationMembersTable
                     ->label('Jabatan')
                     ->badge()
                     ->sortable(),
+                TextColumn::make('division.name')
+                    ->label('Bidang')
+                    ->placeholder('-')
+                    ->toggleable(),
                 TextColumn::make('period.name')
                     ->label('Periode')
                     ->badge()
@@ -76,6 +80,11 @@ class OrganizationMembersTable
                 SelectFilter::make('organization_position_id')
                     ->label('Jabatan')
                     ->relationship('position', 'name')
+                    ->searchable()
+                    ->preload(),
+                SelectFilter::make('organization_division_id')
+                    ->label('Bidang')
+                    ->relationship('division', 'name')
                     ->searchable()
                     ->preload(),
                 TernaryFilter::make('is_active')

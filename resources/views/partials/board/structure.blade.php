@@ -1,6 +1,7 @@
 @php
     $officerCount = $officers->count();
-    $showBidangTab = $divisionMembers->isNotEmpty();
+    $leadCount = $divisionLeads->count();
+    $showBidangTab = $divisionGroups->isNotEmpty();
 @endphp
 <section class="relative overflow-hidden bg-cream py-14 sm:py-16 lg:py-20">
     @include('partials.site.section-shapes', ['variant' => 'light'])
@@ -71,26 +72,40 @@
                     </div>
 
                     @if ($officerCount > 0)
-                        <div class="board-org-stem" aria-hidden="true"></div>
-                        <div class="board-org-officers" style="--board-count: {{ $officerCount }}">
-                            <div class="board-org-bar" aria-hidden="true"></div>
-                            @foreach ($officers as $officer)
-                                <div class="board-org-node">
-                                    <span class="board-org-twig" aria-hidden="true"></span>
-                                    @include('partials.board.member-card', ['member' => $officer])
-                                </div>
-                            @endforeach
-                        </div>
+                        @include('partials.board.org-row', ['members' => $officers])
                     @endif
 
-                    @if ($moreMembers->isNotEmpty())
+                    @if ($leadCount > 0)
+                        @include('partials.board.org-row', ['members' => $divisionLeads])
+                    @endif
+
+                    @if ($hasMore)
                         <div id="board-more" class="board-org-more hidden w-full" hidden>
-                            <div class="board-org-stem mx-auto" aria-hidden="true"></div>
-                            <div class="grid w-full gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                                @foreach ($moreMembers as $member)
-                                    @include('partials.board.member-card', ['member' => $member])
-                                @endforeach
-                            </div>
+                            @foreach ($divisionGroups as $group)
+                                @if ($group['members']->isNotEmpty())
+                                    <div class="board-division-block">
+                                        <h3 class="board-division-title">
+                                            Bidang {{ $group['division']?->displayName() ?? '' }}
+                                        </h3>
+                                        <div class="grid w-full gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                                            @foreach ($group['members'] as $member)
+                                                @include('partials.board.member-card', ['member' => $member])
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+
+                            @if ($ungroupedMembers->isNotEmpty())
+                                <div class="board-division-block">
+                                    <h3 class="board-division-title">Pengurus Lainnya</h3>
+                                    <div class="grid w-full gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                                        @foreach ($ungroupedMembers as $member)
+                                            @include('partials.board.member-card', ['member' => $member])
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="mt-8 flex justify-center">
@@ -152,29 +167,27 @@
                 aria-labelledby="board-tab-bidang"
                 hidden
             >
-                @if ($divisionMembers->count() > 4)
-                    <div class="relative">
-                        <button type="button" id="board-bidang-prev" class="absolute top-1/2 left-0 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-navy/15 bg-white text-navy shadow-sm transition hover:border-gold hover:text-gold sm:-left-1" aria-label="Bidang sebelumnya">
-                            ←
-                        </button>
-                        <button type="button" id="board-bidang-next" class="absolute top-1/2 right-0 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-navy/15 bg-white text-navy shadow-sm transition hover:border-gold hover:text-gold sm:-right-1" aria-label="Bidang berikutnya">
-                            →
-                        </button>
-                        <div id="board-bidang-track" class="alumni-track px-10 sm:px-12">
-                            @foreach ($divisionMembers as $member)
-                                <div class="alumni-card w-[min(100%,17.5rem)] shrink-0">
-                                    @include('partials.board.member-card', ['member' => $member])
+                <div class="space-y-12">
+                    @foreach ($divisionGroups as $group)
+                        <section>
+                            <h3 class="board-division-title">
+                                Bidang {{ $group['division']?->displayName() ?? '' }}
+                            </h3>
+                            @if ($group['lead'])
+                                <div class="mx-auto mb-6 max-w-sm">
+                                    @include('partials.board.member-card', ['member' => $group['lead']])
                                 </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @else
-                    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                        @foreach ($divisionMembers as $member)
-                            @include('partials.board.member-card', ['member' => $member])
-                        @endforeach
-                    </div>
-                @endif
+                            @endif
+                            @if ($group['members']->isNotEmpty())
+                                <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                                    @foreach ($group['members'] as $member)
+                                        @include('partials.board.member-card', ['member' => $member])
+                                    @endforeach
+                                </div>
+                            @endif
+                        </section>
+                    @endforeach
+                </div>
             </div>
         @endif
     </div>
