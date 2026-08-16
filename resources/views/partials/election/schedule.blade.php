@@ -81,7 +81,7 @@
                         </span>
 
                         <h3 @class([
-                            'mt-4 flex flex-1 items-center text-[11px] font-semibold tracking-[0.12em] uppercase',
+                            'mt-3 w-full text-[11px] font-semibold leading-snug tracking-[0.12em] uppercase',
                             'text-navy' => ! $isFinal,
                             'text-gold' => $isFinal,
                         ])>
@@ -99,7 +99,7 @@
                         @endif
 
                         <p @class([
-                            'mt-auto pt-3 text-sm font-medium',
+                            'mt-2 text-sm font-medium',
                             'text-muted' => ! $isFinal,
                             'text-gold-light' => $isFinal,
                         ])>
