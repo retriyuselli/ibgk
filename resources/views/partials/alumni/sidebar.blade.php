@@ -1,3 +1,6 @@
+@php
+    $isHonorary = $isHonorary ?? false;
+@endphp
 <aside class="space-y-5">
     <div class="border border-navy/8 bg-white p-5 shadow-sm">
         <div class="flex items-center justify-between gap-3">
@@ -39,6 +42,31 @@
                 </a>
             @endforeach
         </nav>
+
+        @php
+            $honoraryUrl = route('alumni', array_filter([
+                'angkatan' => \App\Models\HonoraryMember::DIRECTORY_SLUG,
+                'q' => $search ?: null,
+            ]));
+        @endphp
+        <a
+            href="{{ $honoraryUrl }}"
+            @class([
+                'mt-3 flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-sm transition',
+                'bg-navy text-gold' => $isHonorary,
+                'bg-cream text-navy hover:bg-cream-muted' => ! $isHonorary,
+            ])
+        >
+            <span class="flex items-center gap-2 font-medium">
+                <span @class(['text-gold', 'opacity-70' => ! $isHonorary])>
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4l2.1 4.3 4.7.7-3.4 3.3.8 4.7L12 14.8 7.8 17l.8-4.7-3.4-3.3 4.7-.7L12 4z"/></svg>
+                </span>
+                Anggota Kehormatan
+            </span>
+            @if ($isHonorary)
+                <span aria-hidden="true">→</span>
+            @endif
+        </a>
 
         <div class="mt-4 flex items-center justify-between gap-2">
             @if ($sidebarPage > 1)

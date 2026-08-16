@@ -28,7 +28,13 @@ class AlumniBatch extends Model
 
     public const CATEGORY_FOUNDERS = 'founders';
 
+    public const CATEGORY_HONORARY = 'honorary';
+
     public const FOUNDERS_SLUG = 'pendiri';
+
+    public const HONORARY_SLUG = 'anggota-kehormatan';
+
+    public const HONORARY_YEAR = 1998;
 
     protected $fillable = [
         'election_id',
@@ -57,6 +63,11 @@ class AlumniBatch extends Model
         return $this->category === self::CATEGORY_FOUNDERS;
     }
 
+    public function isHonorary(): bool
+    {
+        return $this->category === self::CATEGORY_HONORARY;
+    }
+
     public function isElection(): bool
     {
         return $this->category === self::CATEGORY_ELECTION;
@@ -70,6 +81,11 @@ class AlumniBatch extends Model
     public function scopeFounders(Builder $query): Builder
     {
         return $query->where('category', self::CATEGORY_FOUNDERS);
+    }
+
+    public function scopeHonorary(Builder $query): Builder
+    {
+        return $query->where('category', self::CATEGORY_HONORARY);
     }
 
     public function scopeActiveUpToCurrentYear(Builder $query): Builder
@@ -111,7 +127,7 @@ class AlumniBatch extends Model
 
     public function displayMemberCount(): int
     {
-        if ($this->isFounders()) {
+        if ($this->isFounders() || $this->isHonorary()) {
             $recorded = $this->publicMemberCount();
 
             return $recorded > 0 ? $recorded : (int) $this->historical_member_count;
@@ -218,14 +234,30 @@ class AlumniBatch extends Model
             ->first();
     }
 
+    public static function honoraryBatch(): ?self
+    {
+        static::syncHonoraryBatch();
+
+        return static::query()
+            ->honorary()
+            ->where('is_active', true)
+            ->withPublicMemberCount()
+            ->first();
+    }
+
     /** @return Collection<int, self> */
     public static function orderedForPublicSite(): Collection
     {
         $batches = static::electionBatchesOrdered();
         $founders = static::foundersBatch();
+        $honorary = static::honoraryBatch();
 
         if ($founders) {
             $batches->push($founders);
+        }
+
+        if ($honorary) {
+            $batches->push($honorary);
         }
 
         return $batches->values();
@@ -302,6 +334,19 @@ class AlumniBatch extends Model
         );
     }
 
+    public static function syncHonoraryBatch(): void
+    {
+        static::query()->updateOrCreate(
+            ['slug' => self::HONORARY_SLUG],
+            [
+                'name' => 'ANGGOTA KEHORMATAN',
+                'category' => self::CATEGORY_HONORARY,
+                'year' => self::HONORARY_YEAR,
+                'is_active' => true,
+            ]
+        );
+    }
+
     public static function syncElectionYearBatches(): void
     {
         $currentYear = (int) now()->format('Y');
@@ -334,6 +379,7 @@ class AlumniBatch extends Model
     public static function forPublicSite(): Collection
     {
         static::syncFoundersBatch();
+        static::syncHonoraryBatch();
 
         return static::query()
             ->where('is_active', true)
@@ -342,7 +388,8 @@ class AlumniBatch extends Model
                     ->where(fn (Builder $builder) => $builder
                         ->election()
                         ->whereBetween('year', [self::FIRST_ELECTION_YEAR, (int) now()->format('Y')]))
-                    ->orWhere(fn (Builder $builder) => $builder->founders());
+                    ->orWhere(fn (Builder $builder) => $builder->founders())
+                    ->orWhere(fn (Builder $builder) => $builder->honorary());
             })
             ->withPublicMemberCount()
             ->orderByDesc('year')

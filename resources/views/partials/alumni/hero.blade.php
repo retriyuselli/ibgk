@@ -53,7 +53,7 @@
                     <p class="mt-1 text-[11px] leading-relaxed text-white/60">Periode Pemilihan BGK Sumsel {{ $alumniSinceYear }}–sekarang</p>
                 </div>
             </div>
-            <div class="flex items-start gap-3 border border-gold/25 bg-navy-deep/50 px-4 py-4 backdrop-blur-sm">
+            <a href="{{ route('alumni', ['angkatan' => \App\Models\HonoraryMember::DIRECTORY_SLUG]) }}" class="flex items-start gap-3 border border-gold/25 bg-navy-deep/50 px-4 py-4 backdrop-blur-sm transition hover:border-gold/50">
                 <span class="mt-0.5 text-gold">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5l1.76 3.56 3.93.57-2.84 2.77.67 3.91-3.52-1.85-3.52 1.85.67-3.91-2.84-2.77 3.93-.57L11.48 3.5z"/></svg>
                 </span>
@@ -62,7 +62,7 @@
                     <p class="text-xs font-semibold tracking-[0.12em] text-white uppercase">Anggota Kehormatan</p>
                     <p class="mt-1 text-[11px] leading-relaxed text-white/60">Telah berjasa dan berkontribusi bagi IBGK Sumsel</p>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </section>

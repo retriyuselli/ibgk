@@ -34,7 +34,7 @@ class AlumniBatchForm
                             ->preload()
                             ->nullable()
                             ->live()
-                            ->visible(fn (Get $get): bool => $get('category') !== 'founders')
+                            ->visible(fn (Get $get): bool => ! in_array($get('category'), ['founders', 'honorary'], true))
                             ->afterStateUpdated(function (Set $set, Get $get, mixed $state): void {
                                 if (blank($state)) {
                                     return;
@@ -83,6 +83,7 @@ class AlumniBatchForm
                             ->options([
                                 'election' => 'Angkatan Pemilihan BGK',
                                 'founders' => 'Pendiri',
+                                'honorary' => 'Anggota Kehormatan',
                             ])
                             ->default('election')
                             ->required()
@@ -93,9 +94,11 @@ class AlumniBatchForm
                             ->numeric()
                             ->minValue(1999)
                             ->maxValue(now()->year + 10)
-                            ->helperText(fn (Get $get): ?string => $get('category') === 'founders'
-                                ? 'Gunakan 1999 untuk pengurutan pendiri sebelum angkatan 2002.'
-                                : null),
+                            ->helperText(fn (Get $get): ?string => match ($get('category')) {
+                                'founders' => 'Gunakan 1999 untuk pengurutan pendiri sebelum angkatan 2002.',
+                                'honorary' => 'Gunakan 1998 untuk pengurutan anggota kehormatan setelah pendiri.',
+                                default => null,
+                            }),
                         TextInput::make('historical_member_count')
                             ->label('Jumlah Finalis Berdasarkan Arsip')
                             ->numeric()

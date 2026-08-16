@@ -11,8 +11,8 @@
                     <h1 class="mt-3 font-display text-2xl font-semibold text-navy sm:text-3xl">Daftar Profil Alumni</h1>
                     <div class="mt-3 h-px w-12 bg-gold"></div>
                     <p class="mt-4 text-sm leading-relaxed text-muted">
-                        Alumni IBGK Sumsel dapat mengisi profil sendiri. Pilih angkatan BGK Anda, lengkapi data, lalu kirim.
-                        Setelah terdaftar, akun Dashboard akan dibuat otomatis menggunakan email Anda.
+                        Alumni, pendiri, dan anggota kehormatan IBGK Sumsel dapat mengisi profil sendiri.
+                        Pilih keanggotaan Anda, lengkapi data, lalu kirim. Setelah terdaftar, akun Dashboard akan dibuat otomatis menggunakan email Anda.
                     </p>
                 </div>
 
@@ -22,14 +22,41 @@
                     <fieldset class="auth-field-animate space-y-4" style="--auth-delay: 0s">
                         <legend class="text-xs font-semibold tracking-[0.14em] text-gold uppercase">Keanggotaan</legend>
                         <div>
-                            <label for="alumni_batch_id" class="mb-1.5 block text-sm font-medium text-navy">Angkatan BGK *</label>
+                            <label for="alumni_batch_id" class="mb-1.5 block text-sm font-medium text-navy">Keanggotaan *</label>
                             <select id="alumni_batch_id" name="alumni_batch_id" required class="w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2.5 text-sm outline-none transition focus:border-gold focus:shadow-[0_0_0_3px_color-mix(in_oklab,var(--color-gold)_18%,transparent)]">
-                                <option value="">Pilih angkatan...</option>
-                                @foreach ($batches as $batch)
-                                    <option value="{{ $batch->id }}" @selected((string) old('alumni_batch_id') === (string) $batch->id)>
-                                        {{ $batch->name }} ({{ $batch->year }})
-                                    </option>
-                                @endforeach
+                                <option value="">Pilih keanggotaan...</option>
+                                @php
+                                    $electionBatches = $batches->filter->isElection();
+                                    $founderBatches = $batches->filter->isFounders();
+                                    $honoraryBatches = $batches->filter->isHonorary();
+                                @endphp
+                                @if ($electionBatches->isNotEmpty())
+                                    <optgroup label="Angkatan">
+                                        @foreach ($electionBatches as $batch)
+                                            <option value="{{ $batch->id }}" @selected((string) old('alumni_batch_id') === (string) $batch->id)>
+                                                {{ $batch->name }} ({{ $batch->year }})
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endif
+                                @if ($founderBatches->isNotEmpty())
+                                    <optgroup label="Pendiri">
+                                        @foreach ($founderBatches as $batch)
+                                            <option value="{{ $batch->id }}" @selected((string) old('alumni_batch_id') === (string) $batch->id)>
+                                                {{ $batch->name }}
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endif
+                                @if ($honoraryBatches->isNotEmpty())
+                                    <optgroup label="Anggota Kehormatan">
+                                        @foreach ($honoraryBatches as $batch)
+                                            <option value="{{ $batch->id }}" @selected((string) old('alumni_batch_id') === (string) $batch->id)>
+                                                {{ $batch->name }}
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endif
                             </select>
                             @error('alumni_batch_id')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                         </div>

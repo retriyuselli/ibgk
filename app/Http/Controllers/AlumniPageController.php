@@ -27,7 +27,10 @@ class AlumniPageController extends Controller
         $batches = AlumniBatch::batchesWithPublicAlumniOrdered();
 
         $angkatanSlug = trim($request->string('angkatan')->toString());
-        $selectedBatch = $batches->firstWhere('slug', $angkatanSlug) ?? $batches->first();
+        $isHonorary = $angkatanSlug === HonoraryMember::DIRECTORY_SLUG;
+        $selectedBatch = $isHonorary
+            ? null
+            : ($batches->firstWhere('slug', $angkatanSlug) ?? $batches->first());
 
         $sidebarPages = AlumniBatch::sidebarPageCount();
         $sidebarPage = $request->integer('halaman');
@@ -48,13 +51,33 @@ class AlumniPageController extends Controller
             : null;
 
         $search = trim((string) $request->string('q'));
-        $gender = $request->string('gender')->toString();
+        $gender = $isHonorary ? '' : $request->string('gender')->toString();
+
+        $honoraryBatch = AlumniBatch::honoraryBatch();
+
+        $honoraryQuery = HonoraryMember::query()
+            ->where('is_active', true)
+            ->when($search !== '', function ($query) use ($search): void {
+                $query->where(function ($builder) use ($search): void {
+                    $builder
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('title', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('sort_order')
+            ->orderBy('name');
+
+        $honoraryMembers = $isHonorary
+            ? $honoraryQuery->get()
+            : collect();
 
         $alumniQuery = Alumni::query()
             ->with('alumniBatch')
             ->where('is_public', true)
             ->where('is_active', true)
-            ->when($selectedBatch, fn ($query) => $query->where('alumni_batch_id', $selectedBatch->id))
+            ->when($isHonorary, fn ($query) => $query->where('alumni_batch_id', $honoraryBatch?->id ?? 0))
+            ->when(! $isHonorary && $selectedBatch, fn ($query) => $query->where('alumni_batch_id', $selectedBatch->id))
             ->when($search !== '', function ($query) use ($search): void {
                 $query->where(function ($builder) use ($search): void {
                     $builder
@@ -79,6 +102,9 @@ class AlumniPageController extends Controller
             ]);
         }
 
+        $honoraryMemberCount = HonoraryMember::query()->where('is_active', true)->count();
+        $honoraryAlumniCount = $honoraryBatch?->publicMemberCount() ?? 0;
+
         return view('pages.alumni', [
             'profile' => OrganizationProfile::query()->first(),
             'batches' => $batches,
@@ -88,12 +114,14 @@ class AlumniPageController extends Controller
             'prevPageBatch' => $prevPageBatch,
             'nextPageBatch' => $nextPageBatch,
             'selectedBatch' => $selectedBatch,
+            'isHonorary' => $isHonorary,
             'alumni' => $alumni,
+            'honoraryMembers' => $honoraryMembers,
             'search' => $search,
             'gender' => $gender,
             'totalAlumni' => AlumniBatch::totalPublicMembersUpToCurrentYear(),
             'batchCount' => AlumniBatch::activeBatchCountUpToCurrentYear(),
-            'honoraryCount' => HonoraryMember::query()->where('is_active', true)->count(),
+            'honoraryCount' => $honoraryMemberCount + $honoraryAlumniCount,
         ]);
     }
 }

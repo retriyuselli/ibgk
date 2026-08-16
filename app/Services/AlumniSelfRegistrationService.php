@@ -58,9 +58,9 @@ class AlumniSelfRegistrationService
     {
         $batch = AlumniBatch::query()->find($data['alumni_batch_id'] ?? null);
 
-        if (! $batch || ! $batch->is_active || (! $batch->isElection() && ! $batch->isFounders())) {
+        if (! $batch || ! $batch->is_active || (! $batch->isElection() && ! $batch->isFounders() && ! $batch->isHonorary())) {
             throw ValidationException::withMessages([
-                'alumni_batch_id' => 'Angkatan yang dipilih tidak valid.',
+                'alumni_batch_id' => 'Keanggotaan yang dipilih tidak valid.',
             ]);
         }
 

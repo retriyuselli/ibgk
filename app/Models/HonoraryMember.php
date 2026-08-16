@@ -9,6 +9,8 @@ class HonoraryMember extends Model
 {
     use HasFactory;
 
+    public const DIRECTORY_SLUG = 'anggota-kehormatan';
+
     protected $fillable = [
         'name',
         'title',

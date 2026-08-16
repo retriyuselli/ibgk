@@ -11,5 +11,6 @@ class AlumniBatchSeeder extends Seeder
     {
         AlumniBatch::syncElectionYearBatches();
         AlumniBatch::syncFoundersBatch();
+        AlumniBatch::syncHonoraryBatch();
     }
 }

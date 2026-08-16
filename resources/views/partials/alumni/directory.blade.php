@@ -1,15 +1,20 @@
 <section class="relative bg-cream py-14 sm:py-16 lg:py-20 overflow-hidden">
+    @php
+        $isHonorary = $isHonorary ?? false;
+    @endphp
     <div class="site-container">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div class="max-w-xl">
                 <h2 class="section-title">Keluarga Besar Alumni</h2>
                 <p class="mt-3 text-sm text-muted sm:text-base">
-                    Jelajahi alumni berdasarkan angkatan, nama, perguruan tinggi, atau profesi.
+                    Jelajahi alumni berdasarkan angkatan, pendiri, anggota kehormatan, nama, perguruan tinggi, atau profesi.
                 </p>
             </div>
 
             <form method="GET" action="{{ route('alumni') }}" class="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
-                @if ($selectedBatch)
+                @if ($isHonorary)
+                    <input type="hidden" name="angkatan" value="{{ \App\Models\HonoraryMember::DIRECTORY_SLUG }}">
+                @elseif ($selectedBatch)
                     <input type="hidden" name="angkatan" value="{{ $selectedBatch->slug }}">
                     <input type="hidden" name="halaman" value="{{ $sidebarPage }}">
                 @endif
@@ -23,11 +28,12 @@
                         type="search"
                         name="q"
                         value="{{ $search }}"
-                        placeholder="Cari nama, kampus, profesi..."
+                        placeholder="{{ $isHonorary ? 'Cari nama atau gelar...' : 'Cari nama, kampus, profesi...' }}"
                         class="w-full rounded-md border border-navy/15 bg-white py-2.5 pr-3 pl-10 text-sm text-navy outline-none transition focus:border-gold"
                     >
                 </label>
 
+                @unless ($isHonorary)
                 <label class="relative">
                     <span class="sr-only">Filter gender</span>
                     <select
@@ -40,6 +46,7 @@
                         <option value="gadis" @selected(in_array($gender, ['gadis', 'female'], true))>Gadis</option>
                     </select>
                 </label>
+                @endunless
 
                 <button type="submit" class="btn-gold-sm whitespace-nowrap">
                     Cari
