@@ -580,6 +580,13 @@ html[data-site-theme] [class*='bg-navy/'] {
     .schedule-card {
         min-height: 15.5rem;
         height: auto;
+        width: 14rem;
+    }
+
+    @media (min-width: 640px) {
+        .schedule-card {
+            width: 16rem;
+        }
     }
 
     .section-shapes {

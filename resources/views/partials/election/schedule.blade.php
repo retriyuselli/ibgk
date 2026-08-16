@@ -64,7 +64,7 @@
                         $isFinal = str_contains(strtolower($card->name), 'grand');
                     @endphp
                     <article @class([
-                        'schedule-card alumni-card flex w-44 shrink-0 flex-col items-center px-4 py-6 text-center shadow-sm sm:w-48',
+                        'schedule-card alumni-card flex w-56 shrink-0 flex-col items-center px-5 py-6 text-center shadow-sm sm:w-64',
                         'border border-gold/30 bg-white text-navy' => ! $isFinal,
                         'bg-navy text-white' => $isFinal,
                     ])>
