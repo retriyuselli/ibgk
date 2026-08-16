@@ -20,8 +20,14 @@
             <p class="text-xs font-semibold tracking-[0.2em] text-gold uppercase">Program</p>
             <h2 class="section-title mt-3">Program & Kegiatan</h2>
 
+            @php
+                $homeProgramLimit = 4;
+                $visibleCategories = $activityCategories->take($homeProgramLimit);
+                $hasMorePrograms = $activityCategories->count() > $homeProgramLimit;
+            @endphp
+
             <ul class="mt-8 space-y-3">
-                @forelse ($activityCategories as $index => $category)
+                @forelse ($visibleCategories as $index => $category)
                     <li>
                         <a href="{{ route('activities', ['kategori' => $category->slug]) }}" class="group flex items-center gap-4 border border-navy/8 bg-cream/60 px-4 py-4 transition hover:border-gold/40 hover:bg-cream">
                             <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-gold shadow-sm">
@@ -34,6 +40,13 @@
                     <li class="text-sm text-muted">Belum ada kategori kegiatan.</li>
                 @endforelse
             </ul>
+
+            @if ($hasMorePrograms)
+                <a href="{{ route('activities') }}" class="mt-5 inline-flex items-center gap-1 text-xs font-semibold tracking-[0.14em] text-gold uppercase hover:text-navy">
+                    Selengkapnya
+                    <span aria-hidden="true">→</span>
+                </a>
+            @endif
         </div>
 
         <div id="berita">
