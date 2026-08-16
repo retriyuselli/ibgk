@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-site-theme="{{ ($profile ?? org_profile())->frontendTheme() }}">
 @php
     $showDevelopmentGate = config('site.under_development')
         && ! auth()->check()
@@ -8,6 +8,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        (function () {
+            try {
+                var allowed = ['classic', 'festival'];
+                var saved = localStorage.getItem('ibgk-site-theme');
+                if (allowed.indexOf(saved) !== -1) {
+                    document.documentElement.setAttribute('data-site-theme', saved);
+                }
+            } catch (e) {}
+        })();
+    </script>
     <title>@yield('title', config('app.name', 'IBGK Sumsel'))</title>
     <meta name="description" content="@yield('meta_description', $profile?->short_description ?? 'Ikatan Bujang Gadis Kampus Sumatera Selatan')">
     <meta name="robots" content="{{ $showDevelopmentGate ? 'noindex, nofollow' : 'index, follow' }}">

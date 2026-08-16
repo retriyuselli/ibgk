@@ -22,6 +22,18 @@
     --color-banking-dark: #00524f;
 }
 
+html[data-site-theme='festival'] {
+    --color-navy: #7a288a;
+    --color-navy-deep: #4a148c;
+    --color-navy-soft: #9c3aad;
+    --color-gold: #ffd54f;
+    --color-gold-light: #ffe082;
+    --color-cream: #fbf5fd;
+    --color-cream-muted: #f4e6f8;
+    --color-ink: #2a1238;
+    --color-muted: #6e547a;
+}
+
 @layer components {
     .partner-showcase {
         --showcase-primary: var(--color-banking);
@@ -148,6 +160,28 @@
     ::selection {
         background: color-mix(in oklab, var(--color-gold) 35%, transparent);
     }
+
+    html[data-site-theme='festival'] .site-header {
+        background-color: color-mix(in oklab, var(--color-navy) 94%, transparent);
+        background-image: linear-gradient(
+            135deg,
+            var(--color-navy-soft) 0%,
+            var(--color-navy) 52%,
+            var(--color-navy-deep) 100%
+        );
+    }
+
+    html[data-site-theme='festival'] .site-footer {
+        background-image: linear-gradient(180deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
+    }
+
+    html[data-site-theme='festival'] .site-theme-swatch-classic {
+        opacity: 1;
+    }
+
+    html[data-site-theme='festival'] .site-theme-swatch-festival {
+        opacity: 0.45;
+    }
 }
 
 @layer components {
@@ -212,6 +246,32 @@
 
     .btn-outline-light-sm {
         @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/70 bg-transparent px-4 py-2.5 text-xs font-semibold tracking-wide text-white transition duration-300 hover:border-gold hover:text-gold;
+    }
+
+    .site-theme-toggle {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 text-white transition duration-300 hover:border-gold hover:text-gold;
+    }
+
+    .site-theme-swatch {
+        @apply relative h-5 w-5;
+    }
+
+    .site-theme-swatch-classic,
+    .site-theme-swatch-festival {
+        @apply absolute inset-0 rounded-full border border-white/50;
+    }
+
+    .site-theme-swatch-classic {
+        background: #0b1f3a;
+        box-shadow: inset 0 0 0 2px #c9a227;
+        opacity: 0.45;
+    }
+
+    .site-theme-swatch-festival {
+        background: linear-gradient(135deg, #c2185b 0%, #7a288a 100%);
+        box-shadow: inset 0 0 0 2px #ffd54f;
+        transform: translate(5px, 5px) scale(0.78);
+        opacity: 1;
     }
 
     .btn-google {

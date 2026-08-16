@@ -3,7 +3,7 @@
         $programIcons = ['users', 'mobile', 'building', 'book', 'map', 'trophy', 'campus', 'card', 'award', 'share', 'star', 'database'];
     @endphp
 
-    <section class="showcase-programs relative overflow-hidden bg-[#f7f4ef] py-14 sm:py-16 lg:py-20">
+    <section class="showcase-programs relative overflow-hidden bg-cream py-14 sm:py-16 lg:py-20">
         <div class="pointer-events-none absolute inset-0 opacity-[0.35]" style="background-image: radial-gradient(circle at 1px 1px, #0a5c58 1px, transparent 0); background-size: 28px 28px;" aria-hidden="true"></div>
 
         <div class="site-container relative">

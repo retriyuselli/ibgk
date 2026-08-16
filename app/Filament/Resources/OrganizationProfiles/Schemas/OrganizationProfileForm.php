@@ -11,6 +11,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use App\Support\SiteTheme;
 
 class OrganizationProfileForm
 {
@@ -43,6 +44,14 @@ class OrganizationProfileForm
                             ->disk('public')
                             ->visibility('public')
                             ->imageEditor()
+                            ->columnSpanFull(),
+                        Select::make('frontend_theme')
+                            ->label('Tema Tampilan Situs')
+                            ->options(SiteTheme::options())
+                            ->default(SiteTheme::CLASSIC)
+                            ->required()
+                            ->native(false)
+                            ->helperText('Tema awal untuk pengunjung baru. Pengunjung tetap bisa mengganti tema dari header situs.')
                             ->columnSpanFull(),
                     ]),
 

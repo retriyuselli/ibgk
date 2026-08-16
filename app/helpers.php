@@ -48,6 +48,7 @@ if (! function_exists('org_profile')) {
 
         return $fallback ??= App\Models\OrganizationProfile::make([
             'name' => 'Organisasi',
+            'frontend_theme' => App\Support\SiteTheme::CLASSIC,
             'showcase_copy' => App\Models\OrganizationProfile::showcaseCopyDefaults(),
             'election_copy' => App\Models\OrganizationProfile::electionCopyDefaults(),
             'election_pillars' => App\Models\OrganizationProfile::electionPillarDefaults(),

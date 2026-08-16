@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Support\SiteTheme;
 
 class OrganizationProfile extends Model
 {
@@ -19,6 +20,7 @@ class OrganizationProfile extends Model
         'vision',
         'mission',
         'logo',
+        'frontend_theme',
         'address',
         'phone',
         'email',
@@ -144,6 +146,11 @@ class OrganizationProfile extends Model
         }
 
         return asset('storage/'.$this->logo);
+    }
+
+    public function frontendTheme(): string
+    {
+        return SiteTheme::normalize($this->frontend_theme);
     }
 
     /** @return array<string, string> */

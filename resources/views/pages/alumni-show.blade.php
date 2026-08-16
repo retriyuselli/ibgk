@@ -13,7 +13,7 @@
 
         <div
             class="pointer-events-none absolute inset-0 z-0 opacity-[0.07]"
-            style="background-image: radial-gradient(circle at 20% 20%, #0B1F3A 0.8px, transparent 1px), radial-gradient(circle at 80% 60%, #c9a227 0.8px, transparent 1px); background-size: 28px 28px;"
+            style="background-image: radial-gradient(circle at 20% 20%, var(--color-navy) 0.8px, transparent 1px), radial-gradient(circle at 80% 60%, var(--color-gold) 0.8px, transparent 1px); background-size: 28px 28px;"
             aria-hidden="true"
         ></div>
 

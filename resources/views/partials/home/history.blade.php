@@ -18,7 +18,7 @@
 <section id="sejarah" class="history-section relative overflow-hidden bg-navy py-16 text-white sm:py-20 lg:py-24">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
 
-    <div class="pointer-events-none absolute inset-0 z-0 opacity-[0.07]" style="background-image: radial-gradient(circle at 20% 20%, #c9a227 0.8px, transparent 1px), radial-gradient(circle at 80% 60%, #c9a227 0.8px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="pointer-events-none absolute inset-0 z-0 opacity-[0.07]" style="background-image: radial-gradient(circle at 20% 20%, var(--color-gold) 0.8px, transparent 1px), radial-gradient(circle at 80% 60%, var(--color-gold) 0.8px, transparent 1px); background-size: 28px 28px;"></div>
 
     <div class="site-container relative">
         <div class="history-header history-animate mx-auto max-w-3xl text-center">

@@ -6,6 +6,7 @@ use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use App\Support\SiteTheme;
 
 class OrganizationProfileInfolist
 {
@@ -34,6 +35,11 @@ class OrganizationProfileInfolist
                             ),
                         TextEntry::make('founder')
                             ->label('Pendiri'),
+                        TextEntry::make('frontend_theme')
+                            ->label('Tema Tampilan Situs')
+                            ->formatStateUsing(
+                                fn (?string $state) => SiteTheme::options()[SiteTheme::normalize($state)]
+                            ),
                     ]),
                 Section::make('Profil Organisasi')
                     ->schema([

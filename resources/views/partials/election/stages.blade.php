@@ -21,7 +21,7 @@
 <section id="tahapan" class="stages-section relative overflow-hidden bg-navy py-16 text-white sm:py-20 lg:py-24">
     @include('partials.site.section-shapes', ['variant' => 'dark'])
 
-    <div class="pointer-events-none absolute inset-0 z-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 20% 20%, #c9a227 1px, transparent 1px); background-size: 26px 26px;"></div>
+    <div class="pointer-events-none absolute inset-0 z-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 20% 20%, var(--color-gold) 1px, transparent 1px); background-size: 26px 26px;"></div>
 
     <div class="site-container relative">
         <div class="stages-header stages-animate mx-auto max-w-3xl text-center">

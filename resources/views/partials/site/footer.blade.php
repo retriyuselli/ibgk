@@ -55,7 +55,7 @@
 
     <div
         class="pointer-events-none absolute inset-0 z-0 opacity-[0.06]"
-        style="background-image: radial-gradient(circle at 15% 25%, #c9a227 0.8px, transparent 1px), radial-gradient(circle at 85% 70%, #c9a227 0.8px, transparent 1px); background-size: 30px 30px;"
+        style="background-image: radial-gradient(circle at 15% 25%, var(--color-gold) 0.8px, transparent 1px), radial-gradient(circle at 85% 70%, var(--color-gold) 0.8px, transparent 1px); background-size: 30px 30px;"
         aria-hidden="true"
     ></div>
 

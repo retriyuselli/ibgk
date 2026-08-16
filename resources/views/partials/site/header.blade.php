@@ -14,7 +14,7 @@
     $isDashboard = request()->routeIs('dashboard');
 @endphp
 
-<header class="sticky top-0 z-50 border-b border-white/10 bg-navy/95 backdrop-blur-md">
+<header class="site-header sticky top-0 z-50 border-b border-white/10 bg-navy/95 backdrop-blur-md">
     <div class="site-container flex h-[4.25rem] items-center justify-between gap-4 lg:h-[4.75rem]">
         <a href="{{ route('home') }}" class="group flex shrink-0 items-center" aria-label="{{ $profile->short_name ?? 'IBGK Sumatera Selatan' }}">
             @if (filled($profile?->logo))
@@ -61,6 +61,18 @@
         </nav>
 
         <div class="flex items-center gap-2 sm:gap-3">
+            <button
+                type="button"
+                id="site-theme-toggle"
+                class="site-theme-toggle"
+                aria-label="Ganti tema tampilan"
+                title="Ganti tema tampilan"
+            >
+                <span class="site-theme-swatch" aria-hidden="true">
+                    <span class="site-theme-swatch-classic"></span>
+                    <span class="site-theme-swatch-festival"></span>
+                </span>
+            </button>
             @auth
                 <a
                     href="{{ route('dashboard') }}"

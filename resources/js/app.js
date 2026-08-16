@@ -1,4 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('site-theme-toggle');
+    const allowedThemes = ['classic', 'festival'];
+    const themeStorageKey = 'ibgk-site-theme';
+
+    const currentSiteTheme = () => {
+        const theme = document.documentElement.getAttribute('data-site-theme');
+
+        return allowedThemes.includes(theme) ? theme : 'classic';
+    };
+
+    const syncThemeToggle = (theme) => {
+        if (! themeToggle) {
+            return;
+        }
+
+        const nextTheme = theme === 'festival' ? 'classic' : 'festival';
+        const nextLabel = nextTheme === 'festival' ? 'Tema Festival' : 'Tema Klasik';
+
+        themeToggle.setAttribute('aria-label', `Ganti ke ${nextLabel}`);
+        themeToggle.setAttribute('title', `Ganti ke ${nextLabel}`);
+    };
+
+    const applySiteTheme = (theme) => {
+        const nextTheme = allowedThemes.includes(theme) ? theme : 'classic';
+
+        document.documentElement.setAttribute('data-site-theme', nextTheme);
+
+        try {
+            localStorage.setItem(themeStorageKey, nextTheme);
+        } catch (e) {}
+
+        syncThemeToggle(nextTheme);
+    };
+
+    syncThemeToggle(currentSiteTheme());
+
+    themeToggle?.addEventListener('click', () => {
+        applySiteTheme(currentSiteTheme() === 'festival' ? 'classic' : 'festival');
+    });
+
     const toggle = document.getElementById('mobile-nav-toggle');
     const mobileNav = document.getElementById('mobile-nav');
 
