@@ -58,18 +58,18 @@
                 →
             </button>
 
-            <div id="schedule-track" class="alumni-track px-10 sm:px-12">
+            <div id="schedule-track" class="alumni-track items-stretch px-10 sm:px-12">
                 @foreach ($cards as $index => $card)
                     @php
                         $isFinal = str_contains(strtolower($card->name), 'grand');
                     @endphp
                     <article @class([
-                        'alumni-card flex h-full min-h-[13rem] w-44 shrink-0 flex-col items-center px-4 py-6 text-center shadow-sm sm:w-48',
+                        'schedule-card alumni-card flex w-44 shrink-0 flex-col items-center px-4 py-6 text-center shadow-sm sm:w-48',
                         'border border-gold/30 bg-white text-navy' => ! $isFinal,
                         'bg-navy text-white' => $isFinal,
                     ])>
                         <span @class([
-                            'flex h-11 w-11 items-center justify-center rounded-full border',
+                            'flex h-11 w-11 shrink-0 items-center justify-center rounded-full border',
                             'border-gold/40 text-gold' => ! $isFinal,
                             'border-gold text-gold' => $isFinal,
                         ])>
@@ -81,7 +81,7 @@
                         </span>
 
                         <h3 @class([
-                            'mt-4 text-[11px] font-semibold tracking-[0.12em] uppercase',
+                            'mt-4 flex flex-1 items-center text-[11px] font-semibold tracking-[0.12em] uppercase',
                             'text-navy' => ! $isFinal,
                             'text-gold' => $isFinal,
                         ])>
@@ -89,7 +89,7 @@
                         </h3>
 
                         <p @class([
-                            'mt-2 text-sm font-medium',
+                            'mt-auto pt-3 text-sm font-medium',
                             'text-muted' => ! $isFinal,
                             'text-gold-light' => $isFinal,
                         ])>

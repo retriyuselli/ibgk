@@ -573,6 +573,15 @@ html[data-site-theme] [class*='bg-navy/'] {
         scroll-snap-align: start;
     }
 
+    #schedule-track {
+        align-items: stretch;
+    }
+
+    .schedule-card {
+        min-height: 15.5rem;
+        height: auto;
+    }
+
     .section-shapes {
         @apply pointer-events-none absolute inset-0 z-[1] overflow-hidden;
     }
