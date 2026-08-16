@@ -14,6 +14,8 @@
     --color-navy-soft: #132a4a;
     --color-gold: #c9a227;
     --color-gold-light: #e0c15a;
+    --color-gold-ink: #8a6914;
+    --color-gold-bright: #c9a227;
     --color-cream: #f7f4ef;
     --color-cream-muted: #efeae1;
     --color-ink: #1a2332;
@@ -26,12 +28,24 @@ html[data-site-theme='festival'] {
     --color-navy: #7a288a;
     --color-navy-deep: #4a148c;
     --color-navy-soft: #9c3aad;
-    --color-gold: #ffd54f;
     --color-gold-light: #ffe082;
+    --color-gold-ink: #b45309;
+    --color-gold-bright: #ffd54f;
     --color-cream: #fbf5fd;
     --color-cream-muted: #f4e6f8;
     --color-ink: #2a1238;
     --color-muted: #6e547a;
+}
+
+html[data-site-theme] {
+    --color-gold: var(--color-gold-ink);
+    --gold-text: var(--color-gold-ink);
+}
+
+html[data-site-theme] :is(.site-header, .site-footer, .bg-navy, .bg-navy-deep, .bg-navy-soft),
+html[data-site-theme] [class*='bg-navy/'] {
+    --color-gold: var(--color-gold-bright);
+    --gold-text: var(--color-gold-bright);
 }
 
 @layer components {
@@ -194,7 +208,12 @@ html[data-site-theme='festival'] {
     }
 
     .btn-gold {
-        @apply inline-flex items-center justify-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold tracking-wide text-navy-deep transition duration-300 hover:bg-gold-light;
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold tracking-wide text-navy-deep transition duration-300;
+        background-color: var(--color-gold-bright);
+    }
+
+    .btn-gold:hover {
+        background-color: var(--color-gold-light);
     }
 
     .btn-outline-light {
@@ -202,7 +221,8 @@ html[data-site-theme='festival'] {
     }
 
     .btn-outline-gold {
-        @apply inline-flex items-center justify-center gap-2 rounded-md border border-gold px-5 py-3 text-sm font-semibold tracking-wide text-gold transition duration-300 hover:bg-gold hover:text-navy-deep;
+        @apply inline-flex items-center justify-center gap-2 rounded-md border border-gold px-5 py-3 text-sm font-semibold tracking-wide transition duration-300 hover:bg-gold hover:text-navy-deep;
+        color: var(--gold-text);
     }
 
     .section-title {
@@ -227,7 +247,8 @@ html[data-site-theme='festival'] {
     }
 
     .ornament-divider {
-        @apply mx-auto flex items-center justify-center gap-3 text-gold;
+        @apply mx-auto flex items-center justify-center gap-3;
+        color: var(--gold-text);
     }
 
     .ornament-divider::before,
@@ -241,7 +262,12 @@ html[data-site-theme='festival'] {
     }
 
     .btn-gold-sm {
-        @apply inline-flex items-center justify-center gap-2 rounded-md bg-gold px-4 py-2.5 text-xs font-semibold tracking-wide text-navy-deep transition duration-300 hover:bg-gold-light;
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-xs font-semibold tracking-wide text-navy-deep transition duration-300;
+        background-color: var(--color-gold-bright);
+    }
+
+    .btn-gold-sm:hover {
+        background-color: var(--color-gold-light);
     }
 
     .btn-outline-light-sm {
@@ -1735,7 +1761,7 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 
 .board-tab.is-active svg,
 .board-tab:hover svg {
-    @apply text-gold;
+    color: var(--gold-text);
 }
 
 .board-org-chart {
@@ -1792,7 +1818,8 @@ nav[role='navigation'][aria-label='Pagination Navigation'] a {
 }
 
 .board-division-title {
-    @apply mb-5 text-center text-xs font-semibold tracking-[0.16em] text-gold uppercase;
+    @apply mb-5 text-center text-xs font-semibold tracking-[0.16em] uppercase;
+    color: var(--gold-text);
 }
 
 .board-member-card {
@@ -1814,7 +1841,7 @@ a.board-member-card {
 
 .board-member-card.is-link:hover .board-member-name,
 .board-member-card.is-link:focus-visible .board-member-name {
-    @apply text-gold;
+    color: var(--gold-text);
 }
 
 a.board-member-card.is-link {
@@ -1846,7 +1873,8 @@ a.board-member-card.is-link {
 }
 
 .board-member-role {
-    @apply text-[10px] font-semibold tracking-[0.14em] text-gold uppercase sm:text-[11px];
+    @apply text-[10px] font-semibold tracking-[0.14em] uppercase sm:text-[11px];
+    color: var(--gold-text);
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
