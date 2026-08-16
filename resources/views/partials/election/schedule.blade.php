@@ -88,6 +88,16 @@
                             {{ $card->name }}
                         </h3>
 
+                        @if (filled($card->location ?? null))
+                            <p @class([
+                                'mt-2 text-[11px] leading-snug',
+                                'text-muted' => ! $isFinal,
+                                'text-white/70' => $isFinal,
+                            ])>
+                                {{ $card->location }}
+                            </p>
+                        @endif
+
                         <p @class([
                             'mt-auto pt-3 text-sm font-medium',
                             'text-muted' => ! $isFinal,

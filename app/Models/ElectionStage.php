@@ -14,6 +14,7 @@ class ElectionStage extends Model
         'election_id',
         'name',
         'description',
+        'location',
         'start_date',
         'end_date',
         'sort_order',

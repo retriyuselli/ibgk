@@ -73,6 +73,9 @@
                         <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cream text-xs font-semibold text-gold">{{ $index + 1 }}</span>
                         <div>
                             <p class="text-sm font-semibold text-navy">{{ $stage->name }}</p>
+                            @if (filled($stage->location))
+                                <p class="mt-0.5 text-xs text-navy/70">{{ $stage->location }}</p>
+                            @endif
                             @if ($stage->description)
                                 <p class="mt-0.5 text-xs text-muted">{{ $stage->description }}</p>
                             @endif

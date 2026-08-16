@@ -73,6 +73,11 @@
                         <h3 class="mt-4 text-[11px] font-semibold tracking-[0.12em] text-gold uppercase sm:text-xs">
                             {{ $stage->name }}
                         </h3>
+                        @if (filled($stage->location))
+                            <p class="mt-1.5 text-[11px] leading-relaxed text-gold-light/90">
+                                {{ $stage->location }}
+                            </p>
+                        @endif
                         <p class="mt-2 text-[11px] leading-relaxed text-white/70">
                             {{ $stage->description }}
                         </p>

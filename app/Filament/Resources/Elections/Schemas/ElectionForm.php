@@ -146,6 +146,11 @@ class ElectionForm
                                 ->label('Deskripsi')
                                 ->rows(2)
                                 ->columnSpanFull(),
+                            Textarea::make('location')
+                                ->label('Lokasi')
+                                ->placeholder('Contoh: Palembang, atau nama gedung/kampus')
+                                ->rows(2)
+                                ->columnSpanFull(),
                             DatePicker::make('start_date')
                                 ->label('Mulai')
                                 ->native(false),
