@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityCategory;
 use App\Models\AlumniBatch;
+use App\Models\HomepagePopup;
 use App\Models\News;
 use App\Models\OrganizationProfile;
 use App\Models\Partner;
@@ -47,6 +48,7 @@ class HomeController extends Controller
                 ->orderBy('sort_order')
                 ->with('category')
                 ->get(),
+            'homepagePopup' => rescue(fn () => HomepagePopup::current()),
         ]);
     }
 }

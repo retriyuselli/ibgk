@@ -12,4 +12,5 @@
     @include('partials.home.programs-news')
     @include('partials.home.alumni')
     @include('partials.home.partners')
+    @include('partials.home.popup')
 @endsection

@@ -300,6 +300,47 @@ html[data-site-theme] [class*='bg-navy/'] {
         opacity: 1;
     }
 
+    .home-popup {
+        @apply fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6;
+    }
+
+    .home-popup[hidden] {
+        display: none !important;
+    }
+
+    .home-popup-backdrop {
+        @apply absolute inset-0 bg-navy-deep/70 backdrop-blur-sm;
+        animation: gate-backdrop-in 0.35s ease-out both;
+    }
+
+    .home-popup-panel {
+        @apply relative z-10 w-full max-w-lg overflow-hidden rounded-lg border border-navy/10 bg-white shadow-2xl;
+        animation: auth-card-rise 0.45s ease-out both;
+        max-height: min(90vh, 42rem);
+        overflow-y: auto;
+    }
+
+    .home-popup-close {
+        @apply absolute top-3 right-3 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-navy/10 bg-white/90 text-navy shadow-sm transition hover:border-gold hover:text-gold;
+    }
+
+    .home-popup-media {
+        @apply bg-cream;
+    }
+
+    .home-popup-image {
+        @apply block w-full object-cover object-top;
+        max-height: 22rem;
+    }
+
+    .home-popup-body {
+        @apply p-5 sm:p-7;
+    }
+
+    html.home-popup-open {
+        overflow: hidden;
+    }
+
     .btn-google {
         @apply inline-flex w-full items-center justify-center gap-3 rounded-md border border-navy/12 bg-white px-4 py-2.5 text-sm font-semibold text-navy shadow-sm transition duration-300 hover:border-navy/20 hover:bg-cream/70 hover:shadow;
     }
@@ -1576,6 +1617,8 @@ html[data-site-theme] [class*='bg-navy/'] {
     .development-gate-backdrop,
     .development-gate-panel,
     .development-gate-icon,
+    .home-popup-backdrop,
+    .home-popup-panel,
     .history-animate,
     .history-line,
     .journey-animate,
