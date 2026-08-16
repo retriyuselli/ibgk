@@ -21,6 +21,8 @@ class HonoraryMemberResource extends Resource
 {
     protected static ?string $model = HonoraryMember::class;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
 
     protected static string|UnitEnum|null $navigationGroup = 'Organisasi';

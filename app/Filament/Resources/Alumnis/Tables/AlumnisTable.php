@@ -47,7 +47,7 @@ class AlumnisTable
                     })
                     ->sortable(),
                 TextColumn::make('batch.name')
-                    ->label('Angkatan')
+                    ->label('Keanggotaan')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('university')
@@ -86,7 +86,7 @@ class AlumnisTable
             ->defaultSort('id', 'desc')
             ->filters([
                 SelectFilter::make('alumni_batch_id')
-                    ->label('Angkatan')
+                    ->label('Keanggotaan')
                     ->relationship('batch', 'name', fn ($query) => $query->orderByDesc('year'))
                     ->searchable()
                     ->preload(),

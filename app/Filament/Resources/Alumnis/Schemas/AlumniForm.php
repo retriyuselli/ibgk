@@ -29,7 +29,7 @@ class AlumniForm
                     ->columns(2)
                     ->schema([
                         Select::make('alumni_batch_id')
-                            ->label('Angkatan')
+                            ->label('Keanggotaan')
                             ->relationship(
                                 name: 'batch',
                                 titleAttribute: 'name',

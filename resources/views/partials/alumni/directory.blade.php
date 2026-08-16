@@ -28,12 +28,11 @@
                         type="search"
                         name="q"
                         value="{{ $search }}"
-                        placeholder="{{ $isHonorary ? 'Cari nama atau gelar...' : 'Cari nama, kampus, profesi...' }}"
+                        placeholder="Cari nama, kampus, profesi..."
                         class="w-full rounded-md border border-navy/15 bg-white py-2.5 pr-3 pl-10 text-sm text-navy outline-none transition focus:border-gold"
                     >
                 </label>
 
-                @unless ($isHonorary)
                 <label class="relative">
                     <span class="sr-only">Filter gender</span>
                     <select
@@ -46,7 +45,6 @@
                         <option value="gadis" @selected(in_array($gender, ['gadis', 'female'], true))>Gadis</option>
                     </select>
                 </label>
-                @endunless
 
                 <button type="submit" class="btn-gold-sm whitespace-nowrap">
                     Cari

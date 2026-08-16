@@ -2,7 +2,7 @@
     $isHonorary = $isHonorary ?? false;
     $listingTitle = $isHonorary ? 'Anggota Kehormatan' : ($selectedBatch?->name ?? 'Alumni');
     $listingCount = $isHonorary
-        ? ($honoraryMembers->count() + $alumni->total())
+        ? $alumni->total()
         : ($selectedBatch?->displayMemberCount() ?? 0);
     $listingBadge = $isHonorary ? 'Anggota' : 'Finalis';
 @endphp
@@ -27,25 +27,7 @@
         </figure>
     @endif
 
-    @if ($isHonorary && ($honoraryMembers->isNotEmpty() || $alumni->isNotEmpty()))
-        <div id="alumni-grid" class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3 2xl:grid-cols-4">
-            @include('partials.alumni.honorary-card-items')
-            @include('partials.alumni.card-items')
-        </div>
-
-        @if ($alumni->hasMorePages())
-            <div class="mt-8 text-center" id="alumni-load-more-wrap">
-                <button
-                    type="button"
-                    id="alumni-load-more"
-                    class="btn-outline-gold min-w-44"
-                    data-next-page="{{ $alumni->currentPage() + 1 }}"
-                >
-                    Muat Lebih Banyak
-                </button>
-            </div>
-        @endif
-    @elseif (! $isHonorary && $alumni->isNotEmpty())
+    @if ($alumni->isNotEmpty())
         <div id="alumni-grid" class="mt-6 grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3 2xl:grid-cols-4">
             @include('partials.alumni.card-items')
         </div>
@@ -67,7 +49,7 @@
             @if ($isHonorary)
                 <p class="font-display text-xl text-navy">Data anggota kehormatan sedang dilengkapi</p>
                 <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
-                    Nama anggota kehormatan akan tampil di sini setelah data diisi melalui panel admin.
+                    Profil publik anggota kehormatan akan tampil di sini setelah data alumni dipublikasikan.
                 </p>
             @else
                 <p class="font-display text-xl text-navy">Data alumni sedang dilengkapi</p>

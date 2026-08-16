@@ -12,7 +12,7 @@
         ],
         [
             'title' => 'Anggota Kehormatan',
-            'text' => 'Tokoh atau pihak yang memberikan kontribusi istimewa bagi organisasi dan ditetapkan secara resmi oleh IBGK Sumsel.',
+            'text' => 'Bagian dari keluarga besar Alumni IBGK Sumsel yang ditetapkan atas kontribusi istimewa bagi organisasi.',
             'icon' => 'star',
         ],
     ];
@@ -53,10 +53,10 @@
             <h2 class="font-display text-2xl font-semibold text-navy sm:text-3xl">Anggota Kehormatan</h2>
             <div class="mt-3 h-px w-16 bg-gold"></div>
             <p class="mt-4 text-sm leading-relaxed text-muted">
-                Anggota kehormatan ditetapkan atas kontribusi istimewa terhadap perjalanan dan reputasi IBGK Sumatera Selatan.
+                Anggota kehormatan ditetapkan atas kontribusi istimewa terhadap perjalanan dan reputasi IBGK Sumatera Selatan. Profil lengkapnya dapat dilihat di halaman Alumni, bersama angkatan dan pendiri.
             </p>
-            <a href="{{ route('board') }}" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-gold hover:text-navy">
-                Lihat struktur kepengurusan
+            <a href="{{ $honoraryDirectoryUrl }}" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-gold hover:text-navy">
+                Lihat di halaman Alumni
                 <span aria-hidden="true">→</span>
             </a>
 
@@ -67,9 +67,13 @@
                             {{ $index + 1 }}
                         </span>
                         <div>
-                            <p class="font-semibold text-navy">{{ $member->name }}</p>
+                            @if (filled($member->slug))
+                                <a href="{{ route('alumni.show', $member) }}" class="font-semibold text-navy transition hover:text-gold">{{ $member->displayName() }}</a>
+                            @else
+                                <p class="font-semibold text-navy">{{ $member->displayName() }}</p>
+                            @endif
                             <p class="text-xs text-muted sm:text-sm">
-                                {{ $member->title ?: ($member->description ?: 'Anggota Kehormatan IBGK Sumsel') }}
+                                {{ $member->titleCase($member->profession) ?: $member->titleCase($member->university) ?: 'Anggota Kehormatan IBGK Sumsel' }}
                             </p>
                         </div>
                     </li>
