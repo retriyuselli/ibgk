@@ -1,6 +1,9 @@
 @php
     $org = $org ?? org_profile($profile);
     $description = $election?->description ?? $org->electionCopy('description_fallback');
+    $descriptionHtml = str_contains((string) $description, '<')
+        ? clean_html($description)
+        : '<p>'.e($description).'</p>';
     $pillars = $org->electionPillars();
 @endphp
 
@@ -19,8 +22,8 @@
 
         <div class="mt-12 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
             <div>
-                <div class="space-y-4 text-sm leading-relaxed text-muted sm:text-base">
-                    <p>{{ $description }}</p>
+                <div class="space-y-4 text-sm leading-relaxed text-muted sm:text-base [&_p+p]:mt-4">
+                    {!! $descriptionHtml !!}
                     <p>{{ $org->electionCopy('about_second_paragraph') }}</p>
                 </div>
 
