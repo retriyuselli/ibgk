@@ -3,7 +3,7 @@
     $popupHref = $popup?->buttonHref();
 @endphp
 
-@if ($popup)
+@if ($popup?->imageUrl())
     <div
         id="home-popup"
         class="home-popup"
@@ -16,6 +16,8 @@
         <div class="home-popup-backdrop" data-home-popup-close tabindex="-1" aria-hidden="true"></div>
 
         <div class="home-popup-panel">
+            <h2 id="home-popup-title" class="sr-only">{{ $popup->title }}</h2>
+
             <button
                 type="button"
                 class="home-popup-close"
@@ -27,37 +29,15 @@
                 </svg>
             </button>
 
-            @if ($popup->imageUrl())
+            @if ($popupHref)
+                <a href="{{ $popupHref }}" class="home-popup-media" aria-label="{{ $popup->buttonText() }}">
+                    <img src="{{ $popup->imageUrl() }}" alt="{{ $popup->title }}" class="home-popup-image">
+                </a>
+            @else
                 <div class="home-popup-media">
-                    @if ($popupHref)
-                        <a href="{{ $popupHref }}">
-                            <img src="{{ $popup->imageUrl() }}" alt="{{ $popup->title }}" class="home-popup-image">
-                        </a>
-                    @else
-                        <img src="{{ $popup->imageUrl() }}" alt="{{ $popup->title }}" class="home-popup-image">
-                    @endif
+                    <img src="{{ $popup->imageUrl() }}" alt="{{ $popup->title }}" class="home-popup-image">
                 </div>
             @endif
-
-            <div class="home-popup-body">
-                <p class="text-xs font-semibold tracking-[0.2em] text-gold uppercase">Pengumuman</p>
-                <h2 id="home-popup-title" class="mt-2 font-display text-2xl font-semibold text-navy sm:text-3xl">
-                    {{ $popup->title }}
-                </h2>
-                @if (filled($popup->body))
-                    <div class="mt-3 h-px w-12 bg-gold"></div>
-                    <p class="mt-4 text-sm leading-relaxed text-muted sm:text-base">
-                        {{ $popup->body }}
-                    </p>
-                @endif
-
-                @if ($popupHref)
-                    <a href="{{ $popupHref }}" class="btn-gold mt-6 w-full justify-center">
-                        {{ $popup->buttonText() }}
-                        <span aria-hidden="true">→</span>
-                    </a>
-                @endif
-            </div>
         </div>
     </div>
 @endif

@@ -46,7 +46,12 @@ class HomepagePopup extends Model
 
     public static function current(): ?self
     {
-        return static::query()->active()->latest('updated_at')->first();
+        return static::query()
+            ->active()
+            ->whereNotNull('image')
+            ->where('image', '!=', '')
+            ->latest('updated_at')
+            ->first();
     }
 
     public function imageUrl(): ?string

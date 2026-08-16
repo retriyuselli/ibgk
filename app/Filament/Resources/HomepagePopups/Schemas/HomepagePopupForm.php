@@ -4,7 +4,6 @@ namespace App\Filament\Resources\HomepagePopups\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -16,36 +15,31 @@ class HomepagePopupForm
     {
         return $schema->components([
             Section::make('Isi Popup')
-                ->description('Popup hanya tampil di beranda saat status aktif. Pengunjung yang menutup tidak melihatnya lagi sampai konten diubah.')
+                ->description('Popup beranda menampilkan poster saja. Ukurannya menyesuaikan layar. Pengunjung yang menutup tidak melihatnya lagi sampai poster diubah.')
                 ->columns(2)
                 ->schema([
                     TextInput::make('title')
-                        ->label('Judul')
+                        ->label('Judul (teks alternatif)')
                         ->required()
                         ->maxLength(255)
-                        ->columnSpanFull(),
-                    Textarea::make('body')
-                        ->label('Isi singkat')
-                        ->rows(4)
+                        ->helperText('Untuk aksesibilitas dan daftar di admin, tidak tampil di popup.')
                         ->columnSpanFull(),
                     FileUpload::make('image')
-                        ->label('Gambar / Poster')
+                        ->label('Poster')
                         ->image()
+                        ->required()
                         ->directory('homepage-popups')
                         ->disk('public')
                         ->visibility('public')
                         ->imageEditor()
-                        ->helperText('Opsional. Jika diisi, poster tampil di bagian atas popup.')
+                        ->helperText('Wajib. Poster ini yang tampil di beranda.')
                         ->columnSpanFull(),
-                    TextInput::make('button_label')
-                        ->label('Teks tombol')
-                        ->maxLength(100)
-                        ->placeholder('Daftar Sekarang'),
                     TextInput::make('button_url')
-                        ->label('Tautan tombol')
+                        ->label('Tautan saat poster diklik')
                         ->maxLength(500)
                         ->placeholder('/daftar-bgk')
-                        ->helperText('Boleh path situs (/daftar-bgk) atau URL lengkap.'),
+                        ->helperText('Opsional. Path situs (/daftar-bgk) atau URL lengkap.')
+                        ->columnSpanFull(),
                     Toggle::make('is_active')
                         ->label('Tampilkan di beranda')
                         ->default(true)

@@ -301,7 +301,7 @@ html[data-site-theme] [class*='bg-navy/'] {
     }
 
     .home-popup {
-        @apply fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6;
+        @apply fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-5;
     }
 
     .home-popup[hidden] {
@@ -314,27 +314,31 @@ html[data-site-theme] [class*='bg-navy/'] {
     }
 
     .home-popup-panel {
-        @apply relative z-10 w-full max-w-lg overflow-hidden rounded-lg border border-navy/10 bg-white shadow-2xl;
+        @apply relative z-10;
+        width: fit-content;
+        max-width: min(92vw, 36rem);
+        max-height: 90vh;
         animation: auth-card-rise 0.45s ease-out both;
-        max-height: min(90vh, 42rem);
-        overflow-y: auto;
     }
 
     .home-popup-close {
-        @apply absolute top-3 right-3 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-navy/10 bg-white/90 text-navy shadow-sm transition hover:border-gold hover:text-gold;
+        @apply absolute top-2 right-2 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-navy shadow-md transition hover:bg-white hover:text-gold sm:top-3 sm:right-3;
     }
 
     .home-popup-media {
-        @apply bg-cream;
+        @apply block overflow-hidden rounded-lg shadow-2xl;
+        line-height: 0;
     }
 
     .home-popup-image {
-        @apply block w-full object-cover object-top;
-        max-height: 22rem;
-    }
-
-    .home-popup-body {
-        @apply p-5 sm:p-7;
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: min(92vw, 36rem);
+        max-height: 88vh;
+        object-fit: contain;
+        object-position: center top;
+        vertical-align: top;
     }
 
     html.home-popup-open {
