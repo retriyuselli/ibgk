@@ -9,6 +9,7 @@ use App\Filament\Resources\Alumnis\Pages\ViewAlumni;
 use App\Filament\Resources\Alumnis\Schemas\AlumniForm;
 use App\Filament\Resources\Alumnis\Schemas\AlumniInfolist;
 use App\Filament\Resources\Alumnis\Tables\AlumnisTable;
+use App\Filament\Resources\Alumnis\Widgets\AlumniStatsOverview;
 use App\Models\Alumni;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -77,6 +78,13 @@ class AlumniResource extends Resource
     public static function getRelations(): array
     {
         return [];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            AlumniStatsOverview::class,
+        ];
     }
 
     public static function getPages(): array
