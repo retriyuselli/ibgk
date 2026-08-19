@@ -12,8 +12,12 @@ Options -Indexes
     RewriteCond %{HTTP_HOST} !^127\.0\.0\.1(:\d+)?$ [NC]
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # Blokir akses langsung ke folder internal Laravel
-    RewriteRule ^(?:app|bootstrap|config|database|resources|routes|storage|tests|vendor)(?:/|$) - [F,L]
+    # Blokir akses langsung ke folder internal Laravel.
+    # Jangan sertakan `storage` di sini: URL /storage/... harus diteruskan
+    # ke public/storage (symlink ke storage/app/public). Folder Laravel
+    # storage/logs tetap tidak terpapar karena rewrite di bawah mengarahkannya
+    # ke public/storage, bukan ke storage/ di root.
+    RewriteRule ^(?:app|bootstrap|config|database|resources|routes|tests|vendor)(?:/|$) - [F,L]
 
     # Arahkan request publik ke folder public/
     RewriteCond %{REQUEST_URI} !^/public/
