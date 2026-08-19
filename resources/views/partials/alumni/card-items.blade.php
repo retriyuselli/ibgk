@@ -16,6 +16,9 @@
         </div>
         <div class="px-3 py-3 sm:px-4 sm:py-4">
             <h4 class="text-sm font-semibold text-navy transition group-hover:text-gold sm:text-base">{{ $person->displayName() }}</h4>
+            @if ($isSearching ?? false)
+                <p class="mt-0.5 text-[10px] font-semibold tracking-wide text-gold sm:text-[11px]">{{ $person->alumniBatch?->name }}</p>
+            @endif
             <p class="mt-1 line-clamp-2 text-[11px] text-muted sm:text-xs">{{ $person->titleCase($person->university) ?: '—' }}</p>
             <p class="mt-0.5 line-clamp-2 text-[11px] font-medium text-navy/70 sm:text-xs">{{ $person->titleCase($person->profession) ?: 'Alumni IBGK' }}</p>
         </div>

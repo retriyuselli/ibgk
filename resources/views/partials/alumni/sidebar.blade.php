@@ -23,7 +23,6 @@
                             ? \App\Models\HonoraryMember::DIRECTORY_SLUG
                             : $batch->slug,
                         'halaman' => $sidebarPage,
-                        'q' => $search ?: null,
                         'gender' => $gender ?: null,
                     ]));
                 @endphp

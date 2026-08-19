@@ -204,6 +204,20 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
+    const alumniDirectoryForm = document.getElementById('alumni-directory-form');
+
+    if (alumniDirectoryForm) {
+        alumniDirectoryForm.addEventListener('submit', () => {
+            const query = alumniDirectoryForm.querySelector('input[name="q"]');
+
+            if (query && query.value.trim() !== '') {
+                alumniDirectoryForm.querySelectorAll('input[name="angkatan"], input[name="halaman"]').forEach((field) => {
+                    field.disabled = true;
+                });
+            }
+        });
+    }
+
     const alumniGrid = document.getElementById('alumni-grid');
     const alumniLoadMore = document.getElementById('alumni-load-more');
     const alumniLoadMoreWrap = document.getElementById('alumni-load-more-wrap');

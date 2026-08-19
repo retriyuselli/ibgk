@@ -1,10 +1,15 @@
 @php
     $isHonorary = $isHonorary ?? false;
-    $listingTitle = $isHonorary ? 'Anggota Kehormatan' : ($selectedBatch?->name ?? 'Alumni');
-    $listingCount = $isHonorary
+    $isSearching = $isSearching ?? false;
+    $listingTitle = $isSearching
+        ? 'Hasil pencarian'
+        : ($isHonorary ? 'Anggota Kehormatan' : ($selectedBatch?->name ?? 'Alumni'));
+    $listingCount = ($isSearching || $isHonorary)
         ? $alumni->total()
         : ($selectedBatch?->displayMemberCount() ?? 0);
-    $listingBadge = $isHonorary ? 'Anggota' : 'Finalis';
+    $listingBadge = $isSearching
+        ? 'Alumni'
+        : ($isHonorary ? 'Anggota' : 'Finalis');
 @endphp
 <div>
     <div class="flex flex-wrap items-center gap-3">
@@ -16,7 +21,13 @@
         </span>
     </div>
 
-    @if (! $isHonorary && filled($selectedBatch?->photo))
+    @if ($isSearching)
+        <p class="mt-2 text-sm text-muted">
+            Menampilkan alumni dari seluruh angkatan untuk “{{ $search }}”.
+        </p>
+    @endif
+
+    @if (! $isSearching && ! $isHonorary && filled($selectedBatch?->photo))
         <figure class="mt-5 overflow-hidden rounded-md border border-navy/8 bg-white shadow-sm">
             {!! site_image_or_storage($selectedBatch->photo, 'images/home/alumni-placeholder.jpg', 'Foto angkatan '.$selectedBatch->name, ['class' => 'aspect-[16/9] w-full object-cover sm:aspect-[21/9]']) !!}
             @if (filled($selectedBatch->description))
@@ -46,7 +57,12 @@
         @endif
     @else
         <div class="mt-6 border border-dashed border-navy/15 bg-white px-6 py-12 text-center">
-            @if ($isHonorary)
+            @if ($isSearching)
+                <p class="font-display text-xl text-navy">Tidak ada hasil</p>
+                <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
+                    Tidak ditemukan alumni yang cocok dengan “{{ $search }}” di seluruh angkatan.
+                </p>
+            @elseif ($isHonorary)
                 <p class="font-display text-xl text-navy">Data anggota kehormatan sedang dilengkapi</p>
                 <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
                     Profil publik anggota kehormatan akan tampil di sini setelah data alumni dipublikasikan.

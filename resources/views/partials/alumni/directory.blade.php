@@ -11,12 +11,14 @@
                 </p>
             </div>
 
-            <form method="GET" action="{{ route('alumni') }}" class="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
-                @if ($isHonorary)
-                    <input type="hidden" name="angkatan" value="{{ \App\Models\HonoraryMember::DIRECTORY_SLUG }}">
-                @elseif ($selectedBatch)
-                    <input type="hidden" name="angkatan" value="{{ $selectedBatch->slug }}">
-                    <input type="hidden" name="halaman" value="{{ $sidebarPage }}">
+            <form id="alumni-directory-form" method="GET" action="{{ route('alumni') }}" class="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
+                @if (! ($isSearching ?? false))
+                    @if ($isHonorary)
+                        <input type="hidden" name="angkatan" value="{{ \App\Models\HonoraryMember::DIRECTORY_SLUG }}">
+                    @elseif ($selectedBatch)
+                        <input type="hidden" name="angkatan" value="{{ $selectedBatch->slug }}">
+                        <input type="hidden" name="halaman" value="{{ $sidebarPage }}">
+                    @endif
                 @endif
 
                 <label class="relative block min-w-0 flex-1 lg:w-72">
@@ -28,7 +30,7 @@
                         type="search"
                         name="q"
                         value="{{ $search }}"
-                        placeholder="Cari nama, kampus, profesi..."
+                        placeholder="Cari nama, kampus, profesi, angkatan..."
                         class="w-full rounded-md border border-navy/15 bg-white py-2.5 pr-3 pl-10 text-sm text-navy outline-none transition focus:border-gold"
                     >
                 </label>
@@ -38,7 +40,7 @@
                     <select
                         name="gender"
                         class="w-full cursor-pointer appearance-none rounded-md border border-navy/15 bg-white py-2.5 pr-10 pl-3 text-sm font-medium text-navy outline-none transition focus:border-gold"
-                        onchange="this.form.submit()"
+                        onchange="this.form.requestSubmit()"
                     >
                         <option value="">Semua</option>
                         <option value="bujang" @selected(in_array($gender, ['bujang', 'male'], true))>Bujang</option>
