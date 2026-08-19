@@ -68,6 +68,26 @@ class OrganizationProfileForm
                     ])
                     ->collapsed(),
 
+                Section::make('Halaman Tentang Kami')
+                    ->description('Foto di section Sejarah Singkat. Kosongkan untuk memakai gambar default.')
+                    ->columns(1)
+                    ->schema([
+                        FileUpload::make('history_image')
+                            ->label('Foto Sejarah Singkat')
+                            ->image()
+                            ->directory('organization/history')
+                            ->disk('public')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->helperText('Tampil di samping teks Sejarah Singkat. Kosongkan untuk gambar default.'),
+                        TextInput::make('history_image_caption')
+                            ->label('Keterangan Foto')
+                            ->maxLength(255)
+                            ->placeholder('Grand Final BGK')
+                            ->helperText('Teks di bawah foto. Kosongkan untuk “Grand Final BGK”.'),
+                    ])
+                    ->collapsed(),
+
                 Section::make('Visi & Misi')
                     ->columns(1)
                     ->schema([

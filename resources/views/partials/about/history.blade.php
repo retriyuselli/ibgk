@@ -44,9 +44,14 @@
         </div>
 
         <figure class="overflow-hidden rounded-lg shadow-md shadow-navy/10">
-            {!! site_image('images/home/sejarah-grand-final.jpg', 'Grand Final BGK Sumatera Selatan', ['class' => 'aspect-[4/3] w-full object-cover']) !!}
+            {!! site_image_or_storage(
+                $profile?->historyImageStoragePath(),
+                $profile?->historyImageFallback() ?? 'images/home/sejarah-grand-final.jpg',
+                $profile?->historyImageCaption() ?? 'Grand Final BGK',
+                ['class' => 'aspect-[4/3] w-full object-cover']
+            ) !!}
             <figcaption class="bg-cream px-4 py-3 text-xs font-medium tracking-wide text-muted uppercase">
-                Grand Final BGK
+                {{ $profile?->historyImageCaption() ?? 'Grand Final BGK' }}
             </figcaption>
         </figure>
     </div>

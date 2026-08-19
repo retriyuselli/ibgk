@@ -20,6 +20,8 @@ class OrganizationProfile extends Model
         'vision',
         'mission',
         'logo',
+        'history_image',
+        'history_image_caption',
         'frontend_theme',
         'address',
         'phone',
@@ -249,6 +251,31 @@ class OrganizationProfile extends Model
         }
 
         return array_values($pillars);
+    }
+
+    public function historyImageFallback(): string
+    {
+        if (filled($this->history_image) && str_starts_with($this->history_image, 'images/')) {
+            return $this->history_image;
+        }
+
+        return 'images/home/sejarah-grand-final.jpg';
+    }
+
+    public function historyImageStoragePath(): ?string
+    {
+        if (blank($this->history_image) || str_starts_with($this->history_image, 'images/')) {
+            return null;
+        }
+
+        return $this->history_image;
+    }
+
+    public function historyImageCaption(): string
+    {
+        return filled($this->history_image_caption)
+            ? $this->history_image_caption
+            : 'Grand Final BGK';
     }
 
     public function electionBenefitsImagePath(): string

@@ -19,10 +19,10 @@
             </div>
         </div>
 
-        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5 lg:gap-0 lg:divide-x lg:divide-navy/10">
+        <div class="mt-10 flex flex-wrap justify-center gap-y-8 lg:gap-y-0 lg:divide-x lg:divide-navy/10">
             @foreach ($categories as $category)
                 @php $icon = $icons[$category->slug] ?? 'flag'; @endphp
-                <article class="px-2 text-center lg:px-4">
+                <article class="w-full max-w-sm px-6 text-center sm:w-1/2 lg:w-56 lg:max-w-none lg:px-8">
                     <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-gold/40 text-gold">
                         @switch($icon)
                             @case('academic')

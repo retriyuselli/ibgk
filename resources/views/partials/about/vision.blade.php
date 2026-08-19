@@ -50,11 +50,11 @@
             <div class="rounded-lg border border-navy/8 bg-white p-7 sm:p-8">
                 <p class="text-xs font-semibold tracking-[0.18em] text-gold uppercase">Visi</p>
                 @if ($hasVision)
-                    <div class="mt-4 font-display text-xl leading-relaxed text-navy sm:text-2xl [&_p+p]:mt-4">
+                    <div class="mt-4 text-sm leading-relaxed text-muted sm:text-base [&_p+p]:mt-4">
                         {!! clean_html($profile->vision) !!}
                     </div>
                 @else
-                    <p class="mt-4 font-display text-xl leading-relaxed text-navy sm:text-2xl">
+                    <p class="mt-4 text-sm leading-relaxed text-muted sm:text-base">
                         {{ $defaultVision }}
                     </p>
                 @endif

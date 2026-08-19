@@ -801,6 +801,92 @@ html[data-site-theme] [class*='bg-navy/'] {
         left: auto;
     }
 
+    .alumni-batch-section .section-shapes--light .shape-ring-sm {
+        width: 5.5rem;
+        height: 5.5rem;
+        border-width: 2px;
+        border-color: color-mix(in oklab, var(--color-gold) 45%, transparent);
+    }
+
+    .alumni-batch-section .section-shapes--light .shape-diamond {
+        width: 2.5rem;
+        height: 2.5rem;
+        background: color-mix(in oklab, var(--color-gold) 28%, transparent);
+        border-color: color-mix(in oklab, var(--color-gold) 50%, transparent);
+    }
+
+    .alumni-batch-section .section-shapes--light .shape-dot,
+    .alumni-batch-section .section-shapes--light .auth-shape-dot-b {
+        width: 0.55rem;
+        height: 0.55rem;
+        background: color-mix(in oklab, var(--color-gold) 70%, transparent);
+    }
+
+    .alumni-batch-section .section-shapes--light.auth-shapes--rich .auth-shape-ring-tr {
+        border-color: color-mix(in oklab, var(--color-gold) 32%, transparent);
+    }
+
+    .alumni-batch-section .section-shapes--light.auth-shapes--rich .auth-shape-orb {
+        background: radial-gradient(
+            circle,
+            color-mix(in oklab, var(--color-gold) 16%, transparent) 0%,
+            color-mix(in oklab, var(--color-navy) 6%, transparent) 42%,
+            transparent 72%
+        );
+    }
+
+    .alumni-batch-section .section-shapes--light.auth-shapes--rich .auth-shape-shimmer {
+        opacity: 0.9;
+    }
+
+    .showcase-shapes--alumni-batch .shape-pos-tl {
+        top: 4%;
+        left: 2%;
+    }
+
+    .showcase-shapes--alumni-batch .shape-pos-diamond {
+        top: 8%;
+        right: 3%;
+        bottom: auto;
+        left: auto;
+    }
+
+    .showcase-shapes--alumni-batch .shape-pos-dot-a {
+        bottom: 14%;
+        left: 5%;
+        top: auto;
+        right: auto;
+    }
+
+    .showcase-shapes--alumni-batch .auth-shape-ring-tr {
+        top: 18%;
+        right: 4%;
+        left: auto;
+        width: 11rem;
+        height: 11rem;
+    }
+
+    .showcase-shapes--alumni-batch .auth-shape-orb {
+        bottom: 6%;
+        right: 3%;
+        left: auto;
+        width: 18rem;
+        height: 18rem;
+    }
+
+    .showcase-shapes--alumni-batch .auth-shape-shimmer {
+        top: 36%;
+        left: 6%;
+        width: 8rem;
+    }
+
+    .showcase-shapes--alumni-batch .auth-shape-dot-b {
+        top: 28%;
+        right: 18%;
+        bottom: auto;
+        left: auto;
+    }
+
     .alumni-show-photo .showcase-shapes {
         @apply absolute inset-0;
     }

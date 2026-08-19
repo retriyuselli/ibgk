@@ -54,8 +54,10 @@
         </div>
     </section>
 
-    <section class="relative bg-cream py-14 sm:py-16 lg:py-20 overflow-hidden">
-        <div class="site-container">
+    <section class="alumni-batch-section relative isolate overflow-hidden bg-cream py-14 sm:py-16 lg:py-20">
+        @include('partials.partnership.showcase.shapes', ['variant' => 'light', 'density' => 'rich', 'section' => 'alumni-batch'])
+
+        <div class="site-container relative z-[2]">
             @if (filled($batch->photo))
                 <figure class="overflow-hidden rounded-md border border-navy/8 bg-white shadow-sm">
                     {!! site_image_or_storage($batch->photo, 'images/home/alumni-placeholder.jpg', 'Foto angkatan '.$batch->name, ['class' => 'aspect-[16/9] w-full object-cover sm:aspect-[21/9]']) !!}
