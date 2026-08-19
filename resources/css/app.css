@@ -301,7 +301,11 @@ html[data-site-theme] [class*='bg-navy/'] {
     }
 
     .home-popup {
-        @apply fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-5;
+        @apply fixed inset-0 z-[90] flex items-center justify-center;
+        padding: max(1rem, env(safe-area-inset-top, 0px))
+            max(1rem, env(safe-area-inset-right, 0px))
+            max(1.25rem, env(safe-area-inset-bottom, 0px))
+            max(1rem, env(safe-area-inset-left, 0px));
     }
 
     .home-popup[hidden] {
@@ -316,13 +320,13 @@ html[data-site-theme] [class*='bg-navy/'] {
     .home-popup-panel {
         @apply relative z-10;
         width: fit-content;
-        max-width: min(86vw, 22rem);
-        max-height: 72vh;
+        max-width: min(88vw, 26rem);
+        max-height: min(78dvh, 34rem);
         animation: auth-card-rise 0.45s ease-out both;
     }
 
     .home-popup-close {
-        @apply absolute top-2 right-2 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-navy shadow-md transition hover:bg-white hover:text-gold sm:top-3 sm:right-3;
+        @apply absolute top-2 right-2 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-navy shadow-md transition hover:bg-white hover:text-gold sm:top-3 sm:right-3 sm:h-9 sm:w-9;
     }
 
     .home-popup-media {
@@ -334,11 +338,27 @@ html[data-site-theme] [class*='bg-navy/'] {
         display: block;
         width: auto;
         height: auto;
-        max-width: min(86vw, 22rem);
-        max-height: 70vh;
+        max-width: min(88vw, 26rem);
+        max-height: min(74dvh, 32rem);
         object-fit: contain;
         object-position: center top;
         vertical-align: top;
+    }
+
+    @media (min-width: 640px) {
+        .home-popup {
+            padding: 5rem 1.5rem 1.75rem;
+        }
+
+        .home-popup-panel {
+            max-width: min(78vw, 26rem);
+            max-height: min(68vh, 34rem);
+        }
+
+        .home-popup-image {
+            max-width: min(78vw, 26rem);
+            max-height: min(66vh, 32rem);
+        }
     }
 
     html.home-popup-open {
