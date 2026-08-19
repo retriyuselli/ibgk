@@ -82,11 +82,4 @@ class HomepagePopup extends Model
     {
         return filled($this->button_label) ? $this->button_label : 'Selengkapnya';
     }
-
-    public function dismissKey(): string
-    {
-        $stamp = $this->updated_at?->timestamp ?? $this->id;
-
-        return 'ibgk-home-popup-'.$this->id.'-'.$stamp;
-    }
 }

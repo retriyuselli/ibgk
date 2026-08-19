@@ -42,21 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const homePopup = document.getElementById('home-popup');
 
     if (homePopup) {
-        const popupKey = homePopup.dataset.popupKey || 'ibgk-home-popup';
-        let popupDismissed = false;
-
-        try {
-            popupDismissed = localStorage.getItem(popupKey) === '1';
-        } catch (e) {}
-
         const closeHomePopup = () => {
             homePopup.hidden = true;
             homePopup.setAttribute('aria-hidden', 'true');
             document.documentElement.classList.remove('home-popup-open');
-
-            try {
-                localStorage.setItem(popupKey, '1');
-            } catch (e) {}
         };
 
         const openHomePopup = () => {
@@ -66,9 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             homePopup.querySelector('.home-popup-close')?.focus();
         };
 
-        if (! popupDismissed) {
-            window.setTimeout(openHomePopup, 450);
-        }
+        window.setTimeout(openHomePopup, 450);
 
         homePopup.querySelectorAll('[data-home-popup-close]').forEach((el) => {
             el.addEventListener('click', closeHomePopup);

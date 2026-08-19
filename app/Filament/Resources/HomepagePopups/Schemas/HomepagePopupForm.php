@@ -15,7 +15,7 @@ class HomepagePopupForm
     {
         return $schema->components([
             Section::make('Isi Popup')
-                ->description('Popup beranda menampilkan poster saja. Ukurannya menyesuaikan layar. Pengunjung yang menutup tidak melihatnya lagi sampai poster diubah.')
+                ->description('Popup beranda menampilkan poster saja. Ukurannya menyesuaikan layar. Popup muncul setiap kali pengunjung membuka beranda.')
                 ->columns(2)
                 ->schema([
                     TextInput::make('title')

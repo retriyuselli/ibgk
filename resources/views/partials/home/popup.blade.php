@@ -11,7 +11,6 @@
         role="dialog"
         aria-modal="true"
         aria-labelledby="home-popup-title"
-        data-popup-key="{{ $popup->dismissKey() }}"
     >
         <div class="home-popup-backdrop" data-home-popup-close tabindex="-1" aria-hidden="true"></div>
 
