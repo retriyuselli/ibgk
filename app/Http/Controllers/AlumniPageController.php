@@ -41,7 +41,7 @@ class AlumniPageController extends Controller
         $sidebarPage = $request->integer('halaman');
 
         if ($sidebarPage < 1) {
-            $sidebarPage = $selectedBatch && ! $isHonorary
+            $sidebarPage = $selectedBatch
                 ? AlumniBatch::sidebarPageForBatch($selectedBatch)
                 : 1;
         }

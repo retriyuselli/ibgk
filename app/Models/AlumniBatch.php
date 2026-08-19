@@ -22,7 +22,7 @@ class AlumniBatch extends Model
 
     public const YEAR_RANGE_SPAN = 5;
 
-    public const SIDEBAR_PAGE_SIZE = 5;
+    public const SIDEBAR_PAGE_SIZE = 8;
 
     public const CATEGORY_ELECTION = 'election';
 
@@ -252,12 +252,12 @@ class AlumniBatch extends Model
         $founders = static::foundersBatch();
         $honorary = static::honoraryBatch();
 
-        if ($founders) {
-            $batches->push($founders);
-        }
-
         if ($honorary) {
             $batches->push($honorary);
+        }
+
+        if ($founders) {
+            $batches->push($founders);
         }
 
         return $batches->values();
@@ -288,7 +288,24 @@ class AlumniBatch extends Model
     /** @return Collection<int, self> */
     public static function sidebarBatchesOrdered(): Collection
     {
-        return static::batchesWithPublicAlumniOrdered();
+        $batches = static::batchesWithPublicAlumniOrdered();
+        $honorary = static::honoraryBatch();
+
+        if (! $honorary) {
+            return $batches;
+        }
+
+        $foundersIndex = $batches->search(fn (self $batch): bool => $batch->isFounders());
+
+        if ($foundersIndex === false) {
+            return $batches->push($honorary)->values();
+        }
+
+        return $batches
+            ->take($foundersIndex)
+            ->push($honorary)
+            ->concat($batches->slice($foundersIndex))
+            ->values();
     }
 
     public static function sidebarPageCount(): int

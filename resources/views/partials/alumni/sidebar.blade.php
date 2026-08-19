@@ -14,9 +14,14 @@
         <nav class="mt-5 space-y-2" aria-label="Daftar angkatan">
             @foreach ($sidebarBatches as $batch)
                 @php
-                    $isActive = $selectedBatch?->id === $batch->id;
+                    $isHonoraryItem = $batch->isHonorary();
+                    $isActive = $isHonoraryItem
+                        ? $isHonorary
+                        : $selectedBatch?->id === $batch->id;
                     $url = route('alumni', array_filter([
-                        'angkatan' => $batch->slug,
+                        'angkatan' => $isHonoraryItem
+                            ? \App\Models\HonoraryMember::DIRECTORY_SLUG
+                            : $batch->slug,
                         'halaman' => $sidebarPage,
                         'q' => $search ?: null,
                         'gender' => $gender ?: null,
@@ -32,9 +37,13 @@
                 >
                     <span class="flex items-center gap-2 font-medium">
                         <span @class(['text-gold', 'opacity-70' => ! $isActive])>
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3 2M12 21a9 9 0 100-18 9 9 0 000 18z"/></svg>
+                            @if ($isHonoraryItem)
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4l2.1 4.3 4.7.7-3.4 3.3.8 4.7L12 14.8 7.8 17l.8-4.7-3.4-3.3 4.7-.7L12 4z"/></svg>
+                            @else
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l3 2M12 21a9 9 0 100-18 9 9 0 000 18z"/></svg>
+                            @endif
                         </span>
-                        {{ $batch->name }}
+                        {{ $isHonoraryItem ? 'Anggota Kehormatan' : $batch->name }}
                     </span>
                     @if ($isActive)
                         <span aria-hidden="true">→</span>
@@ -42,31 +51,6 @@
                 </a>
             @endforeach
         </nav>
-
-        @php
-            $honoraryUrl = route('alumni', array_filter([
-                'angkatan' => \App\Models\HonoraryMember::DIRECTORY_SLUG,
-                'q' => $search ?: null,
-            ]));
-        @endphp
-        <a
-            href="{{ $honoraryUrl }}"
-            @class([
-                'mt-3 flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-sm transition',
-                'bg-navy text-gold' => $isHonorary,
-                'bg-cream text-navy hover:bg-cream-muted' => ! $isHonorary,
-            ])
-        >
-            <span class="flex items-center gap-2 font-medium">
-                <span @class(['text-gold', 'opacity-70' => ! $isHonorary])>
-                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4l2.1 4.3 4.7.7-3.4 3.3.8 4.7L12 14.8 7.8 17l.8-4.7-3.4-3.3 4.7-.7L12 4z"/></svg>
-                </span>
-                Anggota Kehormatan
-            </span>
-            @if ($isHonorary)
-                <span aria-hidden="true">→</span>
-            @endif
-        </a>
 
         <div class="mt-4 flex items-center justify-between gap-2">
             @if ($sidebarPage > 1)
