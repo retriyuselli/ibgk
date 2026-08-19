@@ -29,15 +29,19 @@
 
                 <div id="alumni-track" class="alumni-track">
                     @forelse ($batches as $batch)
-                        <article class="alumni-card w-52 shrink-0 overflow-hidden border border-white/10 bg-navy-soft sm:w-56">
+                        <a
+                            href="{{ route('alumni.batch', $batch) }}"
+                            class="alumni-card group w-52 shrink-0 overflow-hidden border border-white/10 bg-navy-soft transition hover:border-gold/50 sm:w-56"
+                            aria-label="Lihat angkatan {{ $batch->year }}"
+                        >
                             <div class="border-b border-white/10 px-4 py-3">
                                 <p class="font-display text-2xl font-semibold text-gold">{{ $batch->year }}</p>
                                 <p class="text-xs text-white/65">
                                     {{ $batch->displayMemberCount() ?: '—' }} Finalis
                                 </p>
                             </div>
-                            {!! site_image_or_storage($batch->photo, 'images/home/alumni-placeholder.jpg', 'Angkatan '.$batch->year, ['class' => 'aspect-[4/3] w-full object-cover']) !!}
-                        </article>
+                            {!! site_image_or_storage($batch->photo, 'images/home/alumni-placeholder.jpg', 'Angkatan '.$batch->year, ['class' => 'aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-[1.03]']) !!}
+                        </a>
                     @empty
                         <p class="text-sm text-white/60">Data angkatan belum tersedia.</p>
                     @endforelse

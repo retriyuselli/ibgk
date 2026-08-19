@@ -56,6 +56,7 @@ Route::post('/alumni/isi-profil/{token}', [AlumniProfileFormController::class, '
 Route::get('/alumni/daftar-profil', [AlumniSelfRegistrationController::class, 'create'])->name('alumni.register');
 Route::post('/alumni/daftar-profil', [AlumniSelfRegistrationController::class, 'store'])->middleware('throttle:5,1')->name('alumni.register.store');
 Route::get('/alumni', AlumniPageController::class)->name('alumni');
+Route::get('/alumni/angkatan/{batch:slug}', [AlumniPageController::class, 'batch'])->name('alumni.batch');
 Route::get('/alumni/{alumni:slug}', [AlumniPageController::class, 'show'])->name('alumni.show');
 Route::get('/kegiatan', ActivityPageController::class)->name('activities');
 Route::get('/kegiatan/{activity:slug}', [ActivityPageController::class, 'show'])->name('activities.show');

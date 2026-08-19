@@ -3,7 +3,7 @@
     $isHome = request()->routeIs('home');
     $isAbout = request()->routeIs('about', 'board');
     $isElection = request()->routeIs('election');
-    $isAlumni = request()->routeIs('alumni');
+    $isAlumni = request()->routeIs('alumni', 'alumni.show', 'alumni.batch');
     $isActivities = request()->routeIs('activities');
     $isNews = request()->routeIs('news');
     $isGallery = request()->routeIs('gallery');

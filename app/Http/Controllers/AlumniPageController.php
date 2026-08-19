@@ -22,6 +22,40 @@ class AlumniPageController extends Controller
         ]);
     }
 
+    public function batch(AlumniBatch $batch): View
+    {
+        abort_unless($batch->is_active, 404);
+
+        $alumni = Alumni::query()
+            ->with('alumniBatch')
+            ->where('alumni_batch_id', $batch->id)
+            ->where('is_public', true)
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        $neighbors = AlumniBatch::query()
+            ->election()
+            ->where('is_active', true)
+            ->whereBetween('year', [AlumniBatch::FIRST_ELECTION_YEAR, (int) now()->format('Y')])
+            ->orderByDesc('year')
+            ->get();
+
+        $currentIndex = $neighbors->search(fn (AlumniBatch $item): bool => $item->id === $batch->id);
+
+        return view('pages.alumni-batch', [
+            'profile' => OrganizationProfile::query()->first(),
+            'batch' => $batch,
+            'alumni' => $alumni,
+            'newerBatch' => $currentIndex !== false && $currentIndex > 0
+                ? $neighbors->get($currentIndex - 1)
+                : null,
+            'olderBatch' => $currentIndex !== false
+                ? $neighbors->get($currentIndex + 1)
+                : null,
+        ]);
+    }
+
     public function __invoke(Request $request): View|JsonResponse
     {
         $batches = AlumniBatch::batchesWithPublicAlumniOrdered();
