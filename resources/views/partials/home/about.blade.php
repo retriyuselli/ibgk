@@ -1,4 +1,4 @@
-<section id="tentang" class="relative bg-cream py-16 sm:py-20 lg:py-24 overflow-hidden">
+<section id="tentang" class="relative bg-white py-16 sm:py-20 lg:py-24 overflow-hidden">
     <div class="site-container grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
             <p class="text-xs font-semibold tracking-[0.2em] text-gold uppercase">Tentang Kami</p>
@@ -27,18 +27,16 @@
             </a>
         </div>
 
-        @php
-            $aboutImages = $cmsPages->aboutCollage();
-        @endphp
-        <div class="grid grid-cols-2 gap-3 sm:gap-4">
-            <div class="space-y-3 sm:space-y-4">
-                {!! site_image_or_storage($aboutImages[0]['src'], $aboutImages[0]['fallback'], $aboutImages[0]['alt'], ['class' => $aboutImages[0]['class']]) !!}
-                {!! site_image_or_storage($aboutImages[1]['src'], $aboutImages[1]['fallback'], $aboutImages[1]['alt'], ['class' => $aboutImages[1]['class']]) !!}
-            </div>
-            <div class="mt-6 space-y-3 sm:mt-10 sm:space-y-4">
-                {!! site_image_or_storage($aboutImages[2]['src'], $aboutImages[2]['fallback'], $aboutImages[2]['alt'], ['class' => $aboutImages[2]['class']]) !!}
-                {!! site_image_or_storage($aboutImages[3]['src'], $aboutImages[3]['fallback'], $aboutImages[3]['alt'], ['class' => $aboutImages[3]['class']]) !!}
-            </div>
-        </div>
+        <video
+            class="mx-auto w-1/2 bg-transparent object-contain"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-label="Animasi logo Ikatan Bujang Gadis Kampus Sumatera Selatan"
+        >
+            <source src="{{ asset('video/'.rawurlencode('IMG_4580.MP4')) }}" type="video/mp4">
+        </video>
     </div>
 </section>

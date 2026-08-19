@@ -33,17 +33,22 @@
                     >
                 </label>
 
-                <label class="relative">
-                    <span class="sr-only">Filter gender</span>
+                <label class="relative block sm:w-40">
+                    <span class="sr-only">Filter kategori</span>
                     <select
                         name="gender"
-                        class="w-full appearance-none rounded-md border border-navy/15 bg-white py-2.5 pr-10 pl-3 text-sm font-medium text-navy outline-none transition focus:border-gold sm:w-36"
+                        class="w-full cursor-pointer appearance-none rounded-md border border-navy/15 bg-white py-2.5 pr-10 pl-3 text-sm font-medium text-navy outline-none transition focus:border-gold"
                         onchange="this.form.submit()"
                     >
-                        <option value="">Filter</option>
+                        <option value="">Semua</option>
                         <option value="bujang" @selected(in_array($gender, ['bujang', 'male'], true))>Bujang</option>
                         <option value="gadis" @selected(in_array($gender, ['gadis', 'female'], true))>Gadis</option>
                     </select>
+                    <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-muted" aria-hidden="true">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </span>
                 </label>
 
                 <button type="submit" class="btn-gold-sm whitespace-nowrap">
