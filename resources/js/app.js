@@ -267,6 +267,55 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const activitiesGrid = document.getElementById('activities-grid');
+    const activitiesLoadMore = document.getElementById('activities-load-more');
+    const activitiesLoadMoreWrap = document.getElementById('activities-load-more-wrap');
+
+    if (activitiesGrid && activitiesLoadMore) {
+        activitiesLoadMore.addEventListener('click', async () => {
+            const nextPage = activitiesLoadMore.dataset.nextPage;
+
+            if (!nextPage) {
+                return;
+            }
+
+            const originalLabel = activitiesLoadMore.textContent;
+            activitiesLoadMore.disabled = true;
+            activitiesLoadMore.textContent = 'Memuat...';
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('page', nextPage);
+
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        Accept: 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load activities');
+                }
+
+                const data = await response.json();
+
+                activitiesGrid.insertAdjacentHTML('beforeend', data.html);
+
+                if (data.has_more && data.next_page) {
+                    activitiesLoadMore.dataset.nextPage = String(data.next_page);
+                    activitiesLoadMore.disabled = false;
+                    activitiesLoadMore.textContent = originalLabel;
+                } else if (activitiesLoadMoreWrap) {
+                    activitiesLoadMoreWrap.remove();
+                }
+            } catch {
+                activitiesLoadMore.disabled = false;
+                activitiesLoadMore.textContent = originalLabel;
+            }
+        });
+    }
+
     const maxPhotoDimension = 1000;
     const photoQuality = 0.82;
 
