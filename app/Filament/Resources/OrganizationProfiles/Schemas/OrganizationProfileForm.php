@@ -79,12 +79,7 @@ class OrganizationProfileForm
                             ->disk('public')
                             ->visibility('public')
                             ->imageEditor()
-                            ->helperText('Tampil di samping teks Sejarah Singkat. Kosongkan untuk gambar default.'),
-                        TextInput::make('history_image_caption')
-                            ->label('Keterangan Foto')
-                            ->maxLength(255)
-                            ->placeholder('Grand Final BGK')
-                            ->helperText('Teks di bawah foto. Kosongkan untuk “Grand Final BGK”.'),
+                            ->helperText('Tampil di samping teks Sejarah Singkat, tanpa keterangan. Kosongkan untuk gambar default.'),
                     ])
                     ->collapsed(),
 

@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class AlumniBatch extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     public const FIRST_ELECTION_YEAR = 2002;
 
@@ -340,28 +342,32 @@ class AlumniBatch extends Model
 
     public static function syncFoundersBatch(): void
     {
-        static::query()->updateOrCreate(
-            ['slug' => self::FOUNDERS_SLUG],
-            [
-                'name' => 'PENDIRI',
-                'category' => self::CATEGORY_FOUNDERS,
-                'year' => self::FOUNDING_YEAR,
-                'is_active' => true,
-            ]
-        );
+        if (static::withTrashed()->where('slug', self::FOUNDERS_SLUG)->exists()) {
+            return;
+        }
+
+        static::query()->create([
+            'name' => 'PENDIRI',
+            'slug' => self::FOUNDERS_SLUG,
+            'category' => self::CATEGORY_FOUNDERS,
+            'year' => self::FOUNDING_YEAR,
+            'is_active' => true,
+        ]);
     }
 
     public static function syncHonoraryBatch(): void
     {
-        static::query()->updateOrCreate(
-            ['slug' => self::HONORARY_SLUG],
-            [
-                'name' => 'ANGGOTA KEHORMATAN',
-                'category' => self::CATEGORY_HONORARY,
-                'year' => self::HONORARY_YEAR,
-                'is_active' => true,
-            ]
-        );
+        if (static::withTrashed()->where('slug', self::HONORARY_SLUG)->exists()) {
+            return;
+        }
+
+        static::query()->create([
+            'name' => 'ANGGOTA KEHORMATAN',
+            'slug' => self::HONORARY_SLUG,
+            'category' => self::CATEGORY_HONORARY,
+            'year' => self::HONORARY_YEAR,
+            'is_active' => true,
+        ]);
     }
 
     public static function syncElectionYearBatches(): void
@@ -369,26 +375,41 @@ class AlumniBatch extends Model
         $currentYear = (int) now()->format('Y');
         $expectedCount = self::electionYearCount($currentYear);
 
-        if (static::query()->election()->activeUpToCurrentYear()->count() >= $expectedCount) {
+        $existingCount = static::withTrashed()
+            ->election()
+            ->whereBetween('year', [self::FIRST_ELECTION_YEAR, $currentYear])
+            ->count();
+
+        if ($existingCount >= $expectedCount) {
             return;
         }
 
         for ($year = self::FIRST_ELECTION_YEAR; $year <= $currentYear; $year++) {
             $name = "BGK Sumsel {$year}";
+            $slug = Str::slug($name);
 
-            $batch = static::query()->updateOrCreate(
-                ['slug' => Str::slug($name)],
-                [
-                    'name' => $name,
-                    'year' => $year,
-                    'category' => self::CATEGORY_ELECTION,
-                    'is_active' => true,
-                ]
-            );
+            $exists = static::withTrashed()
+                ->where(function (Builder $query) use ($slug, $year): void {
+                    $query
+                        ->where('slug', $slug)
+                        ->orWhere(fn (Builder $builder) => $builder
+                            ->election()
+                            ->where('year', $year));
+                })
+                ->exists();
 
-            if ($batch->wasRecentlyCreated || blank($batch->historical_member_count)) {
-                $batch->update(['historical_member_count' => self::MEMBERS_PER_YEAR]);
+            if ($exists) {
+                continue;
             }
+
+            static::query()->create([
+                'name' => $name,
+                'slug' => $slug,
+                'year' => $year,
+                'category' => self::CATEGORY_ELECTION,
+                'is_active' => true,
+                'historical_member_count' => self::MEMBERS_PER_YEAR,
+            ]);
         }
     }
 

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\AlumniBatches\Pages;
 
 use App\Filament\Resources\AlumniBatches\AlumniBatchResource;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -16,6 +17,8 @@ class EditAlumniBatch extends EditRecord
     {
         return [
             ViewAction::make(),
+            RestoreAction::make()
+                ->label('Pulihkan'),
             DeleteAction::make()
                 ->before(function (DeleteAction $action): void {
                     if ($this->getRecord()->alumni()->exists()) {
@@ -30,7 +33,7 @@ class EditAlumniBatch extends EditRecord
                 })
                 ->requiresConfirmation()
                 ->modalHeading('Hapus Angkatan')
-                ->modalDescription('Hanya angkatan tanpa alumni yang dapat dihapus. Lanjutkan?'),
+                ->modalDescription('Hanya angkatan tanpa alumni yang dapat dihapus. Angkatan yang dihapus tidak akan dibuat ulang otomatis.'),
         ];
     }
 }

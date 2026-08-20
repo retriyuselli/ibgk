@@ -43,16 +43,13 @@
             </a>
         </div>
 
-        <figure class="overflow-hidden rounded-lg shadow-md shadow-navy/10">
+        <div class="mx-auto w-[78%] lg:w-[72%]">
             {!! site_image_or_storage(
                 $profile?->historyImageStoragePath(),
                 $profile?->historyImageFallback() ?? 'images/home/sejarah-grand-final.jpg',
-                $profile?->historyImageCaption() ?? 'Grand Final BGK',
-                ['class' => 'aspect-[4/3] w-full object-cover']
+                'Sejarah IBGK Sumatera Selatan',
+                ['class' => 'h-auto w-full']
             ) !!}
-            <figcaption class="bg-cream px-4 py-3 text-xs font-medium tracking-wide text-muted uppercase">
-                {{ $profile?->historyImageCaption() ?? 'Grand Final BGK' }}
-            </figcaption>
-        </figure>
+        </div>
     </div>
 </section>

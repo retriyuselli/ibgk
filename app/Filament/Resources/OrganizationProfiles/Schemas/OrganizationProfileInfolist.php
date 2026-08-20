@@ -57,9 +57,6 @@ class OrganizationProfileInfolist
                             ->label('Foto Sejarah Singkat')
                             ->disk('public')
                             ->columnSpanFull(),
-                        TextEntry::make('history_image_caption')
-                            ->label('Keterangan Foto')
-                            ->placeholder('Grand Final BGK'),
                     ]),
                 Section::make('Visi & Misi')
                     ->schema([
