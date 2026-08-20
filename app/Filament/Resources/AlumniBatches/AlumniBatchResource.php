@@ -10,6 +10,7 @@ use App\Filament\Resources\AlumniBatches\RelationManagers\AlumniRelationManager;
 use App\Filament\Resources\AlumniBatches\Schemas\AlumniBatchForm;
 use App\Filament\Resources\AlumniBatches\Schemas\AlumniBatchInfolist;
 use App\Filament\Resources\AlumniBatches\Tables\AlumniBatchesTable;
+use App\Filament\Resources\AlumniBatches\Widgets\AlumniBatchStatsOverview;
 use App\Models\AlumniBatch;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -66,6 +67,13 @@ class AlumniBatchResource extends Resource
     {
         return [
             AlumniRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            AlumniBatchStatsOverview::class,
         ];
     }
 
