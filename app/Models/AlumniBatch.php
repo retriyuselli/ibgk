@@ -158,14 +158,25 @@ class AlumniBatch extends Model
         return $throughYear - self::FIRST_ELECTION_YEAR + 1;
     }
 
+    public static function activeElectionYearCount(?int $throughYear = null): int
+    {
+        $throughYear ??= (int) now()->format('Y');
+
+        return static::query()
+            ->election()
+            ->where('is_active', true)
+            ->where('year', '<=', $throughYear)
+            ->count();
+    }
+
     public static function totalPublicMembersUpToCurrentYear(): int
     {
-        return self::electionYearCount() * self::MEMBERS_PER_YEAR;
+        return self::activeElectionYearCount() * self::MEMBERS_PER_YEAR;
     }
 
     public static function activeBatchCountUpToCurrentYear(): int
     {
-        return self::electionYearCount();
+        return self::activeElectionYearCount();
     }
 
     /** @return list<array{start: int, end: int, label: string, slug: string, member_count: int}> */

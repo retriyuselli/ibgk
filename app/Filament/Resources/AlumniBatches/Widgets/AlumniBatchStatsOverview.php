@@ -30,6 +30,8 @@ class AlumniBatchStatsOverview extends StatsOverviewWidget
         $founders = AlumniBatch::query()->founders()->count();
         $honorary = AlumniBatch::query()->honorary()->count();
         $alumniCount = Alumni::query()->count();
+        $activeYears = AlumniBatch::query()->election()->activeUpToCurrentYear()->count();
+        $formulaTotal = $activeYears * AlumniBatch::MEMBERS_PER_YEAR;
 
         $electionYears = filled($yearFrom) && filled($yearTo)
             ? "Tahun {$yearFrom}–{$yearTo}"
@@ -48,8 +50,8 @@ class AlumniBatchStatsOverview extends StatsOverviewWidget
                 ->description(number_format($founders).' pendiri · '.number_format($honorary).' kehormatan')
                 ->descriptionIcon('heroicon-m-star')
                 ->color('info'),
-            Stat::make('Alumni Terinput', number_format($alumniCount))
-                ->description('Dari seluruh angkatan')
+            Stat::make('Total Alumni', number_format($formulaTotal))
+                ->description(AlumniBatch::MEMBERS_PER_YEAR.' × '.number_format($activeYears).' tahun aktif · '.number_format($alumniCount).' terinput')
                 ->descriptionIcon('heroicon-m-academic-cap')
                 ->color('success'),
         ];
