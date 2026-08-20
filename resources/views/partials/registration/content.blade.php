@@ -3,7 +3,7 @@
     $success = session('registration_success');
     $year = $election?->year ?? now()->year;
     $inputClass = 'w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2.5 text-sm outline-none focus:border-gold';
-    $fileClass = 'w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2 text-sm file:mr-3 file:rounded file:border-0 file:bg-gold file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-navy-deep';
+    $fileClass = 'w-full rounded-md border border-navy/15 bg-cream/40 px-3 py-2 text-sm file:mr-3 file:rounded file:border-0 file:bg-gold file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white';
 @endphp
 
 <section class="relative overflow-hidden bg-cream py-14 sm:py-16 lg:py-20">

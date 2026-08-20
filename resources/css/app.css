@@ -40,12 +40,14 @@ html[data-site-theme='festival'] {
 html[data-site-theme] {
     --color-gold: var(--color-gold-ink);
     --gold-text: var(--color-gold-ink);
+    --on-gold: #fff;
 }
 
 html[data-site-theme] :is(.site-header, .site-footer, .bg-navy, .bg-navy-deep, .bg-navy-soft),
 html[data-site-theme] [class*='bg-navy/'] {
     --color-gold: var(--color-gold-bright);
     --gold-text: var(--color-gold-bright);
+    --on-gold: var(--color-navy-deep);
 }
 
 @layer components {
@@ -221,8 +223,24 @@ html[data-site-theme] [class*='bg-navy/'] {
     }
 
     .btn-outline-gold {
-        @apply inline-flex items-center justify-center gap-2 rounded-md border border-gold px-5 py-3 text-sm font-semibold tracking-wide transition duration-300 hover:bg-gold hover:text-navy-deep;
+        @apply inline-flex items-center justify-center gap-2 rounded-md border border-gold px-5 py-3 text-sm font-semibold tracking-wide transition duration-300;
         color: var(--gold-text);
+    }
+
+    .btn-outline-gold:hover,
+    .btn-outline-gold:focus-visible {
+        background-color: var(--color-gold);
+        border-color: var(--color-gold);
+        color: var(--on-gold, #fff);
+    }
+
+    .bg-gold.text-navy,
+    .bg-gold.text-navy-deep {
+        color: var(--on-gold, #fff);
+    }
+
+    .file\:bg-gold::file-selector-button {
+        color: var(--on-gold, #fff);
     }
 
     .section-title {
@@ -397,6 +415,21 @@ html[data-site-theme] [class*='bg-navy/'] {
 
     .development-gate-panel {
         animation: auth-card-rise 0.95s ease-out 0.12s both;
+        --color-gold: var(--color-gold-ink);
+        --gold-text: var(--color-gold-ink);
+        --on-gold: #fff;
+    }
+
+    .development-gate-panel .btn-gold,
+    .development-gate-panel .btn-gold-sm {
+        background-color: var(--color-gold);
+        color: var(--on-gold, #fff);
+    }
+
+    .development-gate-panel .btn-gold:hover,
+    .development-gate-panel .btn-gold-sm:hover {
+        background-color: color-mix(in oklab, var(--color-gold) 86%, black);
+        color: #fff;
     }
 
     .development-gate-icon {
