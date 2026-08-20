@@ -593,6 +593,43 @@ html[data-site-theme] [class*='bg-navy/'] {
         scroll-snap-align: start;
     }
 
+    .alumni-profile-card {
+        background-color: var(--color-cream-muted);
+    }
+
+    .alumni-profile-card__overlay {
+        @apply absolute inset-x-0 bottom-0 z-[1] flex items-end justify-between gap-3 px-3 pb-3 sm:px-4 sm:pb-4;
+        padding-top: 5.5rem;
+        background: linear-gradient(
+            to top,
+            rgb(0 0 0 / 0.82) 0%,
+            rgb(0 0 0 / 0.42) 46%,
+            transparent 100%
+        );
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        pointer-events: none;
+    }
+
+    .alumni-profile-card__action {
+        @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-navy;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .alumni-profile-card__overlay {
+            opacity: 0;
+            transform: translateY(0.6rem);
+        }
+
+        .alumni-profile-card:hover .alumni-profile-card__overlay,
+        .alumni-profile-card:focus-visible .alumni-profile-card__overlay,
+        .alumni-profile-card:focus-within .alumni-profile-card__overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     #schedule-track {
         align-items: stretch;
     }
@@ -1827,6 +1864,17 @@ html[data-site-theme] [class*='bg-navy/'] {
         animation: none !important;
         opacity: 1 !important;
         transform: translateX(-50%) !important;
+    }
+
+    .alumni-profile-card__overlay,
+    .alumni-profile-card:hover .alumni-profile-card__overlay,
+    .alumni-profile-card img {
+        transition: none !important;
+        transform: none !important;
+    }
+
+    .alumni-profile-card__overlay {
+        opacity: 1 !important;
     }
 
     .board-member-card:hover {
